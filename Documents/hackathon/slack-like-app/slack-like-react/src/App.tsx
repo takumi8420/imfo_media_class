@@ -61,8 +61,9 @@ function App() {
 
   return (
     <div>
+      <p>aaa</p>
       <div>
-
+        
         {currentPage === "defaultPage" && pageContent}
         {currentPage === "SignUp" && pageContent}
         {currentPage === "SignIn" && pageContent}
