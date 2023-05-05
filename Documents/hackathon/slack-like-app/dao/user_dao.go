@@ -67,7 +67,7 @@ func CreateUser(user model.UserReqForHTTPPost) (model.UserResForHTTPPost, error)
 	}
 	defer tx.Rollback()
 
-	_, err = tx.Exec("INSERT INTO user (id, name, age) VALUES (?, ?, ?)", id, user.Name, user.Age)
+	_, err = tx.Exec("INSERT INTO user_test (id, name, age) VALUES (?, ?, ?)", id, user.Name, user.Age)
 	if err != nil {
 		return model.UserResForHTTPPost{}, err
 	}
