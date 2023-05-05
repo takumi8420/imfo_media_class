@@ -5,8 +5,8 @@ import (
 	"io"
 	"log"
 	"net/http"
-	"new_db/model"
-	"new_db/usecase"
+	"slack-like-app/model"
+	"slack-like-app/usecase"
 )
 
 func RegisterUserHandler(w http.ResponseWriter, r *http.Request) {

@@ -1,8 +1,8 @@
 package usecase
 
 import (
-	"new_db/dao"
-	"new_db/model"
+	"slack-like-app/dao"
+	"slack-like-app/model"
 )
 
 func GetUserByName(name string) ([]model.UserResForHTTPGet, error) {

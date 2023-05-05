@@ -3,10 +3,10 @@ package main
 import (
 	"log"
 	"net/http"
-	"new_db/controller"
-	"new_db/dao"
 	"os"
 	"os/signal"
+	"slack-like-app/controller"
+	"slack-like-app/dao"
 	"syscall"
 )
 
@@ -24,7 +24,6 @@ func main() {
 		log.Fatal(err)
 	}
 }
-
 
 // ③ Ctrl+CでHTTPサーバー停止時にDBをクローズする
 func closeDBWithSysCall() {

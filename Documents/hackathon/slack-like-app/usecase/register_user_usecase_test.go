@@ -1,7 +1,7 @@
 package usecase
 
 import (
-	"new_db/model"
+	"slack-like-app/model"
 	"testing"
 )
 

@@ -2,8 +2,8 @@ package usecase
 
 import (
 	"errors"
-	"new_db/dao"
-	"new_db/model"
+	"slack-like-app/dao"
+	"slack-like-app/model"
 )
 
 func CreateUser(user model.UserReqForHTTPPost) (model.UserResForHTTPPost, error) {

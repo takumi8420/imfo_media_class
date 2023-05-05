@@ -7,8 +7,8 @@ import (
 	"github.com/oklog/ulid/v2"
 	"log"
 	"math/rand"
-	"slack-like-app/model"
 	"os"
+	"slack-like-app/model"
 	"time"
 )
 

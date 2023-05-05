@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
-	"new_db/usecase"
+	"slack-like-app/usecase"
 )
 
 func SearchUserHandler(w http.ResponseWriter, r *http.Request) {
