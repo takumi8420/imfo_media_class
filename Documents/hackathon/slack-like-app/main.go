@@ -25,6 +25,7 @@ func main() {
 	}
 }
 
+
 // ③ Ctrl+CでHTTPサーバー停止時にDBをクローズする
 func closeDBWithSysCall() {
 	sig := make(chan os.Signal, 1)
