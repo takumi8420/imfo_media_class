@@ -20,7 +20,7 @@ const IsThereAccount: React.FC = () => {
 
         // uidが存在する場合のみGETリクエストを送る
         if (uid) {
-          const getResponse = await fetch("https://hackthon1-rzmhhbabrq-uc.a.run.app/search_user", {
+          const getResponse = await fetch("https://hackthon1-rzmhhbabrq-uc.a.run.app/search_user/${uid}", {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
@@ -40,7 +40,7 @@ const IsThereAccount: React.FC = () => {
           console.error("No uid found in the URL");
         }
       } catch (error) {
-        console.error("can not catch data:", error);
+        console.error("can not catch :", error);
       }
     };
 
