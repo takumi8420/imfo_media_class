@@ -25,6 +25,8 @@ const IsThereAccount: React.FC = () => {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
+              "Access-Control-Request-Methods": "GET, OPTIONS",
+              "Access-Control-Request-Headers": "Content-Type"
             },
           });
 
