@@ -13,7 +13,7 @@ import (
 
 func main() {
 	// ② /userでリクエストされたらnameパラメーターと一致する名前を持つレコードをJSON形式で返す
-	fmt.Print(ok)
+	fmt.Print("ok")
 	
 	http.HandleFunc("/search_user", controller.SearchUserHandler)
 	http.HandleFunc("/register_user", controller.RegisterUserHandler)
