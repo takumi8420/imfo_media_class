@@ -5,10 +5,10 @@ import (
 	"log"
 	"net/http"
 	"slack-like-app/usecase"
+	"strings"
 )
 
 func SearchUserHandler(w http.ResponseWriter, r *http.Request) {
-
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Access-Control-Allow-Methods", "GET, OPTIONS")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
@@ -23,14 +23,24 @@ func SearchUserHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	name := r.URL.Query().Get("name")
-	if name == "" {
-		log.Println("fail: name is empty")
+	// name := r.URL.Query().Get("name")
+	// if name == "" {
+	// 	log.Println("fail: name is empty")
+	// 	w.WriteHeader(http.StatusBadRequest)
+	// 	return
+	// }
+
+	path := r.URL.Path
+	segments := strings.Split(path, "/")
+	uid := segments[len(segments)-1]
+
+	if uid == "" {
+		log.Println("fail: uid is empty")
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
 
-	users, err := usecase.GetUserByName(name)
+	users, err := usecase.GetUserByName(uid)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
