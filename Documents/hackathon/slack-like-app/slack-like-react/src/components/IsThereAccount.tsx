@@ -21,7 +21,7 @@ const IsThereAccount: React.FC = () => {
 
         // uidが存在する場合のみGETリクエストを送る
         if (uid) {
-          const getResponse = await fetch("https://hackthon1-rzmhhbabrq-uc.a.run.app/search_user/${uid}", {
+          const getResponse = await fetch(`https://hackthon1-rzmhhbabrq-uc.a.run.app/search_user/${uid}`, {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
