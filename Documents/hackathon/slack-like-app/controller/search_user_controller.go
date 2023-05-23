@@ -23,16 +23,11 @@ func SearchUserHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// name := r.URL.Query().Get("name")
-	// if name == "" {
-	// 	log.Println("fail: name is empty")
-	// 	w.WriteHeader(http.StatusBadRequest)
-	// 	return
-	// }
 
 	path := r.URL.Path
 	segments := strings.Split(path, "/")
 	uid := segments[len(segments)-1]
+	log.Print(uid)
 
 	if uid == "" {
 		log.Println("fail: uid is empty")

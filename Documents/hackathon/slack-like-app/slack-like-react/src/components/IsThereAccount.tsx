@@ -17,6 +17,7 @@ const IsThereAccount: React.FC = () => {
         // URLからuidを取得
         const url = window.location.href;
         const uid = url.substring(url.lastIndexOf("/") + 1);
+        console.log(uid);
 
         // uidが存在する場合のみGETリクエストを送る
         if (uid) {
