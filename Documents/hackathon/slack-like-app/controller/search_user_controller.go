@@ -2,6 +2,7 @@ package controller
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 	"slack-like-app/usecase"
@@ -27,7 +28,7 @@ func SearchUserHandler(w http.ResponseWriter, r *http.Request) {
 	path := r.URL.Path
 	segments := strings.Split(path, "/")
 	uid := segments[len(segments)-1]
-	log.Print(uid)
+	fmt.Print(uid)
 
 	if uid == "" {
 		log.Println("fail: uid is empty")
