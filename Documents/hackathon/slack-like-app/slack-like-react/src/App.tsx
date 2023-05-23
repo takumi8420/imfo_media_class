@@ -1,14 +1,16 @@
 
 import React, { useState, useEffect } from 'react';
 import './App.css';
-import LoginWithGoogleForm from "./LoginWithGoogleForm";
+import LoginWithGoogleForm from "./components/LoginWithGoogleForm";
 import Contents  from "./Contents";
 import { onAuthStateChanged } from "firebase/auth";
 import { fireAuth } from "./firebase";
-import SignUp from "./components/SignUp"
+import SignUp from "./components/SignUpWithMail"
 import DefaultPage from "./DefaultPage"
-import SignIn from './components/SignIn';
+import SignIn from './components/LogInWithMail';
 import logo from './logo.svg';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 
 
@@ -30,31 +32,31 @@ function App() {
     };
   }, []);
 
-  const [currentPage, setCurrentPage] = useState("defaultPage");
+  // const [currentPage, setCurrentPage] = useState("defaultPage");
 
   let pageContent;
 
-  switch (currentPage) {
-    case "SignUp":
-      pageContent = <SignUp setCurrentPage={setCurrentPage} />;
-      break;
+  // switch (currentPage) {
+  //   case "SignUp":
+  //     pageContent = <SignUp setCurrentPage={setCurrentPage} />;
+  //     break;
 
-    case "LoginWithGoogleForm":
-      pageContent = <LoginWithGoogleForm setCurrentPage={setCurrentPage}/>;
-      break;
+  //   case "LoginWithGoogleForm":
+  //     pageContent = <LoginWithGoogleForm setCurrentPage={setCurrentPage}/>;
+  //     break;
 
-    case "SignIn":
-      pageContent = <SignIn setCurrentPage={setCurrentPage}/>;
-    break;
+  //   case "SignIn":
+  //     pageContent = <SignIn setCurrentPage={setCurrentPage}/>;
+  //   break;
 
-    case "Contents":
-      pageContent = <Contents setCurrentPage={setCurrentPage}/>;
-      break;
+  //   case "Contents":
+  //     pageContent = <Contents setCurrentPage={setCurrentPage}/>;
+  //     break;
 
-    default:
-      pageContent = <DefaultPage setCurrentPage={setCurrentPage}/>;
-      break;
-  }
+  //   default:
+  //     pageContent = <DefaultPage setCurrentPage={setCurrentPage}/>;
+  //     break;
+  // }
 
 
 
@@ -64,32 +66,29 @@ function App() {
     <div>
       <div className="App">
       <header className="App-header">
+      <h1>
+        SLACK-LIKE-APP
+      </h1>
         <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+
+      <div>
+        <Link to="/LoginWithGoogle">
+          <button>Googleアカウントでサインイン</button>
+        </Link>
+
+
+        <Link to="/LogInWithMail">
+          <button>メールアドレスでログイン</button>
+        </Link>
+
+        <Link to="/SignUpWithMail">
+          <button>メールアドレスで登録する</button>
+        </Link>
+      </div>
+      
       </header>
     </div>
-      <div>
-        
-        {currentPage === "defaultPage" && pageContent}
-        {currentPage === "SignUp" && pageContent}
-        {currentPage === "SignIn" && pageContent}
-        {currentPage === "LoginWithGoogleForm" && pageContent}
-      </div>
-      <div>
-        {currentPage === "Contents" && pageContent}
-        {/* {loginUser ? <Contents /> : null} */}
-      </div>
-    </div>
+  </div>
     
   );
 }

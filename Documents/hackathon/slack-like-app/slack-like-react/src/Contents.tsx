@@ -10,7 +10,7 @@ const Contents: React.FC<ContenntProps> = ({ setCurrentPage }) => {
     <div>
       <h2>ようこそ！ログインしました。</h2>
       <p>ここには、ログインユーザーが見ることができるコンテンツが表示されます。</p>
-      <SignOut setCurrentPage={setCurrentPage} />
+      {/* <SignOut setCurrentPage={setCurrentPage} /> */}
     </div>
 
   );
