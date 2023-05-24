@@ -41,7 +41,7 @@ func CloseDB() error {
 	return db.Close()
 }
 
-func FindMessagesById(userId string) (*[]model.MessagesResForGet, error) {
+func FindMessagesById(userId string) ([]model.MessagesResForGet, error) {
 
 	rows, err := db.Query("SELECT messages.message_id, messages.channel_id, messages.user_id, messages.contents, messages.created_at, user.user_name FROM messages LEFT JOIN user ON messages.user_id = user.user_id WHERE messages.user_id = ?", userId)
 	if err != nil {
@@ -52,12 +52,6 @@ func FindMessagesById(userId string) (*[]model.MessagesResForGet, error) {
 	log.Print("読み取れてはいます")
 	log.Print("rows:", rows)
 
-	//var u model.UserResForHTTPGet
-	//if rows.Next() {
-	//	if err := rows.Scan(&u.Id, &u.Name, &u.Age); err != nil {
-	//		return nil, err
-	//	}
-	//}
 	messages := make([]model.MessagesResForGet, 0)
 	for rows.Next() {
 		var u model.MessagesResForGet
@@ -72,8 +66,8 @@ func FindMessagesById(userId string) (*[]model.MessagesResForGet, error) {
 		}
 		messages = append(messages, u)
 	}
-	log.Print("u:", &messages)
-	return &messages, nil
+	log.Print("u:", messages)
+	return messages, nil
 }
 
 func SendMessages(messasge_data model.MessagesReqForPost) (model.MessagesResForPost, error) {
