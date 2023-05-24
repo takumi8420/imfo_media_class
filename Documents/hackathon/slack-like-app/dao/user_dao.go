@@ -134,6 +134,8 @@ func CreateUser(user model.UserReqForHTTPPost, uid string) (model.UserResForHTTP
 	t := time.Now()
 	entropy := ulid.Monotonic(rand.New(rand.NewSource(t.UnixNano())), 0)
 	id := ulid.MustNew(ulid.Timestamp(t), entropy).String()
+	log.Println("uid:", uid)
+	log.Println("id:", id)
 
 	tx, err := db.Begin()
 	if err != nil {
@@ -145,13 +147,19 @@ func CreateUser(user model.UserReqForHTTPPost, uid string) (model.UserResForHTTP
 	if err != nil {
 		return model.UserResForHTTPPost{}, err
 	}
-	fmt.Print("ok user table")
+	log.Println("ok user table")
 
-	_, err = tx.Exec("INSERT INTO user_account (user_id_uid, user_id, firebase_id) VALUES (?, ?, ?)", id, id, uid)
+	t1 := time.Now()
+	entropy1 := ulid.Monotonic(rand.New(rand.NewSource(t1.UnixNano())), 0)
+	id1 := ulid.MustNew(ulid.Timestamp(t), entropy1).String()
+
+	log.Println(id1, id, uid)
+
+	_, err = tx.Exec("INSERT INTO user_account (user_id_uid, user_id, firebase_id) VALUES (?, ?, ?)", id1, id, uid)
 	if err != nil {
 		return model.UserResForHTTPPost{}, err
 	}
-	fmt.Print("ok user_account table")
+	log.Println("ok user_account table")
 
 	if err := tx.Commit(); err != nil {
 		return model.UserResForHTTPPost{}, err

@@ -2,7 +2,6 @@ package controller
 
 import (
 	"encoding/json"
-	"fmt"
 	"io"
 	"log"
 	"net/http"
@@ -24,9 +23,9 @@ func RegisterUserHandler(w http.ResponseWriter, r *http.Request) {
 	path := r.URL.Path
 	segments := strings.Split(path, "/")
 	uid := segments[len(segments)-1]
-	log.Println("path:", segments)
-	fmt.Print(uid)
-	log.Println("uid:", uid)
+	//log.Println("path:", segments)
+	//fmt.Print(uid)
+	//log.Println("uid:", uid)
 
 	if uid == "" {
 		log.Println("fail: uid is empty")
