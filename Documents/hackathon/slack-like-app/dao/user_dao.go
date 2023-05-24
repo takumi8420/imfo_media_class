@@ -37,37 +37,59 @@ func init() {
 	db = _db
 }
 
-func FindUsersByName(uid string) ([]model.UserResForHTTPGet, error) {
-	rows, err := db.Query("SELECT user_name, age, registered_at FROM user WHERE user_id = ?", uid)
+//
+//func FindUsersByName(uid string) ([]model.UserResForHTTPGet, error) {
+//	rows, err := db.Query("SELECT user_name, age, registered_at FROM user_account WHERE firebase_id = ?", uid)
+//	if err != nil {
+//		return nil, err
+//	}
+//	defer rows.Close()
+//
+//	users := make([]model.UserResForHTTPGet, 0)
+//	for rows.Next() {
+//		var u model.UserResForHTTPGet
+//		if err := rows.Scan(&u.User_id, &u.Name, &u.Age); err != nil {
+//			return nil, err
+//		}
+//		users = append(users, u)
+//	}
+//
+//	return users, nil
+//}
+
+func FindUsersByName(uid string) (*model.UserResForHTTPGet, error) {
+	//rows, err := db.Query("SELECT user.user_id, user.user_name, user.age FROM user_account JOIN user ON user_account.user_id = user.id WHERE user_account.firebase_id = ?", uid)
+	//if err != nil {
+	//	return nil, err
+	//}
+	//defer rows.Close()
+	//
+	//users := make([]model.UserResForHTTPGet, 0)
+	//for rows.Next() {
+	//	var u model.UserResForHTTPGet
+	//	if err := rows.Scan(&u.User_id, &u.Name, &u.Age); err != nil {
+	//		return nil, err
+	//	}
+	//	users = append(users, u)
+	//}
+	//
+	//return users, nil
+
+	rows, err := db.Query("SELECT user.user_id, user.user_name, user.age FROM user_account JOIN user ON user_account.user_id = user.id WHERE user_account.firebase_id = ?", uid)
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
 
-	users := make([]model.UserResForHTTPGet, 0)
-	for rows.Next() {
-		var u model.UserResForHTTPGet
+	var u model.UserResForHTTPGet
+	if rows.Next() {
 		if err := rows.Scan(&u.User_id, &u.Name, &u.Age); err != nil {
 			return nil, err
 		}
-		users = append(users, u)
 	}
 
-	return users, nil
+	return &u, nil
 }
-
-// func FindUsersByName(uid int) (*model.UserResForHTTPGet, error) {
-// 	row := db.QueryRow("SELECT user_id, user_name, age, registered_at FROM user WHERE user_id = ?", uid)
-// 	var u model.UserResForHTTPGet
-// 	if err := row.Scan(&u.User_id, &u.Name, &u.Age); err != nil {
-// 		if err == sql.ErrNoRows {
-// 			return nil, nil
-// 		}
-// 		return nil, err
-// 	}
-// 	return &u, nil
-// }
-
 
 func CreateUser(user model.UserReqForHTTPPost) (model.UserResForHTTPPost, error) {
 	t := time.Now()

@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from 'react-router-dom';
 
 interface User {
-  uid: string;
+  user_id: string;
   user_name: string;
   age: number;
-  registered_at: Date;
   // 他のユーザープロパティを追加する場合はここに追記
 }
 
 const IsThereAccount: React.FC = () => {
-  const [userData, setUserData] = useState<User[]>([]);
+  const [userData, setUserData] = useState<User>();
+  const history = useHistory();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -31,12 +32,19 @@ const IsThereAccount: React.FC = () => {
           });
 
           if (getResponse.ok) {
-            const data: User[] = await getResponse.json();
-            const filteredData = data.filter((user) => user.uid === uid);
-            setUserData(filteredData);
-            console.log("Filtered data is:", filteredData);
-            // 取得したデータを使って処理を行う
-          } else {
+            // const data: User[] = await getResponse.json();
+            // const filteredData = data.filter((user) => user.user_id === uid);
+            // setUserData(filteredData);
+            // console.log("Filtered data is:", filteredData);
+            // // 取得したデータを使って処理を行う
+              const data: User = await getResponse.json();
+              // const filteredData = [data].filter((user) => user.user_id === uid);
+              setUserData(data);
+              // console.log("Filtered data is:", filteredData);
+              // 取得したデータを使って処理を行う
+              history.push(`/IsThereAccount/${data.user_id}`);
+          }
+           else {
             console.error("Failed to fetch data:", getResponse.statusText);
           }
         } else {
@@ -52,15 +60,11 @@ const IsThereAccount: React.FC = () => {
 
   return (
     <div>
-      {userData.map((user) => (
-        <div key={user.uid}>
-          <p>UID: {user.uid}</p>
-          <p>User Name: {user.user_name}</p>
-          <p>Age: {user.age}</p>
-          <p>Registered At: {user.registered_at.toLocaleString()}</p>
-        </div>
-      ))}
+          <p>UID:</p>
+        
     </div>
+
+
   );
 };
 
