@@ -7,7 +7,6 @@ import (
 	"net/http"
 	"slack-like-app/dao/channel_dao"
 	"slack-like-app/model"
-	"strings"
 )
 
 func RegisterChannelHandler(w http.ResponseWriter, r *http.Request) {
@@ -19,20 +18,7 @@ func RegisterChannelHandler(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
 		return
 	}
-
-	path := r.URL.Path
-	segments := strings.Split(path, "/")
-	uid := segments[len(segments)-1]
-	//log.Println("path:", segments)
-	//fmt.Print(uid)
-	//log.Println("uid:", uid)
-
-	if uid == "" {
-		log.Println("fail: uid is empty")
-		w.WriteHeader(http.StatusBadRequest)
-		return
-	}
-
+	
 	if r.Method != http.MethodPost {
 		log.Printf("fail: HTTP Method is %s\n", r.Method)
 		w.WriteHeader(http.StatusBadRequest)

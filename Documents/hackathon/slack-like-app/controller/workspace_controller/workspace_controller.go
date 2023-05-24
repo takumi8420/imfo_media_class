@@ -7,7 +7,6 @@ import (
 	"net/http"
 	"slack-like-app/dao/workspace_dao"
 	"slack-like-app/model"
-	"strings"
 )
 
 func RegisterWorkspaceHandler(w http.ResponseWriter, r *http.Request) {
@@ -17,19 +16,6 @@ func RegisterWorkspaceHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Headers", "*")
 	if r.Method == "OPTIONS" {
 		w.WriteHeader(http.StatusOK)
-		return
-	}
-
-	path := r.URL.Path
-	segments := strings.Split(path, "/")
-	uid := segments[len(segments)-1]
-	//log.Println("path:", segments)
-	//fmt.Print(uid)
-	//log.Println("uid:", uid)
-
-	if uid == "" {
-		log.Println("fail: uid is empty")
-		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
 

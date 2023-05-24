@@ -6,11 +6,10 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
+	"slack-like-app/controller/channel_controller"
 	"slack-like-app/controller/messages_controller"
 	"slack-like-app/controller/user_controller"
-	"slack-like-app/controller/channel_controller"
 	"slack-like-app/controller/workspace_controller"
-
 
 	"slack-like-app/dao/message_dao"
 	"syscall"
