@@ -8,7 +8,7 @@ import LogInWithMail from './components/LogInWithMail';
 import reportWebVitals from './reportWebVitals';
 import { Route, BrowserRouter } from 'react-router-dom';
 import IsThereAccount from './components/IsThereAccount';
-
+import RegisterAccount from './components/RegisterAccount';
 
 
 
@@ -24,6 +24,8 @@ ReactDOM.render(
         <Route exact path="/LoginWithMail" component={LogInWithMail} />
         {/* <Route exact path="/UserPage" component={UserPage} /> */}
         <Route path="/IsThereAccount" component={IsThereAccount} />
+        <Route path="/RegisterAccount" component={RegisterAccount} />
+
         
 
 

@@ -1,3 +1,4 @@
+import { strict } from "assert";
 import React, { useState, useEffect } from "react";
 import { useHistory } from 'react-router-dom';
 
@@ -12,7 +13,12 @@ const IsThereAccount: React.FC = () => {
   const [userData, setUserData] = useState<User>();
   const history = useHistory();
 
+
+
+
+
   useEffect(() => {
+
     const fetchData = async () => {
       try {
         // URLからuidを取得
@@ -40,9 +46,15 @@ const IsThereAccount: React.FC = () => {
               const data: User = await getResponse.json();
               // const filteredData = [data].filter((user) => user.user_id === uid);
               setUserData(data);
-              console.log("data is:", data);
+              console.log("data is:", data.id);
               // 取得したデータを使って処理を行う
-              history.push(`/UserPage/${uid}`);
+              if (data && Object.keys(data).length > 0) {
+                history.push(`/UserPage/${uid}`);
+            } else {
+              history.push(`/RegisterAccount/${uid}`);
+                console.log(data);
+            }
+              
           }
            else {
             console.error("Failed to fetch data:", getResponse.statusText);
