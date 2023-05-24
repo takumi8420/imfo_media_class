@@ -12,5 +12,5 @@ type UserReqForHTTPPost struct {
 }
 
 type UserResForHTTPPost struct {
-	Id string `json:"id"`
+	User_id_uid string `json:"user_id_uid"`
 }
