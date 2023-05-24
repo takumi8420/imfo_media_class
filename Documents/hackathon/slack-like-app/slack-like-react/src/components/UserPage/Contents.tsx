@@ -38,6 +38,9 @@ const Contents: React.FC = () => {
         "Content-Type": "application/json",
       },
     });
+    console.log("ここまでおk");
+    console.log();
+
     const data = await getResponse.json();
     console.log("get response is...", data);
     setMessageDatas(data);
