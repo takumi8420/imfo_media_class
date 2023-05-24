@@ -47,10 +47,6 @@ func FindMessagesById(userId string) ([]model.MessagesResForGet, error) {
 	if err != nil {
 		return nil, err
 	}
-	rows1, err := db.Query("SELECT user_name FROM user WHERE user_id = ?", userId)
-	if err != nil {
-		return nil, err
-	}
 
 	defer rows.Close()
 
