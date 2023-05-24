@@ -93,7 +93,7 @@ func CreateUser(user model.UserReqForHTTPPost, uid string) (model.UserResForHTTP
 		return model.UserResForHTTPPost{}, err
 	}
 
-	return model.UserResForHTTPPost{Id: id1}, nil
+	return model.UserResForHTTPPost{Id: id}, nil
 }
 
 func CloseDB() error {
@@ -135,3 +135,33 @@ func FindMesssagesById(user_id string) (*[]model.MessagesResForGet, error) {
 	log.Print("u:", &messages)
 	return &messages, nil
 }
+
+
+func SendMessages(messasge_data model.MessagesReqForPost) (model.MessagesResForPost, error) {
+	t := time.Now()
+	entropy := ulid.Monotonic(rand.New(rand.NewSource(t.UnixNano())), 0)
+	id := ulid.MustNew(ulid.Timestamp(t), entropy).String()
+	// log.Println("uid:", uid)
+	log.Println("id:", id)
+
+	tx, err := db.Begin()
+	if err != nil {
+		return model.MessagesResForPost{}, err
+	}
+	defer tx.Rollback()
+
+	_, err = tx.Exec("INSERT INTO user (message_id, channel_id, user_id, contents, created_at) VALUES (?, ?, ?, ?, ?)", id, messasge_data.ChannelId, messasge_data.UserId, messasge_data.Contents, t)
+	if err != nil {
+		return model.MessagesResForPost{}, err
+	}
+	log.Println("ok user table")
+
+	log.Println(id, messasge_data.ChannelId, messasge_data.UserId, messasge_data.Contents, t)
+
+	if err := tx.Commit(); err != nil {
+		return model.MessagesResForPost{}, err
+	}
+
+	return model.MessagesResForPost{MessageId: id, ChannelId: messasge_data.ChannelId, UserId: messasge_data.UserId, Contents: messasge_data.Contents, CreatedAt: t}, nil
+}
+

@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useHistory } from 'react-router-dom';
 
 interface User {
-  id: string;
+  user_id: string;
   name: string;
   age: number;
   // 他のユーザープロパティを追加する場合はここに追記
@@ -37,13 +37,13 @@ const IsThereAccount: React.FC = () => {
             const data: User = await getResponse.json();
             // const filteredData = [data].filter((user) => user.user_id === uid);
             setUserData(data);
-            console.log("data is:", data.id);
             // 取得したデータを使って処理を行う
             if (data && Object.keys(data).length > 0) {
-              history.push(`/UserPage/${data.id}`);
+              history.push(`/UserPage/${data.user_id}`);
+              console.log("data:",data.user_id);
           } else {
             history.push(`/RegisterAccount/${uid}`);
-              console.log(data);
+              // console.log(data);
           }
             
         }
@@ -64,7 +64,7 @@ const IsThereAccount: React.FC = () => {
 
   return (
     <div>
-          <p>UID: {userData?.id}</p>
+          <p>UID: {userData?.user_id}</p>
     </div>
 
 

@@ -9,7 +9,7 @@ const Contents: React.FC = () => {
   const [data, setData] = useState([]);
   const url = window.location.href;
   const uid = url.substring(url.lastIndexOf("/") + 1);
-  console.log(uid);
+  // console.log(uid);
 
 
   type data ={
@@ -34,6 +34,8 @@ const Contents: React.FC = () => {
     console.log("get response is...", data);
     setData(data);
   };
+
+  
 
   return (
       <div className="slack-page">
