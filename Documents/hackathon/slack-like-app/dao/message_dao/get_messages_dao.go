@@ -41,7 +41,7 @@ func CloseDB() error {
 	return db.Close()
 }
 
-func FindMesssagesById(user_id string) (*[]model.MessagesResForGet, error) {
+func FindMessagesById(user_id string) (*[]model.MessagesResForGet, error) {
 
 	rows, err := db.Query("SELECT messages.message_id, messages.channel_id, messages.user_id, messages.contents, messages.created_at, user.user_name FROM messages LEFT JOIN user ON messages.use_id=user.use_id WHERE user.user_id = ?", user_id)
 	if err != nil {
@@ -87,6 +87,8 @@ func SendMessages(messasge_data model.MessagesReqForPost) (model.MessagesResForP
 		return model.MessagesResForPost{}, err
 	}
 	defer tx.Rollback()
+
+	log.Println("ここからinsert")
 
 	_, err = tx.Exec("INSERT INTO user (message_id, channel_id, user_id, contents, created_at) VALUES (?, ?, ?, ?, ?)", id, messasge_data.ChannelId, messasge_data.UserId, messasge_data.Contents, t)
 	if err != nil {

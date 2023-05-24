@@ -81,7 +81,7 @@ func CreateUser(user model.UserReqForHTTPPost, uid string) (model.UserResForHTTP
 	entropy1 := ulid.Monotonic(rand.New(rand.NewSource(t1.UnixNano())), 0)
 	id1 := ulid.MustNew(ulid.Timestamp(t), entropy1).String()
 
-	log.Println(id1, id, uid)
+	log.Println("id1,id,uid", id1, id, uid)
 
 	_, err = tx.Exec("INSERT INTO user_account (user_id_uid, user_id, firebase_id) VALUES (?, ?, ?)", id1, id, uid)
 	if err != nil {

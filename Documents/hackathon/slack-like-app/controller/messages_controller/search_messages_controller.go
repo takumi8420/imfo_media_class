@@ -34,7 +34,7 @@ func FindMessagesHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	messages, err := message_dao.FindMesssagesById(uid)
+	messages, err := message_dao.FindMessagesById(uid)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
