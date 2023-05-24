@@ -2,6 +2,7 @@ package controller
 
 import (
 	"encoding/json"
+	"fmt"
 	"io"
 	"log"
 	"net/http"
@@ -23,7 +24,8 @@ func RegisterUserHandler(w http.ResponseWriter, r *http.Request) {
 	path := r.URL.Path
 	segments := strings.Split(path, "/")
 	uid := segments[len(segments)-1]
-	log.Print(uid)
+	fmt.Print(uid)
+	log.Println("uid:", uid)
 
 	if uid == "" {
 		log.Println("fail: uid is empty")
@@ -57,12 +59,14 @@ func RegisterUserHandler(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
-
+	log.Println("ここからregister")
 	response, err := usecase.CreateUser(u, uid)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
+
+	log.Println("register終了")
 
 	responseBody, err := json.Marshal(response)
 	if err != nil {
