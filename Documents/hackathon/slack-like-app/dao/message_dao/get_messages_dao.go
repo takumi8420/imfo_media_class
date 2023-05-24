@@ -43,7 +43,7 @@ func CloseDB() error {
 
 func FindMessagesById(userId string) (*[]model.MessagesResForGet, error) {
 
-	rows, err := db.Query("SELECT messages.message_id, messages.channel_id, messages.user_id, messages.contents, messages.created_at, user.user_name FROM messages LEFT JOIN user ON messages.use_id=user.use_id WHERE user.user_id = ?", userId)
+	rows, err := db.Query("SELECT messages.message_id, messages.channel_id, messages.user_id, messages.contents, messages.created_at, user.user_name FROM messages LEFT JOIN user ON messages.use_id=user.user_id WHERE user.user_id = ?", userId)
 	if err != nil {
 		return nil, err
 	}
