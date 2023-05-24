@@ -2,13 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import LoginWithGoogleForm from './components/LoginWithGoogleForm';
-import SignUpWithMail from './components/SignUpWithMail';
-import LogInWithMail from './components/LogInWithMail';
+import LoginWithGoogleForm from './components/LogInWithFirsbase.tsx/LoginWithGoogleForm';
+import SignUpWithMail from './components/LogInWithFirsbase.tsx/SignUpWithMail';
+import LogInWithMail from './components/LogInWithFirsbase.tsx/LogInWithMail';
 import reportWebVitals from './reportWebVitals';
 import { Route, BrowserRouter } from 'react-router-dom';
-import IsThereAccount from './components/IsThereAccount';
-import RegisterAccount from './components/RegisterAccount';
+import IsThereAccount from './components/AccessToDatabase/IsThereAccount';
+import RegisterAccount from './components/AccessToDatabase/RegisterAccount';
+import Contents from './Contents';
 
 
 
@@ -25,6 +26,7 @@ ReactDOM.render(
         {/* <Route exact path="/UserPage" component={UserPage} /> */}
         <Route path="/IsThereAccount" component={IsThereAccount} />
         <Route path="/RegisterAccount" component={RegisterAccount} />
+        <Route path="/UserPage" component={Contents} />
 
         
 

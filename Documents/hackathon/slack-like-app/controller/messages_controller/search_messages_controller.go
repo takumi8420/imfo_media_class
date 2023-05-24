@@ -1,14 +1,14 @@
-package controller
+package messages_controller
 
 import (
 	"encoding/json"
 	"log"
 	"net/http"
-	"slack-like-app/usecase"
+	"slack-like-app/dao"
 	"strings"
 )
 
-func SearchUserHandler(w http.ResponseWriter, r *http.Request) {
+func FindMessagesHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:3000")
 	w.Header().Set("Access-Control-Allow-Methods", "GET, OPTIONS")
 	w.Header().Set("Access-Control-Allow-Headers", "*")
@@ -23,17 +23,10 @@ func SearchUserHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// name := r.URL.Query().Get("name")
-	// if name == "" {
-	// 	log.Println("fail: name is empty")
-	// 	w.WriteHeader(http.StatusBadRequest)
-	// 	return
-	// }
-
 	path := r.URL.Path
 	segments := strings.Split(path, "/")
 	uid := segments[len(segments)-1]
-	log.Print(uid)
+	//log.Print(uid)
 
 	if uid == "" {
 		log.Println("fail: uid is empty")
@@ -41,14 +34,14 @@ func SearchUserHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	user, err := usecase.GetUserByName(uid)
+	messages, err := dao.FindMesssagesById(uid)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
-	log.Print("ok getuserbyname user", user)
+	log.Print("ok getuserbyname user", messages)
 
-	bytes, err := json.Marshal(user)
+	bytes, err := json.Marshal(messages)
 	if err != nil {
 		log.Printf("fail: json.Marshal, %v\n", err)
 		w.WriteHeader(http.StatusInternalServerError)

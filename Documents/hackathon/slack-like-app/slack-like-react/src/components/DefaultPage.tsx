@@ -1,12 +1,12 @@
 
 import React, { useState, useEffect } from 'react';
 import './App.css';
-import LoginWithGoogleForm from "./LoginWithGoogleForm";
+import LoginWithGoogleForm from "./LogInWithFirsbase.tsx/LoginWithGoogleForm";
 import Contents  from "../Contents";
 import { onAuthStateChanged } from "firebase/auth";
 import { fireAuth } from "../firebase";
-import SignUp from "./SignUpWithMail"
-import SignIn from './LogInWithMail';
+import SignUp from "./LogInWithFirsbase.tsx/SignUpWithMail"
+import SignIn from './LogInWithFirsbase.tsx/LogInWithMail';
 import logo from './logo.svg';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Link } from 'react-router-dom';

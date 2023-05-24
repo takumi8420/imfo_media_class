@@ -37,43 +37,7 @@ func init() {
 	db = _db
 }
 
-//
-//func FindUsersByName(uid string) ([]model.UserResForHTTPGet, error) {
-//	rows, err := db.Query("SELECT user_name, age, registered_at FROM user_account WHERE firebase_id = ?", uid)
-//	if err != nil {
-//		return nil, err
-//	}
-//	defer rows.Close()
-//
-//	users := make([]model.UserResForHTTPGet, 0)
-//	for rows.Next() {
-//		var u model.UserResForHTTPGet
-//		if err := rows.Scan(&u.User_id, &u.Name, &u.Age); err != nil {
-//			return nil, err
-//		}
-//		users = append(users, u)
-//	}
-//
-//	return users, nil
-//}
-
 func FindUsersByName(uid string) (*model.UserResForHTTPGet, error) {
-	//rows, err := db.Query("SELECT user.user_id, user.user_name, user.age FROM user_account JOIN user ON user_account.user_id = user.id WHERE user_account.firebase_id = ?", uid)
-	//if err != nil {
-	//	return nil, err
-	//}
-	//defer rows.Close()
-	//
-	//users := make([]model.UserResForHTTPGet, 0)
-	//for rows.Next() {
-	//	var u model.UserResForHTTPGet
-	//	if err := rows.Scan(&u.User_id, &u.Name, &u.Age); err != nil {
-	//		return nil, err
-	//	}
-	//	users = append(users, u)
-	//}
-	//
-	//return users, nil
 
 	rows, err := db.Query("SELECT user.user_id, user.user_name, user.age FROM user_account LEFT JOIN user ON user_account.user_id = user.user_id WHERE user_account.firebase_id = ?", uid)
 	if err != nil {
@@ -93,45 +57,6 @@ func FindUsersByName(uid string) (*model.UserResForHTTPGet, error) {
 	log.Print("u:", &u)
 	return &u, nil
 }
-
-//func CreateUser(user model.UserReqForHTTPPost, uid string) (model.UserResForHTTPPost, error) {
-//	t := time.Now()
-//	entropy := ulid.Monotonic(rand.New(rand.NewSource(t.UnixNano())), 0)
-//	id := ulid.MustNew(ulid.Timestamp(t), entropy).String()
-//
-//	tx, err := db.Begin()
-//	if err != nil {
-//		return model.UserResForHTTPPost{}, err
-//	}
-//	defer tx.Rollback()
-//
-//	_, err = tx.Exec("INSERT INTO user (user_id, user_name, age, registered_at) VALUES (?, ?, ?, ?)", id, user.Name, user.Age, t)
-//	if err != nil {
-//		return model.UserResForHTTPPost{}, err
-//	}
-//
-//	if err := tx.Commit(); err != nil {
-//		return model.UserResForHTTPPost{}, err
-//	}
-//
-//	//ここからuser_id_uidへのアクセス
-//	tx1, err := db.Begin()
-//	if err != nil {
-//		return model.UserResForHTTPPost{}, err
-//	}
-//	defer tx1.Rollback()
-//
-//	_, err = tx1.Exec("INSERT INTO user_account (user_id_uid, user_id, firebase_id) VALUES (?, ?, ?, ?)", id, id, uid, t)
-//	if err != nil {
-//		return model.UserResForHTTPPost{}, err
-//	}
-//
-//	if err := tx1.Commit(); err != nil {
-//		return model.UserResForHTTPPost{}, err
-//	}
-//
-//	return model.UserResForHTTPPost{Id: uid}, nil
-//}
 
 func CreateUser(user model.UserReqForHTTPPost, uid string) (model.UserResForHTTPPost, error) {
 	t := time.Now()
@@ -173,4 +98,40 @@ func CreateUser(user model.UserReqForHTTPPost, uid string) (model.UserResForHTTP
 
 func CloseDB() error {
 	return db.Close()
+}
+
+func FindMesssagesById(user_id string) (*[]model.MessagesResForGet, error) {
+
+	rows, err := db.Query("SELECT messages.message_id, messages.channel_id, messages.user_id, messages.contents, messages.created_at, user.user_name FROM messages LEFT JOIN user ON messages.use_id=user.use_id WHERE user.user_id = ?", user_id)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	log.Print("rows:", rows)
+
+	
+
+	//var u model.UserResForHTTPGet
+	//if rows.Next() {
+	//	if err := rows.Scan(&u.Id, &u.Name, &u.Age); err != nil {
+	//		return nil, err
+	//	}
+	//}
+	messages := make([]model.MessagesResForGet, 0)
+	for rows.Next() {
+		var u model.MessagesResForGet
+		if err := rows.Scan(&u.MessageId, &u.ChannalId, &u.UserId, &u.Contents, &u.CreatedAt); err != nil {
+			log.Printf("fail: rows.Scan, %v\n", err)
+
+			if err := rows.Close(); err != nil { // 500を返して終了するが、その前にrowsのClose処理が必要
+				log.Printf("fail: rows.Close(), %v\n", err)
+			}
+			//w.WriteHeader(http.StatusInternalServerError)
+			//return
+		}
+		messages = append(messages, u)
+	}
+	log.Print("u:", &messages)
+	return &messages, nil
 }

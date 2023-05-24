@@ -1,4 +1,4 @@
-import { fireAuth } from "../firebase";
+import { fireAuth } from "../../firebase";
 import { signOut } from "firebase/auth";
 import React, {useState} from "react"
 

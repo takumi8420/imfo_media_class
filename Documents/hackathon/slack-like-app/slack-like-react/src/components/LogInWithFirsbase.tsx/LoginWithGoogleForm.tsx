@@ -1,5 +1,5 @@
 import { getAuth, signInWithPopup, GoogleAuthProvider, signOut } from "firebase/auth";
-import { fireAuth } from "../firebase";
+import { fireAuth } from "../../firebase";
 import React, {useState} from "react"
 import { useHistory } from 'react-router-dom';
 

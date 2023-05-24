@@ -6,7 +6,8 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
-	"slack-like-app/controller"
+	"slack-like-app/controller/user_controller"
+	"slack-like-app/controller/messages_controller"
 	"slack-like-app/dao"
 	"syscall"
 )
@@ -14,9 +15,10 @@ import (
 func main() {
 	// ② /userでリクエストされたらnameパラメーターと一致する名前を持つレコードをJSON形式で返す
 	fmt.Print("ok")
-	
-	http.HandleFunc("/search_user/", controller.SearchUserHandler)
-	http.HandleFunc("/register_user/", controller.RegisterUserHandler)
+
+	http.HandleFunc("/search_user/", user_controller.SearchUserHandler)
+	http.HandleFunc("/register_user/", user_controller.RegisterUserHandler)
+	http.HandleFunc("/register_user/", messages_controller.FindMessagesHandler)
 
 	// ③ Ctrl+CでHTTPサーバー停止時にDBをクローズする
 	closeDBWithSysCall()

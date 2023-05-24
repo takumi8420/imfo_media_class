@@ -1,10 +1,21 @@
 import { useState } from "react";
+import { useHistory } from 'react-router-dom';
 
 type Props = {
   onSubmit: (name: string, age: number) => void;
 };
 
+
+
+
+
 const RegisterForm = (props: Props) => {
+
+
+  
+
+////////////////////////////////////////////////
+
   const [name, setName] = useState("");
   const [age, setAge] = useState(parseInt(""));
 
