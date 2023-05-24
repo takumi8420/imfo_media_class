@@ -9,7 +9,7 @@ import reportWebVitals from './reportWebVitals';
 import { Route, BrowserRouter } from 'react-router-dom';
 import IsThereAccount from './components/AccessToDatabase/IsThereAccount';
 import RegisterAccount from './components/AccessToDatabase/RegisterAccount';
-import Contents from './Contents';
+import Contents from './components/UserPage/Contents';
 
 
 

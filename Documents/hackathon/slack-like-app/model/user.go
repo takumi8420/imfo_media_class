@@ -44,6 +44,29 @@ type MessagesResForPost struct {
 	UserName string			`json:"user_name"`
 }
 
+type ChannelReqForPost struct{
+	ChannelName string    `json:"channel_name"`
+	WorkspaceId string    `json:"workspace_id"`
+}
+
+type WorkspaceReqForPost struct{
+	WorkspaceName string    `json:"workspace_name"`
+}
+
+
+type ChannelResForPost struct{
+	ChannelId string	 `json:"channel_id"`
+	ChannelName string `json:"channel_name"`
+	WorkspaceId string	`json:"workspace_id"`
+	RegisteredAt time.Time	`json:"registered_at"`
+}
+
+
+type WorkspaceResForPost struct{
+	WorkspaceId string	 `json:"workspace_id"`
+	WorkspaceName string `json:"workspace_name"`
+	RegisteredAt time.Time	`json:"registered_at"`
+}
 
 
 

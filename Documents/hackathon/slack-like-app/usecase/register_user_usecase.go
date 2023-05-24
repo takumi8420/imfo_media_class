@@ -2,7 +2,7 @@ package usecase
 
 import (
 	"errors"
-	"slack-like-app/dao"
+	"slack-like-app/dao/user_dao"
 	"slack-like-app/model"
 )
 
@@ -14,5 +14,5 @@ func CreateUser(user model.UserReqForHTTPPost, uid string) (model.UserResForHTTP
 		return model.UserResForHTTPPost{}, errors.New("fail: range of age")
 	}
 
-	return dao.CreateUser(user, uid)
+	return user_dao.CreateUser(user, uid)
 }

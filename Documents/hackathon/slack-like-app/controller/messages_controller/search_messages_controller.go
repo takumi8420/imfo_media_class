@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
-	"slack-like-app/dao"
+	"slack-like-app/dao/message_dao"
 	"strings"
 )
 
@@ -34,7 +34,7 @@ func FindMessagesHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	messages, err := dao.FindMesssagesById(uid)
+	messages, err := message_dao.FindMesssagesById(uid)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		return

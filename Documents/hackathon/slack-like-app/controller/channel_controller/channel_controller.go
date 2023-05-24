@@ -1,15 +1,16 @@
-package messages_controller
+package channel_controller
 
 import (
 	"encoding/json"
 	"io"
 	"log"
 	"net/http"
-	"slack-like-app/dao/message_dao"
+	"slack-like-app/dao/channel_dao"
 	"slack-like-app/model"
+	"strings"
 )
 
-func SendMessagesHandler(w http.ResponseWriter, r *http.Request) {
+func RegisterChannelHandler(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:3000")
 	w.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS")
@@ -19,18 +20,18 @@ func SendMessagesHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	//path := r.URL.Path
-	//segments := strings.Split(path, "/")
-	//uid := segments[len(segments)-1]
-	////log.Println("path:", segments)
-	////fmt.Print(uid)
-	////log.Println("uid:", uid)
-	//
-	//if uid == "" {
-	//	log.Println("fail: uid is empty")
-	//	w.WriteHeader(http.StatusBadRequest)
-	//	return
-	//}
+	path := r.URL.Path
+	segments := strings.Split(path, "/")
+	uid := segments[len(segments)-1]
+	//log.Println("path:", segments)
+	//fmt.Print(uid)
+	//log.Println("uid:", uid)
+
+	if uid == "" {
+		log.Println("fail: uid is empty")
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
 
 	if r.Method != http.MethodPost {
 		log.Printf("fail: HTTP Method is %s\n", r.Method)
@@ -52,15 +53,15 @@ func SendMessagesHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var u model.MessagesReqForPost
+	var u model.ChannelReqForPost
 	if err := json.Unmarshal(body, &u); err != nil {
 		log.Printf("fail: json.Unmarshal, %v\n", err)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
-	log.Println("ここからregister")
 
-	response, err := message_dao.SendMessages(u)
+	log.Println("ここからregister")
+	response, err := channel_dao.RegisterChannel(u)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		return

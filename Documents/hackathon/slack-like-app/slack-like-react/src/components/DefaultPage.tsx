@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import LoginWithGoogleForm from "./LogInWithFirsbase.tsx/LoginWithGoogleForm";
-import Contents  from "../Contents";
+import Contents  from "./UserPage/Contents";
 import { onAuthStateChanged } from "firebase/auth";
 import { fireAuth } from "../firebase";
 import SignUp from "./LogInWithFirsbase.tsx/SignUpWithMail"

@@ -8,7 +8,11 @@ import (
 	"os/signal"
 	"slack-like-app/controller/messages_controller"
 	"slack-like-app/controller/user_controller"
-	"slack-like-app/dao"
+	"slack-like-app/controller/channel_controller"
+	"slack-like-app/controller/workspace_controller"
+
+
+	"slack-like-app/dao/message_dao"
 	"syscall"
 )
 
@@ -19,7 +23,9 @@ func main() {
 	http.HandleFunc("/search_user/", user_controller.SearchUserHandler)
 	http.HandleFunc("/register_user/", user_controller.RegisterUserHandler)
 	http.HandleFunc("/get_messages/", messages_controller.FindMessagesHandler)
-
+	http.HandleFunc("/send_messages/", messages_controller.SendMessagesHandler)
+	http.HandleFunc("/register_channel/", channel_controller.RegisterChannelHandler)
+	http.HandleFunc("/register_workspace/", workspace_controller.RegisterWorkspaceHandler)
 	// ③ Ctrl+CでHTTPサーバー停止時にDBをクローズする
 	closeDBWithSysCall()
 
@@ -38,7 +44,7 @@ func closeDBWithSysCall() {
 		s := <-sig
 		log.Printf("received syscall, %v", s)
 
-		if err := dao.CloseDB(); err != nil {
+		if err := message_dao.CloseDB(); err != nil {
 			log.Fatal(err)
 		}
 		log.Printf("success: dao.CloseDB()")
