@@ -25,6 +25,8 @@ func main() {
 	http.HandleFunc("/send_messages/", messages_controller.SendMessagesHandler)
 	http.HandleFunc("/register_channel", channel_controller.RegisterChannelHandler)
 	http.HandleFunc("/register_workspace", workspace_controller.RegisterWorkspaceHandler)
+	http.HandleFunc("/register_channel_and_user/", user_controller.RegisterUserAndChannelHandler)
+	http.HandleFunc("/register_workspace_and_user/", user_controller.RegisterUserAndWorkspaceHandler)
 	// ③ Ctrl+CでHTTPサーバー停止時にDBをクローズする
 	closeDBWithSysCall()
 

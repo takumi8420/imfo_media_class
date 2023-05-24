@@ -60,7 +60,7 @@ func FindMessagesById(user_id string) (*[]model.MessagesResForGet, error) {
 	messages := make([]model.MessagesResForGet, 0)
 	for rows.Next() {
 		var u model.MessagesResForGet
-		if err := rows.Scan(&u.MessageId, &u.ChannalId, &u.UserId, &u.Contents, &u.CreatedAt); err != nil {
+		if err := rows.Scan(&u.MessageId, &u.ChannelId, &u.UserId, &u.Contents, &u.CreatedAt); err != nil {
 			log.Printf("fail: rows.Scan, %v\n", err)
 
 			if err := rows.Close(); err != nil { // 500を返して終了するが、その前にrowsのClose処理が必要

@@ -95,3 +95,59 @@ func CreateUser(user model.UserReqForHTTPPost, uid string) (model.UserResForHTTP
 
 	return model.UserResForHTTPPost{Id: id}, nil
 }
+
+func RegisterUserAndChannel(req model.UserAndChannelReqForPost, uid string) (model.UserAndChannelResForPost, error) {
+	t := time.Now()
+	entropy := ulid.Monotonic(rand.New(rand.NewSource(t.UnixNano())), 0)
+	id := ulid.MustNew(ulid.Timestamp(t), entropy).String()
+	log.Println("uid:", uid)
+	log.Println("id:", id)
+
+	tx, err := db.Begin()
+	if err != nil {
+		return model.UserAndChannelResForPost{}, err
+	}
+	defer tx.Rollback()
+
+	_, err = tx.Exec("INSERT INTO channel_members (channel_member_id, channel_id, workspace_id, user_id) VALUES (?, ?, ?, ?)", id, req.ChannelId, req.WorkspaceId, uid)
+	if err != nil {
+		return model.UserAndChannelResForPost{}, err
+	}
+	log.Println("ok user table")
+
+	log.Println("ok user_account table")
+
+	if err := tx.Commit(); err != nil {
+		return model.UserAndChannelResForPost{}, err
+	}
+
+	return model.UserAndChannelResForPost{id, req.ChannelId, req.WorkspaceId, uid}, nil
+}
+
+func RegisterUserAndWorkspace(req model.UserAndWorkplaceReqForPost, uid string) (model.UserAndWorkspaceResForPost, error) {
+	t := time.Now()
+	entropy := ulid.Monotonic(rand.New(rand.NewSource(t.UnixNano())), 0)
+	id := ulid.MustNew(ulid.Timestamp(t), entropy).String()
+	log.Println("uid:", uid)
+	log.Println("id:", id)
+
+	tx, err := db.Begin()
+	if err != nil {
+		return model.UserAndWorkspaceResForPost{}, err
+	}
+	defer tx.Rollback()
+
+	_, err = tx.Exec("INSERT INTO workspace_members (workspace_member_id, workspace_id, user_id, workspace_user_name) VALUES (?, ?, ?, ?)", id, req.WorkspaceId, uid, req.Name)
+	if err != nil {
+		return model.UserAndWorkspaceResForPost{}, err
+	}
+	log.Println("ok user table")
+
+	log.Println("ok user_account table")
+
+	if err := tx.Commit(); err != nil {
+		return model.UserAndWorkspaceResForPost{}, err
+	}
+
+	return model.UserAndWorkspaceResForPost{id, req.WorkspaceId, uid, req.Name}, nil
+}
