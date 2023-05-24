@@ -46,6 +46,7 @@ func SearchUserHandler(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
+	log.Print("ok getuserbyname")
 
 	bytes, err := json.Marshal(users)
 	if err != nil {
@@ -53,6 +54,7 @@ func SearchUserHandler(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
+	log.Print("変換終了")
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(bytes)
 }

@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useHistory } from 'react-router-dom';
 
 interface User {
-  user_id: string;
-  user_name: string;
+  id: string;
+  name: string;
   age: number;
   // 他のユーザープロパティを追加する場合はここに追記
 }
@@ -42,7 +42,7 @@ const IsThereAccount: React.FC = () => {
               setUserData(data);
               // console.log("Filtered data is:", filteredData);
               // 取得したデータを使って処理を行う
-              history.push(`/IsThereAccount/${data.user_id}`);
+              history.push(`/UserPage/${data.id}`);
           }
            else {
             console.error("Failed to fetch data:", getResponse.statusText);
@@ -60,8 +60,7 @@ const IsThereAccount: React.FC = () => {
 
   return (
     <div>
-          <p>UID:</p>
-        
+          <p>UID: {userData?.id}</p>
     </div>
 
 

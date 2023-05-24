@@ -75,19 +75,21 @@ func FindUsersByName(uid string) (*model.UserResForHTTPGet, error) {
 	//
 	//return users, nil
 
-	rows, err := db.Query("SELECT user.user_id, user.user_name, user.age FROM user_account JOIN user ON user_account.user_id = user.id WHERE user_account.firebase_id = ?", uid)
+	rows, err := db.Query("SELECT user.user_id, user.user_name, user.age FROM user_account JOIN user ON user_account.user_id = user.user_id WHERE user_account.firebase_id = ?", uid)
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
 
+	log.Print("rows:", rows)
+
 	var u model.UserResForHTTPGet
 	if rows.Next() {
-		if err := rows.Scan(&u.User_id, &u.Name, &u.Age); err != nil {
+		if err := rows.Scan(&u.Id, &u.Name, &u.Age); err != nil {
 			return nil, err
 		}
 	}
-
+	log.Print("u:", &u)
 	return &u, nil
 }
 
