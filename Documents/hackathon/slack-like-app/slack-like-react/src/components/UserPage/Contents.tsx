@@ -6,8 +6,8 @@ import { useState, useEffect } from "react";
 
 
 const Contents: React.FC = () => {
-  const [messageDatas, setMessageDatas] = useState<messageData[]>([]);
-  const [channelData, setChannelData] = useState<channlData[]>([]);
+  const [messageDatas, setMessageDatas] = useState([]);
+  const [channelData, setChannelData] = useState<channelData[]>([]);
   const [workspaceData, setWorkspaceData] = useState<workspaceData[]>([]);
   const url = window.location.href;
   const uid = url.substring(url.lastIndexOf("/") + 1);
@@ -16,15 +16,15 @@ const Contents: React.FC = () => {
 
   type messageData ={
     messageId: string;
-    channalId: string; 
+    channelId: string; 
     userId:    string;   
     contents:  string;    
     createdAt: Date;
     userName: string;
   }
 
-  type channlData ={
-    channalName: string; 
+  type channelData ={
+    channelName: string; 
   }
 
   type workspaceData ={
