@@ -1,6 +1,6 @@
 import React from "react";
 import './Contents.css';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 
 
@@ -66,6 +66,10 @@ const Contents: React.FC = () => {
     console.log("get response is...", data);
     setWorkspaceData(data);
   };
+
+  useEffect(() => {
+    fetchMessageData();
+  }, []);
 
   
 

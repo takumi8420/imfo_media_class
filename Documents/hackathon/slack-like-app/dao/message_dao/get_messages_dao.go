@@ -41,14 +41,15 @@ func CloseDB() error {
 	return db.Close()
 }
 
-func FindMessagesById(user_id string) (*[]model.MessagesResForGet, error) {
+func FindMessagesById(userId string) (*[]model.MessagesResForGet, error) {
 
-	rows, err := db.Query("SELECT messages.message_id, messages.channel_id, messages.user_id, messages.contents, messages.created_at, user.user_name FROM messages LEFT JOIN user ON messages.use_id=user.use_id WHERE user.user_id = ?", user_id)
+	rows, err := db.Query("SELECT messages.message_id, messages.channel_id, messages.user_id, messages.contents, messages.created_at, user.user_name FROM messages LEFT JOIN user ON messages.use_id=user.use_id WHERE user.user_id = ?", userId)
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
 
+	log.Print("読み取れてはいます")
 	log.Print("rows:", rows)
 
 	//var u model.UserResForHTTPGet

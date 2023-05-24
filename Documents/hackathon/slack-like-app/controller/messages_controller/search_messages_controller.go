@@ -33,6 +33,7 @@ func FindMessagesHandler(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
+	log.Print("uid", uid)
 
 	messages, err := message_dao.FindMessagesById(uid)
 	if err != nil {
