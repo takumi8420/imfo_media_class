@@ -23,8 +23,8 @@ func RegisterUserHandler(w http.ResponseWriter, r *http.Request) {
 
 	path := r.URL.Path
 	segments := strings.Split(path, "/")
-	log.Println("path:", path)
-	uid := segments[len(segments)-2]
+	uid := segments[len(segments)-1]
+	log.Println("path:", segments)
 	fmt.Print(uid)
 	log.Println("uid:", uid)
 
