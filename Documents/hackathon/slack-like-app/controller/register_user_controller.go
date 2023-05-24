@@ -7,15 +7,27 @@ import (
 	"net/http"
 	"slack-like-app/model"
 	"slack-like-app/usecase"
+	"strings"
 )
 
 func RegisterUserHandler(w http.ResponseWriter, r *http.Request) {
-	
+
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Set("Access-Control-Allow-Methods", "GET, OPTIONS")
+	w.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 	if r.Method == "OPTIONS" {
 		w.WriteHeader(http.StatusOK)
+		return
+	}
+
+	path := r.URL.Path
+	segments := strings.Split(path, "/")
+	uid := segments[len(segments)-1]
+	log.Print(uid)
+
+	if uid == "" {
+		log.Println("fail: uid is empty")
+		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
 
@@ -46,7 +58,7 @@ func RegisterUserHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	response, err := usecase.CreateUser(u)
+	response, err := usecase.CreateUser(u, uid)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		return

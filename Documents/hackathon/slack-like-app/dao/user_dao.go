@@ -91,7 +91,7 @@ func FindUsersByName(uid string) (*model.UserResForHTTPGet, error) {
 	return &u, nil
 }
 
-func CreateUser(user model.UserReqForHTTPPost) (model.UserResForHTTPPost, error) {
+func CreateUser(user model.UserReqForHTTPPost, uid string) (model.UserResForHTTPPost, error) {
 	t := time.Now()
 	entropy := ulid.Monotonic(rand.New(rand.NewSource(t.UnixNano())), 0)
 	id := ulid.MustNew(ulid.Timestamp(t), entropy).String()
@@ -102,7 +102,7 @@ func CreateUser(user model.UserReqForHTTPPost) (model.UserResForHTTPPost, error)
 	}
 	defer tx.Rollback()
 
-	_, err = tx.Exec("INSERT INTO user_test (id, name, age) VALUES (?, ?, ?)", id, user.Name, user.Age)
+	_, err = tx.Exec("INSERT INTO user (user_id, user_name, age, registered_at) VALUES (?, ?, ?, ?)", id, user.Name, user.Age, t)
 	if err != nil {
 		return model.UserResForHTTPPost{}, err
 	}
@@ -111,7 +111,18 @@ func CreateUser(user model.UserReqForHTTPPost) (model.UserResForHTTPPost, error)
 		return model.UserResForHTTPPost{}, err
 	}
 
-	return model.UserResForHTTPPost{Id: id}, nil
+	//ここからuser_id_uidへのアクセス
+
+	_, err = tx.Exec("INSERT INTO user_account (user_id_uid, user_id, firebase_id) VALUES (?, ?, ?)", id, id, uid, t)
+	if err != nil {
+		return model.UserResForHTTPPost{}, err
+	}
+
+	if err := tx.Commit(); err != nil {
+		return model.UserResForHTTPPost{}, err
+	}
+
+	return model.UserResForHTTPPost{Id: uid}, nil
 }
 
 func CloseDB() error {

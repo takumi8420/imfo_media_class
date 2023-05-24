@@ -6,7 +6,7 @@ import (
 	"slack-like-app/model"
 )
 
-func CreateUser(user model.UserReqForHTTPPost) (model.UserResForHTTPPost, error) {
+func CreateUser(user model.UserReqForHTTPPost, uid string) (model.UserResForHTTPPost, error) {
 	if len(user.Name) > 50 {
 		return model.UserResForHTTPPost{}, errors.New("fail: length of name")
 	}
@@ -14,5 +14,5 @@ func CreateUser(user model.UserReqForHTTPPost) (model.UserResForHTTPPost, error)
 		return model.UserResForHTTPPost{}, errors.New("fail: range of age")
 	}
 
-	return dao.CreateUser(user)
+	return dao.CreateUser(user, uid)
 }
