@@ -145,11 +145,13 @@ func CreateUser(user model.UserReqForHTTPPost, uid string) (model.UserResForHTTP
 	if err != nil {
 		return model.UserResForHTTPPost{}, err
 	}
+	fmt.Print("ok user table")
 
 	_, err = tx.Exec("INSERT INTO user_account (user_id_uid, user_id, firebase_id) VALUES (?, ?, ?)", id, id, uid)
 	if err != nil {
 		return model.UserResForHTTPPost{}, err
 	}
+	fmt.Print("ok user_account table")
 
 	if err := tx.Commit(); err != nil {
 		return model.UserResForHTTPPost{}, err
