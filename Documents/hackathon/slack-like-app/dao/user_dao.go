@@ -75,7 +75,7 @@ func FindUsersByName(uid string) (*model.UserResForHTTPGet, error) {
 	//
 	//return users, nil
 
-	rows, err := db.Query("SELECT user_id, user_name, age FROM user JOIN user_account ON user.user_id = user_account.user_id  WHERE user_account.firebase_id = ?", uid)
+	rows, err := db.Query("SELECT user_id, user_name, age FROM user LEFT JOIN user_account ON user_account.user_id = user.user_id WHERE user_account.firebase_id = ?", uid)
 	if err != nil {
 		return nil, err
 	}
