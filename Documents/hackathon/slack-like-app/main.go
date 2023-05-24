@@ -6,8 +6,8 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
-	"slack-like-app/controller/user_controller"
 	"slack-like-app/controller/messages_controller"
+	"slack-like-app/controller/user_controller"
 	"slack-like-app/dao"
 	"syscall"
 )
@@ -18,7 +18,7 @@ func main() {
 
 	http.HandleFunc("/search_user/", user_controller.SearchUserHandler)
 	http.HandleFunc("/register_user/", user_controller.RegisterUserHandler)
-	http.HandleFunc("/register_user/", messages_controller.FindMessagesHandler)
+	http.HandleFunc("/get_messages/", messages_controller.FindMessagesHandler)
 
 	// ③ Ctrl+CでHTTPサーバー停止時にDBをクローズする
 	closeDBWithSysCall()

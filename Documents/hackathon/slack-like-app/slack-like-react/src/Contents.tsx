@@ -24,7 +24,7 @@ const Contents: React.FC = () => {
 
 
   const fetchData = async () => {
-    const getResponse = await fetch(`https://hackthon1-rzmhhbabrq-uc.a.run.app/search_user/${uid}`, {
+    const getResponse = await fetch(`https://hackthon1-rzmhhbabrq-uc.a.run.app/get_messages/${uid}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
