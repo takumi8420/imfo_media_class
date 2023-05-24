@@ -91,6 +91,45 @@ func FindUsersByName(uid string) (*model.UserResForHTTPGet, error) {
 	return &u, nil
 }
 
+//func CreateUser(user model.UserReqForHTTPPost, uid string) (model.UserResForHTTPPost, error) {
+//	t := time.Now()
+//	entropy := ulid.Monotonic(rand.New(rand.NewSource(t.UnixNano())), 0)
+//	id := ulid.MustNew(ulid.Timestamp(t), entropy).String()
+//
+//	tx, err := db.Begin()
+//	if err != nil {
+//		return model.UserResForHTTPPost{}, err
+//	}
+//	defer tx.Rollback()
+//
+//	_, err = tx.Exec("INSERT INTO user (user_id, user_name, age, registered_at) VALUES (?, ?, ?, ?)", id, user.Name, user.Age, t)
+//	if err != nil {
+//		return model.UserResForHTTPPost{}, err
+//	}
+//
+//	if err := tx.Commit(); err != nil {
+//		return model.UserResForHTTPPost{}, err
+//	}
+//
+//	//ここからuser_id_uidへのアクセス
+//	tx1, err := db.Begin()
+//	if err != nil {
+//		return model.UserResForHTTPPost{}, err
+//	}
+//	defer tx1.Rollback()
+//
+//	_, err = tx1.Exec("INSERT INTO user_account (user_id_uid, user_id, firebase_id) VALUES (?, ?, ?, ?)", id, id, uid, t)
+//	if err != nil {
+//		return model.UserResForHTTPPost{}, err
+//	}
+//
+//	if err := tx1.Commit(); err != nil {
+//		return model.UserResForHTTPPost{}, err
+//	}
+//
+//	return model.UserResForHTTPPost{Id: uid}, nil
+//}
+
 func CreateUser(user model.UserReqForHTTPPost, uid string) (model.UserResForHTTPPost, error) {
 	t := time.Now()
 	entropy := ulid.Monotonic(rand.New(rand.NewSource(t.UnixNano())), 0)
@@ -107,23 +146,12 @@ func CreateUser(user model.UserReqForHTTPPost, uid string) (model.UserResForHTTP
 		return model.UserResForHTTPPost{}, err
 	}
 
+	_, err = tx.Exec("INSERT INTO user_account (user_id_uid, user_id, firebase_id) VALUES (?, ?, ?)", id, id, uid)
+	if err != nil {
+		return model.UserResForHTTPPost{}, err
+	}
+
 	if err := tx.Commit(); err != nil {
-		return model.UserResForHTTPPost{}, err
-	}
-
-	//ここからuser_id_uidへのアクセス
-	tx1, err := db.Begin()
-	if err != nil {
-		return model.UserResForHTTPPost{}, err
-	}
-	defer tx1.Rollback()
-
-	_, err = tx1.Exec("INSERT INTO user_account (user_id_uid, user_id, firebase_id) VALUES (?, ?, ?, ?)", id, id, uid, t)
-	if err != nil {
-		return model.UserResForHTTPPost{}, err
-	}
-
-	if err := tx1.Commit(); err != nil {
 		return model.UserResForHTTPPost{}, err
 	}
 
