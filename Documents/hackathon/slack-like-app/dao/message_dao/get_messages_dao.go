@@ -90,7 +90,7 @@ func SendMessages(messasge_data model.MessagesReqForPost) (model.MessagesResForP
 
 	log.Println("ここからinsert")
 
-	_, err = tx.Exec("INSERT INTO user (message_id, channel_id, user_id, contents, created_at) VALUES (?, ?, ?, ?, ?)", id, messasge_data.ChannelId, messasge_data.UserId, messasge_data.Contents, t)
+	_, err = tx.Exec("INSERT INTO messages (message_id, channel_id, user_id, contents, created_at) VALUES (?, ?, ?, ?, ?)", id, messasge_data.ChannelId, messasge_data.UserId, messasge_data.Contents, t)
 	if err != nil {
 		return model.MessagesResForPost{}, err
 	}
