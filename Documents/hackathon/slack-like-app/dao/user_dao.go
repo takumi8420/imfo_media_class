@@ -165,7 +165,7 @@ func CreateUser(user model.UserReqForHTTPPost, uid string) (model.UserResForHTTP
 		return model.UserResForHTTPPost{}, err
 	}
 
-	return model.UserResForHTTPPost{User_id_uid: id1}, nil
+	return model.UserResForHTTPPost{Id: id1}, nil
 }
 
 func CloseDB() error {
