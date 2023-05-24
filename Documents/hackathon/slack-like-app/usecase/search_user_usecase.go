@@ -5,6 +5,6 @@ import (
 	"slack-like-app/model"
 )
 
-func GetUserByName(uid string) ([]model.UserResForHTTPGet, error) {
+func GetUserByName(uid string) (*model.UserResForHTTPGet, error) {
 	return dao.FindUsersByName(uid)
 }
