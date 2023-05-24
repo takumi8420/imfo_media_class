@@ -40,9 +40,9 @@ const IsThereAccount: React.FC = () => {
               const data: User = await getResponse.json();
               // const filteredData = [data].filter((user) => user.user_id === uid);
               setUserData(data);
-              // console.log("Filtered data is:", filteredData);
+              console.log("data is:", data);
               // 取得したデータを使って処理を行う
-              history.push(`/UserPage/${data.id}`);
+              history.push(`/UserPage/${uid}`);
           }
            else {
             console.error("Failed to fetch data:", getResponse.statusText);

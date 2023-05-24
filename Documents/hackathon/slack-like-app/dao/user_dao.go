@@ -89,6 +89,7 @@ func FindUsersByName(uid string) (*model.UserResForHTTPGet, error) {
 			return nil, err
 		}
 	}
+
 	log.Print("u:", &u)
 	return &u, nil
 }

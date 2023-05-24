@@ -41,20 +41,20 @@ func SearchUserHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	users, err := usecase.GetUserByName(uid)
+	user, err := usecase.GetUserByName(uid)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
-	log.Print("ok getuserbyname")
+	log.Print("ok getuserbyname user", user)
 
-	bytes, err := json.Marshal(users)
+	bytes, err := json.Marshal(user)
 	if err != nil {
 		log.Printf("fail: json.Marshal, %v\n", err)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
-	log.Print("変換終了")
+	log.Print("変換終了 bytes", bytes)
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(bytes)
 }

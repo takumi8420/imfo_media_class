@@ -1,8 +1,8 @@
 package model
 
 type UserResForHTTPGet struct {
-	Id   string `json:"id"`
-	Name string `json:"name"`
+	Id   string `json:"user_id"`
+	Name string `json:"user_name"`
 	Age  int    `json:"age"`
 }
 
