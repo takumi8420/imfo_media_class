@@ -112,13 +112,18 @@ func CreateUser(user model.UserReqForHTTPPost, uid string) (model.UserResForHTTP
 	}
 
 	//ここからuser_id_uidへのアクセス
+	tx1, err := db.Begin()
+	if err != nil {
+		return model.UserResForHTTPPost{}, err
+	}
+	defer tx1.Rollback()
 
-	_, err = tx.Exec("INSERT INTO user_account (user_id_uid, user_id, firebase_id) VALUES (?, ?, ?)", id, id, uid, t)
+	_, err = tx1.Exec("INSERT INTO user_account (user_id_uid, user_id, firebase_id) VALUES (?, ?, ?, ?)", id, id, uid, t)
 	if err != nil {
 		return model.UserResForHTTPPost{}, err
 	}
 
-	if err := tx.Commit(); err != nil {
+	if err := tx1.Commit(); err != nil {
 		return model.UserResForHTTPPost{}, err
 	}
 
