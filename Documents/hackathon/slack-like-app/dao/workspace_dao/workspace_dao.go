@@ -1,4 +1,4 @@
-package worksapce_dao
+package workspace_dao
 
 import (
 	"database/sql"
