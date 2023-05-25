@@ -32,15 +32,13 @@ const Contents: React.FC = () => {
   }
 
   const fetchMessageData = async () => {
-    const getResponse = await fetch(`https://hackthon1-rzmhhbabrq-uc.a.run.app/get_messages/${uid}`, {
+    const getResponse = await fetch(`https://hackthon1-rzmhhbabrq-uc.a.run.app/get_messages_with_channel/${uid}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
     });
     console.log("ここまでおk");
-    console.log();
-
     const data = await getResponse.json();
     console.log("get response is...", data);
     setMessageDatas(data);

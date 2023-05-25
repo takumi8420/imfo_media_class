@@ -73,6 +73,38 @@ func FindMessagesById(userId string) ([]model.MessagesResForGet, error) {
 	return messages, nil
 }
 
+func FindMessagesByChannel(channelId string) ([]model.MessagesResForGet, error) {
+
+	rows, err := db.Query("SELECT user.user_name, messages.message_id, messages.channel_id, messages.user_id, messages.contents, messages.created_at FROM messages LEFT JOIN user ON messages.user_id = user.user_id WHERE messages.channel_id = ?", channelId)
+	if err != nil {
+		return nil, err
+	}
+
+	defer rows.Close()
+
+	log.Print("読み取れてはいます")
+	log.Print("rows:", rows)
+
+	messages := make([]model.MessagesResForGet, 0)
+	var i = -1
+	for rows.Next() {
+		i += 1
+		var u model.MessagesResForGet
+		if err := rows.Scan(&u.UserName, &u.MessageId, &u.ChannelId, &u.UserId, &u.Contents, &u.CreatedAt); err != nil {
+			log.Printf("fail: rows.Scan, %v\n", err)
+
+			if err := rows.Close(); err != nil { // 500を返して終了するが、その前にrowsのClose処理が必要
+				log.Printf("fail: rows.Close(), %v\n", err)
+				//w.WriteHeader(http.StatusInternalServerError)
+				//return
+			}
+		}
+		messages = append(messages, u)
+	}
+	log.Print("u:", messages)
+	return messages, nil
+}
+
 func SendMessages(messasge_data model.MessagesReqForPost) (model.MessagesResForPost, error) {
 	t := time.Now()
 	entropy := ulid.Monotonic(rand.New(rand.NewSource(t.UnixNano())), 0)
