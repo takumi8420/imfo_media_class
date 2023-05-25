@@ -67,14 +67,14 @@ func RegisterWorkspace(workspace_data model.WorkspaceReqForPost) (model.Workspac
 
 func FindWorkspaceByUserId(UId string) (*[]model.WorkspaceResForGetByUserId, error) {
 
-	rows, err := db.Query("SELECT workspace_members_workspace_user_name ,workspace.workspace_id, workspace.workspace_name FROM workspace LEFT JOIN workspace_members ON workspace_members.workspace_id = workspace.workspace_id WHERE workspace_members.user_id = ?", UId)
+	rows, err := db.Query("SELECT workspace_members.workspace_user_name ,workspace.workspace_id, workspace.workspace_name FROM workspace LEFT JOIN workspace_members ON workspace_members.workspace_id = workspace.workspace_id WHERE workspace_members.user_id = ?", UId)
 	if err != nil {
 		return nil, err
 	}
 
 	defer rows.Close()
 
-	log.Print("読み取れてはいます")
+	log.Print("workspace読み取れてはいます")
 	log.Print("rows:", rows)
 
 	workspaces := make([]model.WorkspaceResForGetByUserId, 0)

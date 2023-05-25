@@ -79,7 +79,7 @@ func FindMessagesWithChannelIdHandler(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
-	log.Print("channel_id", channel_id)
+	log.Print("channel_id:", channel_id)
 
 	messages, err := message_dao.FindMessagesByChannel(channel_id)
 	if err != nil {
