@@ -15,12 +15,12 @@ const Contents: React.FC = () => {
 
 
   type messageData ={
+    userName: string;
     messageId: string;
     channelId: string; 
     userId:    string;   
     contents:  string;    
     createdAt: Date;
-    userName: string;
   }
 
   type channelData ={

@@ -40,7 +40,7 @@ func FindMessagesHandler(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
-	log.Print("ok getuserbyname user", messages)
+	log.Print("ok getuserbymessages", messages)
 
 	bytes, err := json.Marshal(messages)
 	if err != nil {
@@ -48,6 +48,7 @@ func FindMessagesHandler(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
+	log.Print("ok bytesofmessages", bytes)
 	log.Print("変換終了 bytes", bytes)
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(bytes)
