@@ -93,13 +93,22 @@ func FindMessagesByChannel(channelId string) ([]model.MessagesResForGet, error) 
 		if err := rows.Scan(&u.UserName, &u.MessageId, &u.ChannelId, &u.UserId, &u.Contents, &u.CreatedAt); err != nil {
 			log.Printf("fail: rows.Scan, %v\n", err)
 
-			if err := rows.Close(); err != nil { // 500を返して終了するが、その前にrowsのClose処理が必要
-				log.Printf("fail: rows.Close(), %v\n", err)
-				//w.WriteHeader(http.StatusInternalServerError)
-				//return
-			}
+			//if err := rows.Close(); err != nil { // 500を返して終了するが、その前にrowsのClose処理が必要
+			//	log.Printf("fail: rows.Close(), %v\n", err)
+			//w.WriteHeader(http.StatusInternalServerError)
+			//return
+			//}
 		}
 		messages = append(messages, u)
+		log.Print("u:", messages)
+	}
+	if err := rows.Err(); err != nil {
+		log.Printf("fail: rows.Err(), %v\n", err)
+		// エラーハンドリングの処理を追加することが望ましいです
+	}
+	if err := rows.Close(); err != nil {
+		log.Printf("fail: rows.Close(), %v\n", err)
+		// エラーハンドリングの処理を追加することが望ましいです
 	}
 	log.Print("u:", messages)
 	return messages, nil

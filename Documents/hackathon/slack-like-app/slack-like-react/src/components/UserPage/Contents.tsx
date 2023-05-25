@@ -32,7 +32,7 @@ const Contents: React.FC = () => {
   }
 
   const fetchMessageData = async () => {
-    const getResponse = await fetch(`https://hackthon1-rzmhhbabrq-uc.a.run.app/get_messages_with_channel/${uid}`, {
+    const getResponse = await fetch(`https://hackthon1-rzmhhbabrq-uc.a.run.app/get_messages_with_channel_id/01H176RMW0FKAPB8R6509H9BJX`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
