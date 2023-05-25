@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 
 
 const Contents: React.FC = () => {
-  const [messageDatas, setMessageDatas] = useState([]);
+  const [messageDatas, setMessageDatas] = useState<messageData[]>([]);
   const [channelData, setChannelData] = useState<channelData[]>([]);
   const [workspaceData, setWorkspaceData] = useState<workspaceData[]>([]);
   const url = window.location.href;
@@ -42,6 +42,7 @@ const Contents: React.FC = () => {
     const data = await getResponse.json();
     console.log("get response is...", data);
     setMessageDatas(data);
+    console.log(messageDatas)
   };
 
   const fetchChannelData = async () => {
@@ -71,6 +72,8 @@ const Contents: React.FC = () => {
   useEffect(() => {
     fetchMessageData();
   }, []);
+
+
 
   
 

@@ -73,7 +73,7 @@ func FindMessagesById(userId string) ([]model.MessagesResForGet, error) {
 	return messages, nil
 }
 
-func FindMessagesByChannel(channelId string) ([]model.MessagesResForGet, error) {
+func FindMessagesByChannel(channelId string) (*[]model.MessagesResForGet, error) {
 
 	rows, err := db.Query("SELECT user.user_name, messages.message_id, messages.channel_id, messages.user_id, messages.contents, messages.created_at FROM messages LEFT JOIN user ON messages.user_id = user.user_id WHERE messages.channel_id = ?", channelId)
 	if err != nil {
@@ -111,7 +111,7 @@ func FindMessagesByChannel(channelId string) ([]model.MessagesResForGet, error) 
 		// エラーハンドリングの処理を追加することが望ましいです
 	}
 	log.Print("u:", messages)
-	return messages, nil
+	return &messages, nil
 }
 
 func SendMessages(messasge_data model.MessagesReqForPost) (model.MessagesResForPost, error) {
