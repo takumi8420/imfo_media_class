@@ -64,3 +64,37 @@ func RegisterChannel(channel_data model.ChannelReqForPost) (model.ChannelResForP
 
 	return model.ChannelResForPost{ChannelId: id, ChannelName: channel_data.ChannelName, WorkspaceId: channel_data.WorkspaceId, RegisteredAt: t}, nil
 }
+
+func FindChannelByWorkspaceId(WId string) (*[]model.ChannelResForGetByWorkspaceId, error) {
+
+	rows, err := db.Query("SELECT channel_id, channel_name FROM channel WHERE workspace_id = ?", WId)
+	if err != nil {
+		return nil, err
+	}
+
+	defer rows.Close()
+
+	log.Print("読み取れてはいます")
+	log.Print("rows:", rows)
+
+	channels := make([]model.ChannelResForGetByWorkspaceId, 0)
+
+	for rows.Next() {
+		var u model.ChannelResForGetByWorkspaceId
+		if err := rows.Scan(&u.ChannelId, &u.ChannelName); err != nil {
+			log.Printf("fail: rows.Scan, %v\n", err)
+		}
+		channels = append(channels, u)
+		log.Print("u:", channels)
+	}
+	if err := rows.Err(); err != nil {
+		log.Printf("fail: rows.Err(), %v\n", err)
+		// エラーハンドリングの処理を追加することが望ましいです
+	}
+	if err := rows.Close(); err != nil {
+		log.Printf("fail: rows.Close(), %v\n", err)
+		// エラーハンドリングの処理を追加することが望ましいです
+	}
+	log.Print("channels:", channels)
+	return &channels, nil
+}

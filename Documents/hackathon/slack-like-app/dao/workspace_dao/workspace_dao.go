@@ -64,3 +64,37 @@ func RegisterWorkspace(workspace_data model.WorkspaceReqForPost) (model.Workspac
 
 	return model.WorkspaceResForPost{WorkspaceId: id, WorkspaceName: workspace_data.WorkspaceName, RegisteredAt: t}, nil
 }
+
+func FindWorkspaceByUserId(UId string) (*[]model.WorkspaceResForGetByUserId, error) {
+
+	rows, err := db.Query("SELECT workspace_members_workspace_user_name ,workspace.workspace_id, workspace.workspace_name FROM workspace LEFT JOIN workspace_members ON workspace_members.workspace_id = workspace.workspace_id WHERE workspace_members.user_id = ?", UId)
+	if err != nil {
+		return nil, err
+	}
+
+	defer rows.Close()
+
+	log.Print("読み取れてはいます")
+	log.Print("rows:", rows)
+
+	workspaces := make([]model.WorkspaceResForGetByUserId, 0)
+
+	for rows.Next() {
+		var u model.WorkspaceResForGetByUserId
+		if err := rows.Scan(&u.WorkspaceUserName, &u.WorkspaceId, &u.WorkspaceName); err != nil {
+			log.Printf("fail: rows.Scan, %v\n", err)
+		}
+		workspaces = append(workspaces, u)
+		log.Print("u:", workspaces)
+	}
+	if err := rows.Err(); err != nil {
+		log.Printf("fail: rows.Err(), %v\n", err)
+		// エラーハンドリングの処理を追加することが望ましいです
+	}
+	if err := rows.Close(); err != nil {
+		log.Printf("fail: rows.Close(), %v\n", err)
+		// エラーハンドリングの処理を追加することが望ましいです
+	}
+	log.Print("channels:", workspaces)
+	return &workspaces, nil
+}

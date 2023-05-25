@@ -36,29 +36,7 @@ function App() {
 
   let pageContent;
 
-  // switch (currentPage) {
-  //   case "SignUp":
-  //     pageContent = <SignUp setCurrentPage={setCurrentPage} />;
-  //     break;
-
-  //   case "LoginWithGoogleForm":
-  //     pageContent = <LoginWithGoogleForm setCurrentPage={setCurrentPage}/>;
-  //     break;
-
-  //   case "SignIn":
-  //     pageContent = <SignIn setCurrentPage={setCurrentPage}/>;
-  //   break;
-
-  //   case "Contents":
-  //     pageContent = <Contents setCurrentPage={setCurrentPage}/>;
-  //     break;
-
-  //   default:
-  //     pageContent = <DefaultPage setCurrentPage={setCurrentPage}/>;
-  //     break;
-  // }
-
-
+ 
 
 
 
