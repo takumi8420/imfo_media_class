@@ -46,6 +46,22 @@ const Contents: React.FC = () => {
     console.log("get response is...", data);
     setMessageDatas(data);
     // console.log(messageDatas[0].contents)
+    
+
+  };
+
+  
+
+  const fetchWorkspaceData = async () => {
+    const getResponse = await fetch(`https://hackthon1-rzmhhbabrq-uc.a.run.app/get_workspace_with_user_id/${uid}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await getResponse.json();
+    console.log("get workspace response is...", data);
+    setWorkspaceData(data);
   };
 
   const fetchChannelData = async () => {
@@ -58,18 +74,6 @@ const Contents: React.FC = () => {
     const data = await getResponse.json();
     console.log("get channel response is...", data);
     setChannelData(data);
-  };
-
-  const fetchWorkspaceData = async () => {
-    const getResponse = await fetch(`https://hackthon1-rzmhhbabrq-uc.a.run.app/get_workspace_with_user_id/${uid}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const data = await getResponse.json();
-    console.log("get workspace response is...", data);
-    setWorkspaceData(data);
   };
 
   useEffect(() => {
@@ -90,7 +94,7 @@ const Contents: React.FC = () => {
             <div className="table">
               {workspaceData.map((data: workspaceData) => (
                 <div key={data.workspace_id} className="workspace-contents">
-                  <p className="element">WorkSpaceName: {data.workspace_name} </p>
+                  <p className="element">{data.workspace_name} </p>
                 </div>
               ))}
             </div>
