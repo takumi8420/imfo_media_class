@@ -114,7 +114,7 @@ func FindMessagesByChannel(channelId string) (*[]model.MessagesResForGet, error)
 	return &messages, nil
 }
 
-func SendMessages(messasgeData model.MessagesReqForPost) (model.MessagesResForPost, error) {
+func SendMessages(messageData model.MessagesReqForPost) (model.MessagesResForPost, error) {
 	t := time.Now()
 	entropy := ulid.Monotonic(rand.New(rand.NewSource(t.UnixNano())), 0)
 	id := ulid.MustNew(ulid.Timestamp(t), entropy).String()
@@ -132,17 +132,17 @@ func SendMessages(messasgeData model.MessagesReqForPost) (model.MessagesResForPo
 	log.Println("ここからinsert")
 	log.Println("insertの内容：")
 
-	_, err = tx.Exec("INSERT INTO message (message_id, channel_id, user_id, contents, created_at, is_edited) VALUES (?, ?, ?, ?, ?, ?)", id, messasgeData.ChannelId, messasgeData.UserId, messasgeData.Contents, t, initialBool)
+	_, err = tx.Exec("INSERT INTO message (message_id, channel_id, user_id, contents, created_at, is_edited) VALUES (?, ?, ?, ?, ?, ?)", id, messageData.ChannelId, messageData.UserId, messageData.Contents, t, initialBool)
 	if err != nil {
 		return model.MessagesResForPost{}, err
 	}
 	log.Println("ok user table")
 
-	log.Println(id, messasgeData.ChannelId, messasgeData.UserId, messasgeData.Contents, t)
+	log.Println(id, messageData.ChannelId, messageData.UserId, messageData.Contents, t)
 
 	if err := tx.Commit(); err != nil {
 		return model.MessagesResForPost{}, err
 	}
 
-	return model.MessagesResForPost{MessageId: id, ChannelId: messasgeData.ChannelId, UserId: messasgeData.UserId, Contents: messasgeData.Contents, CreatedAt: t}, nil
+	return model.MessagesResForPost{MessageId: id, ChannelId: messageData.ChannelId, UserId: messageData.UserId, Contents: messageData.Contents, CreatedAt: t}, nil
 }
