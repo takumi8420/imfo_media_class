@@ -21,6 +21,7 @@ const Contents: React.FC = () => {
     user_id:    string;   
     contents:  string;    
     created_at: Date;
+    is_edited: boolean;
   }
 
   type workspaceData ={
@@ -32,6 +33,8 @@ const Contents: React.FC = () => {
   type channelData ={
     channelName: string; 
   }
+
+  
 
 
   const fetchMessageData = async () => {

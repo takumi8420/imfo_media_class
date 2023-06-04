@@ -75,7 +75,7 @@ func FindMessagesById(userId string) ([]model.MessagesResForGet, error) {
 
 func FindMessagesByChannel(channelId string) (*[]model.MessagesResForGet, error) {
 
-	rows, err := db.Query("SELECT user.user_name, messages.message_id, messages.channel_id, messages.user_id, messages.contents, messages.created_at, message.is_edited FROM messages LEFT JOIN user ON messages.user_id = user.user_id WHERE messages.channel_id = ?", channelId)
+	rows, err := db.Query("SELECT user.user_name, message.message_id, message.channel_id, message.user_id, message.content, message.created_at, message.is_edited FROM message LEFT JOIN user ON message.user_id = user.user_id WHERE message.channel_id = ?", channelId)
 	if err != nil {
 		return nil, err
 	}
