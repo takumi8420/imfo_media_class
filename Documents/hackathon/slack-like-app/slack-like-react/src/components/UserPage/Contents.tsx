@@ -71,6 +71,7 @@ const Contents: React.FC = () => {
   };
 
   const fetchChannelData = async () => {
+    console.log("currentworkspaceは：", currentWorkspaceData?.workspace_id);
     const getResponse = await fetch(`https://hackthon1-rzmhhbabrq-uc.a.run.app/get_channel_with_workspace_id/${currentWorkspaceData?.workspace_id}`, {
       method: "GET",
       headers: {
@@ -82,17 +83,32 @@ const Contents: React.FC = () => {
     setChannelData(data);
   };
 
-  useEffect(() => {
-    fetchWorkspaceData();
-    // workspaceの取得後に適当に一つ選ぶ
+  // useEffect(() => {
+  //   fetchWorkspaceData();
+  //   setCurrentWorkspaceData(workspaceData[0]);
+  //   console.log(currentWorkspaceData)
+  //   fetchChannelData();
+  //   setCurrentChannelData(channelData[0])
+  //   console.log(currentChannelData)
+  //   fetchMessageData();
+  // }, []);
+  
+  const fetchData = async () => {
+    await fetchWorkspaceData();
     setCurrentWorkspaceData(workspaceData[0]);
-    console.log(currentWorkspaceData)
-    fetchChannelData();
-    setCurrentChannelData(channelData[0])
-    console.log(currentChannelData)
-    fetchMessageData();
-  }, []);
+    console.log("currentworkspaceはこれです：",currentWorkspaceData);
 
+    await fetchChannelData();
+    setCurrentChannelData(channelData[0]);
+    console.log(currentChannelData);
+
+    await fetchMessageData();
+  };
+
+  useEffect(() => {
+
+    fetchData();
+  }, []);
 
 
   
