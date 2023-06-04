@@ -130,7 +130,7 @@ func SendMessages(messageData model.MessagesReqForPost) (model.MessagesResForPos
 	initialBool := false
 
 	log.Println("ここからinsert")
-	log.Println("insertの内容：")
+	log.Println("insertの内容：", id, messageData.ChannelId, messageData.UserId, messageData.Contents, t, initialBool)
 
 	_, err = tx.Exec("INSERT INTO message (message_id, channel_id, user_id, contents, created_at, is_edited) VALUES (?, ?, ?, ?, ?, ?)", id, messageData.ChannelId, messageData.UserId, messageData.Contents, t, initialBool)
 	if err != nil {
