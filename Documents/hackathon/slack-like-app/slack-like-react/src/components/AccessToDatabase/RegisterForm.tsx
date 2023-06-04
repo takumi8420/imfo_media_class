@@ -27,25 +27,20 @@ const RegisterForm = (props: Props) => {
         alert("Please enter name");
       return;
     }
-
     if (name.length > 50) {
       alert("Please enter a name shorter than 50 characters");
       return;
     }
-
     if (age < 20 || age > 80) {
       alert("Please enter age between 20 and 80");
       return;
     }
-
     setName("");
     setAge(parseInt(""));
-
   };
 
   return (
     <form style={{ display: "flex", flexDirection:  "column"}} onSubmit={submit}>
-
 
     <div style={{ display: "flex", width: "70%", margin: "10px 20%"}}>
 
@@ -53,8 +48,6 @@ const RegisterForm = (props: Props) => {
       <input type={"text"} value={name} onChange={(e) => setName(e.target.value)} style={{marginRight: "20%" , width: "200px"}}
       ></input>
     </div>
-      
-
       
     <div style={{ display: "flex", width: "70%", margin: "10px 20%"}} >
       <label className = "labelAge" style={{width: "200px", height: "30px", fontSize: "20px", marginLeft: "20%"}}>Age: </label>
