@@ -132,11 +132,10 @@ func SendMessages(messageData model.MessagesReqForPost) (model.MessagesResForPos
 	log.Println("ここからinsert")
 	log.Println("insertの内容：", id, messageData.ChannelId, messageData.UserId, messageData.Contents, t.Format("2006-01-02 15:04:05"), initialBool)
 
-	_, err = tx.Exec("INSERT INTO message (message_id, channel_id, user_id, contents, created_at, is_edited) VALUES (?, ?, ?, ?, ?, ?)", id, messageData.ChannelId, messageData.UserId, messageData.Contents, t.Format("2006-01-02 15:04:05"), initialBool)
+	_, err = tx.Exec("INSERT INTO message (message_id, channel_id, user_id, content, created_at, is_edited) VALUES (?, ?, ?, ?, ?, ?)", id, messageData.ChannelId, messageData.UserId, messageData.Contents, t.Format("2006-01-02 15:04:05"), initialBool)
 	if err != nil {
 		log.Println(err)
 		return model.MessagesResForPost{}, err
-
 	}
 	log.Println("ok user table")
 
