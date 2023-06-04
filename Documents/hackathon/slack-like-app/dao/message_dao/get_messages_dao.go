@@ -127,7 +127,7 @@ func SendMessages(messageData model.MessagesReqForPost) (model.MessagesResForPos
 	}
 	defer tx.Rollback()
 
-	initialBool := false
+	initialBool := 0
 
 	log.Println("ここからinsert")
 	log.Println("insertの内容：", id, messageData.ChannelId, messageData.UserId, messageData.Contents, t, initialBool)
