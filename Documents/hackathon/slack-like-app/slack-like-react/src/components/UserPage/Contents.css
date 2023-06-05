@@ -20,6 +20,15 @@
   flex: 1;
 }
 
+.workspace_table {
+  display: flex; /* 要素を横に並べるために flex を使用 */
+}
+
+.workspace-contents {
+  display: inline-block; /* 要素を横に配置 */
+  margin-right: 10px; /* 要素間の余白（任意の値を指定） */
+}
+
 .sidebar1 {
   width: 120px;
   background-color: darkblue;
