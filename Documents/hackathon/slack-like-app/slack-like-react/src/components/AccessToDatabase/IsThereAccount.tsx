@@ -29,17 +29,23 @@ const IsThereAccount: React.FC = () => {
             "Content-Type": "application/json",
             "Access-Control-Request-Methods": "GET",
             "Access-Control-Request-Headers": "Content-Type"
+            //   "Content-Type": "application/json",
+            
           },
         });
 
         if (getResponse.ok) {
+          console.log("ok")
           // // 取得したデータを使って処理を行う
             const data: User = await getResponse.json();
             // const filteredData = [data].filter((user) => user.user_id === uid);
             setUserData(data);
+            console.log(data)
             // 取得したデータを使って処理を行う
             if (data && Object.keys(data).length > 0) {
+              // console.log("ok"
               history.push(`/UserPage/${data.user_id}`);
+
               console.log("data:",data.user_id);
           } else {
             history.push(`/RegisterAccount/${uid}`);
