@@ -17,8 +17,6 @@ func main() {
 	// ② /userでリクエストされたらnameパラメーターと一致する名前を持つレコードをJSON形式で返す
 	//fmt.Print("ok")
 
-	log.Fatal(http.ListenAndServe(":8000", nil))
-
 	http.HandleFunc("/search_user/", user_controller.SearchUserHandler)
 	http.HandleFunc("/register_user/", user_controller.RegisterUserHandler)
 	http.HandleFunc("/get_messages_with_user_id/", messages_controller.FindMessagesWithUserIdHandler)
