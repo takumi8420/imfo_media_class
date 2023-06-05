@@ -145,5 +145,5 @@ func SendMessages(messageData model.MessagesReqForPost) (model.MessagesResForPos
 		return model.MessagesResForPost{}, err
 	}
 
-	return model.MessagesResForPost{MessageId: id, ChannelId: messageData.ChannelId, UserId: messageData.UserId, Contents: messageData.Contents, CreatedAt: t}, nil
+	return model.MessagesResForPost{MessageId: id, ChannelId: messageData.ChannelId, UserId: messageData.UserId, Contents: messageData.Contents}, nil
 }

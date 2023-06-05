@@ -22,7 +22,7 @@ const Contents: React.FC = () => {
     channel_id: string; 
     user_id:    string;   
     contents:  string;    
-    created_at: Date;
+    created_at: string;
     is_edited: boolean;
   }
 
@@ -145,49 +145,7 @@ const Contents: React.FC = () => {
     console.log(currentWorkspaceData);
   };
 
-  ///////////////////////////////////
 
-  // useEffect(() => {
-  //   const socket = new WebSocket("ws://localhost:8000"); // WebSocketサーバーのURLに適切な値を指定してください
-
-  //   // WebSocket接続時の処理
-  //   socket.onopen = () => {
-  //     console.log("WebSocket connected");
-  //   };
-
-  //   // WebSocketメッセージ受信時の処理
-  //   socket.onmessage = (event) => {
-  //     const data = JSON.parse(event.data);
-  //     // メッセージデータを更新する処理を追加する
-  //   };
-
-  //   // コンポーネントのアンマウント時にWebSocket接続をクローズする
-  //   return () => {
-  //     socket.close();
-  //   };
-  // }, []);
-
-  // const fetchMessageData = async () => {
-  //   // メッセージデータの取得処理...
-
-  //   // WebSocket経由で更新情報を送信
-  //   const socket = new WebSocket("ws://localhost:8000"); // WebSocketサーバーのURLに適切な値を指定してください
-
-  //   socket.onopen = () => {
-  //     console.log("WebSocket connected");
-  //   };
-
-  //   socket.onmessage = (event) => {
-  //     const data = JSON.parse(event.data);
-  //     // メッセージデータを更新する処理を追加する
-  //   };
-
-  //   // WebSocketをクローズする
-  //   socket.close();
-  // };
-
-
-  ////////////////////////////////
 
   useEffect(() => {
     initialFetchChannelData();
@@ -245,7 +203,7 @@ const Contents: React.FC = () => {
                 <div className="chat_table">
                   {messageDatas.map((data: messageData) => (
                     <div key={data.message_id} className="chat-contents">
-                      <p className="element">Name: {data.user_name} <br /> {data.contents}</p>
+                      <p className="element">Name: {data.user_name} <br /> {data.contents} {data.created_at}</p>
                     </div>
                   ))}
                 </div>
