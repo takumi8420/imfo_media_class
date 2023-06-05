@@ -56,7 +56,7 @@ const Contents: React.FC = () => {
       const result = await fetch("https://hackthon1-rzmhhbabrq-uc.a.run.app/send_messages/${uid}",{
         method: "POST",
         headers: {
-          "Contet-Type":"application/json",
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           channel_id: channelId,
@@ -70,7 +70,7 @@ const Contents: React.FC = () => {
       } catch (err) {
         console.error(err);
       }
-
+      fetchMessageData();
     }
 
   // const fetchWorkspaceData = async () => {
