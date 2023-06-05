@@ -47,9 +47,27 @@ const Contents: React.FC = () => {
     console.log("ここまでおk");
     const data = await getResponse.json();
     console.log("get response is...", data);
+
+    if (JSON.stringify(data) !== JSON.stringify(messageDatas)) {
+      setMessageDatas(data);
+    }
+    // console.log(messageDatas[0].contents)
+  };
+
+  const initialfetchMessageData = async () => {
+    const getResponse = await fetch(`https://hackthon1-rzmhhbabrq-uc.a.run.app/get_messages_with_channel_id/${currentChannelData?.channel_id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    console.log("ここまでおk");
+    const data = await getResponse.json();
+    console.log("get response is...", data);
     setMessageDatas(data);
     // console.log(messageDatas[0].contents)
   };
+
 
   const onSendMessage = async (channelId: string, userId: string, message: string) => {
     try{
@@ -127,19 +145,71 @@ const Contents: React.FC = () => {
     console.log(currentWorkspaceData);
   };
 
+  ///////////////////////////////////
+
+  // useEffect(() => {
+  //   const socket = new WebSocket("ws://localhost:8000"); // WebSocketサーバーのURLに適切な値を指定してください
+
+  //   // WebSocket接続時の処理
+  //   socket.onopen = () => {
+  //     console.log("WebSocket connected");
+  //   };
+
+  //   // WebSocketメッセージ受信時の処理
+  //   socket.onmessage = (event) => {
+  //     const data = JSON.parse(event.data);
+  //     // メッセージデータを更新する処理を追加する
+  //   };
+
+  //   // コンポーネントのアンマウント時にWebSocket接続をクローズする
+  //   return () => {
+  //     socket.close();
+  //   };
+  // }, []);
+
+  // const fetchMessageData = async () => {
+  //   // メッセージデータの取得処理...
+
+  //   // WebSocket経由で更新情報を送信
+  //   const socket = new WebSocket("ws://localhost:8000"); // WebSocketサーバーのURLに適切な値を指定してください
+
+  //   socket.onopen = () => {
+  //     console.log("WebSocket connected");
+  //   };
+
+  //   socket.onmessage = (event) => {
+  //     const data = JSON.parse(event.data);
+  //     // メッセージデータを更新する処理を追加する
+  //   };
+
+  //   // WebSocketをクローズする
+  //   socket.close();
+  // };
+
+
+  ////////////////////////////////
+
   useEffect(() => {
     initialFetchChannelData();
     console.log("get workspace response is...", currentWorkspaceData?.workspace_id);
   }, [currentWorkspaceData])
 
   useEffect(() => {
-    fetchMessageData();
+    initialfetchMessageData();
     console.log("get workspace response is...", currentWorkspaceData?.workspace_id);
   }, [currentChannelData])
 
   useEffect(() => {
    initialFetchWorkspaceData();
   }, []);
+
+  useEffect(() => {
+    const intervalId = setInterval(fetchMessageData, 1000);
+
+    return () => clearInterval(intervalId);
+  }, [messageDatas]);
+
+  
 
   return (
       <div className="slack-page">
