@@ -30,7 +30,6 @@ func main() {
 	http.HandleFunc("/register_workspace_and_user/", user_controller.RegisterUserAndWorkspaceHandler)
 	http.HandleFunc("/get_channel_with_workspace_id/", channel_controller.FindChannelWithWorkspaceIdHandler)
 	http.HandleFunc("/get_workspace_with_user_id/", workspace_controller.FindWorkspaceWithUIdHandler)
-	//http.HandleFunc("/ws", websocket_controller.NewWebsocketHandler().Handle)
 
 	// ③ Ctrl+CでHTTPサーバー停止時にDBをクローズする
 	closeDBWithSysCall()
