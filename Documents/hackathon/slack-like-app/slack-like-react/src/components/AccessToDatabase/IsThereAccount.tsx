@@ -64,7 +64,7 @@ const IsThereAccount: React.FC = () => {
 
   return (
     <div>
-          <p>UID: {userData?.user_id}</p>
+          {/* <p>UID: {userData?.user_id}</p> */}
     </div>
 
 

@@ -1,6 +1,7 @@
 import React from "react";
 import './Contents.css';
 import { useState, useEffect } from "react";
+import Form from "./Form";
 
 
 
@@ -49,6 +50,28 @@ const Contents: React.FC = () => {
     setMessageDatas(data);
     // console.log(messageDatas[0].contents)
   };
+
+  const onSendMessage = async (channelId: string, userId: string, message: string) => {
+    try{
+      const result = await fetch("https://hackthon1-rzmhhbabrq-uc.a.run.app/send_messages/${uid}",{
+        method: "POST",
+        headers: {
+          "Contet-Type":"application/json",
+        },
+        body: JSON.stringify({
+          channel_id: channelId,
+          user_id: userId, 
+          contents: message,
+        }),
+      });
+        if (!result.ok) {
+          throw Error(`Failed to create user: ${result.status}`);
+        }
+      } catch (err) {
+        console.error(err);
+      }
+
+    }
 
   // const fetchWorkspaceData = async () => {
   //   const getResponse = await fetch(`https://hackthon1-rzmhhbabrq-uc.a.run.app/get_workspace_with_user_id/${uid}`, {
@@ -158,10 +181,25 @@ const Contents: React.FC = () => {
                 </div>
               </div>   
             </div>
-            <div className="user-list">
+            {/* <div className="user-list">
+              <Form 
+                onSubmit={onSendMessage}
+                channelId={currentChannelData.channel_id}
+                userId={uid}
+              />
               <p>入力欄</p>
+            </div> */}
+              <div className="user-list">
+              <p>入力欄</p>
+                {currentChannelData !== undefined ? (
+                  <Form
+                    onSubmit={onSendMessage}
+                    channelId={currentChannelData.channel_id}
+                    userId={uid}
+                  />
+                ) : null}
+              </div>
             </div>
-          </div>
         </div>
       </div>
   );
