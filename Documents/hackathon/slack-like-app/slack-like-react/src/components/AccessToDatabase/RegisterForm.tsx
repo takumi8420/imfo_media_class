@@ -26,19 +26,19 @@ const RegisterForm = (props: Props) => {
     props.onSubmit(name, age);
       if (!name) {
         alert("Please enter name");
-      return;
-    }
-    if (name.length > 50) {
+        return;
+      }else if(!age){
+        alert("Please enter age");
+        return;
+      }
+    if (name.length > 26) {
       alert("Please enter a name shorter than 50 characters");
-      return;
-    }
-    if (age < 20 || age > 80) {
-      alert("Please enter age between 20 and 80");
       return;
     }
     setName("");
     setAge(parseInt(""));
   };
+  
 
   return (
     // <form style={{ display: "flex", flexDirection:  "column"}} onSubmit={submit}>
