@@ -64,7 +64,7 @@ const Contents: React.FC = () => {
     user_id:    string;   // user_id が同じ人に限り編集が可能になるようにしたい。（バックエンドでそのことを航路したくない。）
     contents:  string;    
     created_at: string;
-    is_edited: boolean;
+    is_edited: number;
     // isMenuOpen: boolean;
   }
 
@@ -90,7 +90,7 @@ const Contents: React.FC = () => {
     const data = await getResponse.json();
     console.log("get response is...", data);
 
-    if (JSON.stringify(data) != JSON.stringify(messageDatas)) {
+    if (JSON.stringify(data) !== JSON.stringify(messageDatas)) {
       console.log("usestate");
       setMessageDatas(data);
     }
@@ -177,7 +177,7 @@ const Contents: React.FC = () => {
         } catch (err) {
           console.error(err);
         }
-        // fetchMessageData();
+        fetchMessageData();
       }
 
 
@@ -269,11 +269,11 @@ const Contents: React.FC = () => {
    initialFetchWorkspaceData();
   }, []);
 
-  // useEffect(() => {
-  //   const intervalId = setInterval(fetchMessageData, 10000);
+  useEffect(() => {
+    const intervalId = setInterval(fetchMessageData, 10000);
 
-  //   return () => clearInterval(intervalId);
-  // }, [messageDatas]);
+    return () => clearInterval(intervalId);
+  }, [messageDatas]);
 
   
 
@@ -320,17 +320,19 @@ const Contents: React.FC = () => {
                         // onMouseEnter={() => handleMenuOpen(data.message_id)} // usestateの値の変更
                         // onMouseLeave={() => handleMenuClose(data.message_id)} // usestateの変更
                         >
-                        {data.user_name} <span className="date">{data.created_at}</span> <br />
+                        {data.user_name} <span className="date">{data.created_at}</span> {data.is_edited == 1 && (
+                          <span className="edited">編集済み</span>)}<br />
                         {data.contents}
 
 
-                   
+                        {uid === data.user_id && (
                           <div className="menu">
                             {/* メニューのコンテンツ */}
                               <div className="editicon">
                                 <CreateIcon onClick={() => {
                                   setSelectedMessageId(data.message_id);
                                   setInputEditValue(data.contents)
+                                  console.log(data.contents)
                                   openModal();
                                 }}/>
                                 <span>編集</span>
@@ -386,7 +388,7 @@ const Contents: React.FC = () => {
 
                                 <Button type={"submit"} variant="contained" endIcon={<SendIcon />} onClick={() => {
                                   console.log("edit用のmessage:", data.message_id)
-                                  onEditMessage(data.message_id, inputEditValue)
+                                  onEditMessage(selectedMessageId, inputEditValue)
                                   closeModal()
                                 }}>
                                   Send
@@ -398,6 +400,7 @@ const Contents: React.FC = () => {
 
 
                             </div>
+                        )}
                         
                       </p>
                     </div>

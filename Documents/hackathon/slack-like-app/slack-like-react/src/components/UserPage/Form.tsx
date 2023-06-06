@@ -27,10 +27,7 @@ const Form = (props: Props) => {
         alert("Please enter name");
       return;
     }
-
-
     setMessageToSendData("");
-
   };
 
   return (
