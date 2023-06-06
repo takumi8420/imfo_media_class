@@ -22,6 +22,8 @@ func main() {
 	http.HandleFunc("/get_messages_with_user_id/", messages_controller.FindMessagesWithUserIdHandler)
 	http.HandleFunc("/get_messages_with_channel_id/", messages_controller.FindMessagesWithChannelIdHandler)
 	http.HandleFunc("/send_messages/", messages_controller.SendMessagesHandler)
+	http.HandleFunc("/edit_messages/", messages_controller.EditMessagesHandler)
+	http.HandleFunc("/delete_messages/", messages_controller.DeleteMessagesHandler)
 	http.HandleFunc("/register_channel", channel_controller.RegisterChannelHandler)
 	http.HandleFunc("/register_workspace", workspace_controller.RegisterWorkspaceHandler)
 	http.HandleFunc("/register_channel_and_user/", user_controller.RegisterUserAndChannelHandler)

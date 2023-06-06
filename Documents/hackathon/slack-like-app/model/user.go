@@ -115,3 +115,25 @@ type ChannelResForGetByWorkspaceId struct {
 	ChannelId   string `json:"channel_id"`
 	//UserName      string `json:"user_name"`
 }
+
+type MessagesReqForDelete struct {
+	MessageId string `json:"message_id"`
+	//Contents  string `json:"contents"`
+	//CreatedAt string `json:"created_at"`
+	//UserName  string `json:"user_name"`
+	//IsEdited  int    `json:"is_edited"`d
+}
+
+type MessagesResForDelete struct {
+	MessageId string `json:"message_id"`
+}
+
+type MessagesReqForEdit struct {
+	MessageId string `json:"message_id"`
+	Contents  string `json:"contents"`
+}
+
+type MessagesResForEdit struct {
+	MessageId string `json:"message_id"`
+	Contents  string `json:"contents"`
+}

@@ -20,7 +20,7 @@ const Contents: React.FC = () => {
     user_name: string;
     message_id: string;
     channel_id: string; 
-    user_id:    string;   
+    user_id:    string;   // user_id が同じ人に限り編集が可能になるようにしたい。（バックエンドでそのことを航路したくない。）
     contents:  string;    
     created_at: string;
     is_edited: boolean;
@@ -162,7 +162,7 @@ const Contents: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    const intervalId = setInterval(fetchMessageData, 1000);
+    const intervalId = setInterval(fetchMessageData, 5000);
 
     return () => clearInterval(intervalId);
   }, [messageDatas]);
@@ -172,9 +172,8 @@ const Contents: React.FC = () => {
   return (
       <div className="slack-page">
 
-        <div className="top-bar">
+        <div className="top-bar" style={{ position: "fixed" }}>
           <div style={{ display: "flex", flexDirection: "column" }}>
-
             <div className="workspace_table">
               {workspaceData.map((data: workspaceData) => (
                 <div key={data.workspace_id} className="workspace-contents">
@@ -182,28 +181,33 @@ const Contents: React.FC = () => {
                 </div>
               ))}
             </div>
-
           </div>
         </div>
+
         <div className="body-contents">
-          
-          <div className="sidebar1">
+          <div className="sidebar1" style={{ position: "fixed" }}>
             {/* サイドバーのコンテンツ */}
             <p>aaa</p>
           </div>
-
+          
           <div className="main-content">
-            <header className="header">
+
+            <header className="header" style={{ position: "fixed"}}>
               <p>現在のチャンネル</p>
                 {/* ヘッダーのコンテンツ */}
             </header>
-            <div className="chat-area">
+
+
+            <div className="chat-area" style={{ overflowY: "scroll" }}>
               {/* チャットエリアのコンテンツ */}
               <div style={{ display: "flex", flexDirection: "column" }}>
                 <div className="chat_table">
                   {messageDatas.map((data: messageData) => (
                     <div key={data.message_id} className="chat-contents">
-                      <p className="element">Name: {data.user_name} <br /> {data.contents} {data.created_at}</p>
+                      <p className="element">
+                      {data.user_name} <span className="date">{data.created_at}</span> <br />
+                      {data.contents}
+                    </p>
                     </div>
                   ))}
                 </div>
@@ -217,8 +221,10 @@ const Contents: React.FC = () => {
               />
               <p>入力欄</p>
             </div> */}
-              <div className="user-list">
-              <p>入力欄</p>
+
+
+
+            <div className="user-list" style={{ position: "fixed" }}>
                 {currentChannelData !== undefined ? (
                   <Form
                     onSubmit={onSendMessage}
@@ -226,8 +232,12 @@ const Contents: React.FC = () => {
                     userId={uid}
                   />
                 ) : null}
-              </div>
             </div>
+
+
+
+          </div>
+
         </div>
       </div>
   );

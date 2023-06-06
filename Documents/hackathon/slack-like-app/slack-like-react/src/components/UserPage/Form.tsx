@@ -1,4 +1,5 @@
 import { useState } from "react";
+import './Form.css';
 
 type Props = {
    onSubmit: (channelId: string, userId: string, message: string) => void;
@@ -32,29 +33,36 @@ const Form = (props: Props) => {
   };
 
   return (
-    <form style={{ display: "flex", flexDirection:  "column"}} onSubmit={submit}>
 
-    
-    <div style={{ display: "flex", width: "70%", margin: "10px 20%"}} >
-      <label className = "labelMessage" style={{width: "200px", height: "30px", fontSize: "20px", marginLeft: "20%"}}>
+    <form style={{ display: "flex", flexDirection:  "column", height: "100%", width: "100%", backgroundColor: "#2f0364"}} className ="message" onSubmit={submit}>
+            <div style={{ flex: "1", backgroundColor: "#148168"}}></div>
 
-      </label>
-      <input
-        type={"text"}
-        // style={{ marginBottom: 20 }}
-        value={messageToSendData}
-        onChange={(e) => {
-          setMessageToSendData(e.target.value)
-        }}
-        style={{marginRight: "20%",width: "200px"}}
-        ></input>
-    </div>
-    <div>
-      <button type={"submit"}  style ={{width: "30vh", height: " 40px"}}>POST</button>
-    </div>
+      <div style={{ display: "flex", flexDirection: "row", width: "100%"}} >
+        {/* <label className = "labelMessage" style={{width: "200px", height: "30px", fontSize: "20px", marginLeft: "20%"}}>
+        </label> */}
+        {/* <p style={{ width: "100vw", height: "30px", margin: "0px"}}>入力欄</p> */}
+
+        <input style ={{ width: "calc(100vw - 200px)", height: "30px", marginBottom: "20px", backgroundColor: "rgba(47, 3, 100, 0.5)", padding: "0px"}}
+          type={"text"}
+          // style={{ marginBottom: 20 }}
+          value={messageToSendData}
+          onChange={(e) => {
+            setMessageToSendData(e.target.value)
+          }}
+          ></input>
+
+        <button type={"submit"}  style ={{width: "auto", height: "30px", backgroundColor: "black", marginLeft: "10px", color: "white"}}>POST</button>
+      </div>
+
+      {/* <div style={{ flex: "1", backgroundColor: "#148168"}}></div> */}
+
+      {/* <div>
+        <button type={"submit"}  style ={{width: "100vw", height: " 30px", paddingTop: "0px", marginBottom: "0px"}}>POST</button>
+      </div> */}
 
     </form>
   );
 };
 
 export default Form;
+
