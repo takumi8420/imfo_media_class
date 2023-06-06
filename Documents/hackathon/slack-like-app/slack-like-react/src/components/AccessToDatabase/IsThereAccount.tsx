@@ -31,14 +31,16 @@ const IsThereAccount: React.FC = () => {
             "Access-Control-Request-Headers": "Content-Type"
           },
         });
-
+        
         if (getResponse.ok) {
           // // 取得したデータを使って処理を行う
             const data: User = await getResponse.json();
             // const filteredData = [data].filter((user) => user.user_id === uid);
+
+            if(data.user_id!=""){
             setUserData(data);
             // 取得したデータを使って処理を行う
-            if (data && Object.keys(data).length > 0) {
+            // if (data && Object.keys(data).length > 0) {
               history.push(`/UserPage/${data.user_id}`);
               console.log("data:",data.user_id);
           } else {

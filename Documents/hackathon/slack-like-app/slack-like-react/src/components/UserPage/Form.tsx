@@ -1,6 +1,4 @@
 import { useState } from "react";
-import './Form.css';
-
 type Props = {
    onSubmit: (channelId: string, userId: string, message: string) => void;
    channelId: string;

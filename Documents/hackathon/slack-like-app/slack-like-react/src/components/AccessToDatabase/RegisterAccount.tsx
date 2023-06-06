@@ -40,6 +40,7 @@ function RegisterAccount(){
           // // 取得したデータを使って処理を行う
             const data: User = await getResponse.json();
             // const filteredData = [data].filter((user) => user.user_id === uid);
+            console.log(data)
             setUserData(data);
             console.log("data is:", data.id);
             // 取得したデータを使って処理を行う
@@ -94,14 +95,18 @@ function RegisterAccount(){
   return (
     <div style={{ display: "flex", flexDirection:  "column"}}>
       <div className="App">
-        <header className="App-header">
+        {/* <header className="App-header" style={{ height: "auto" }}>
           <div>
             <h1>User Register</h1>
           </div>
-        </header>
-        <RegisterForm
-        onSubmit={onSubmit} 
-        />
+        </header> */}
+        <div className="main">
+          <h1>登録してね</h1>
+          <RegisterForm 
+          onSubmit={onSubmit} 
+          />
+        </div>
+        
       </div>
       </div>
   );

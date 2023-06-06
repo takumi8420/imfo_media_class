@@ -24,6 +24,7 @@ const Contents: React.FC = () => {
     contents:  string;    
     created_at: string;
     is_edited: boolean;
+    isMenuOpen: boolean;
   }
 
   type workspaceData ={
@@ -145,6 +146,26 @@ const Contents: React.FC = () => {
     console.log(currentWorkspaceData);
   };
 
+  const handleMenuOpen = (messageId: string) => {
+    const updatedMessageDatas = messageDatas.map((data) => {
+      if (data.message_id === messageId) {
+        return { ...data, isMenuOpen: true };
+      }
+      return data;
+    });
+    setMessageDatas(updatedMessageDatas);
+  };
+
+  const handleMenuClose = (messageId: string) => {
+    const updatedMessageDatas = messageDatas.map((data) => {
+      if (data.message_id === messageId) {
+        return { ...data, isMenuOpen: false };
+      }
+      return data;
+    });
+    setMessageDatas(updatedMessageDatas);
+  };
+
 
 
   useEffect(() => {
@@ -177,7 +198,8 @@ const Contents: React.FC = () => {
             <div className="workspace_table">
               {workspaceData.map((data: workspaceData) => (
                 <div key={data.workspace_id} className="workspace-contents">
-                  <p className="element">{data.workspace_name} </p>
+                  <p className="workspace_element">
+                      {data.workspace_name} </p>
                 </div>
               ))}
             </div>
@@ -201,13 +223,27 @@ const Contents: React.FC = () => {
             <div className="chat-area" style={{ overflowY: "scroll" }}>
               {/* チャットエリアのコンテンツ */}
               <div style={{ display: "flex", flexDirection: "column" }}>
-                <div className="chat_table">
+                <div className="chat_table" >
                   {messageDatas.map((data: messageData) => (
                     <div key={data.message_id} className="chat-contents">
-                      <p className="element">
-                      {data.user_name} <span className="date">{data.created_at}</span> <br />
-                      {data.contents}
-                    </p>
+
+                      <p className="chat_element"                  
+                        onMouseEnter={() => handleMenuOpen(data.message_id)} // handleMenuOpenを呼び出すように修正
+                        onMouseLeave={() => handleMenuClose(data.message_id)} // handleMenuCloseを呼び出すように修正
+                        >
+                        {data.user_name} <span className="date">{data.created_at}</span> <br />
+                        {data.contents}
+
+                        {data.isMenuOpen && (
+                          <div className="menu">
+                            {/* メニューのコンテンツ */}
+                              <p>menu</p>
+                            {/* ... */}
+                          </div>
+                    )}
+                      </p>
+
+                    
                     </div>
                   ))}
                 </div>
