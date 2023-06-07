@@ -19,9 +19,7 @@
   flex: 1;
 }
 
-.workspace_table {
-  display: flex; /* 要素を横に並べるために flex を使用 */
-}
+
 
 .workspace-contents {
   display: inline-block; /* 要素を横に配置 */
@@ -119,3 +117,27 @@
   height: 40px;
 }
 
+.channel_element{
+  height: 60px;
+  width: 110px;
+}
+
+.circle_div{
+  z-index: 3;
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+  border-color: #000;
+  background-color: #0da42c;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 30px;
+  margin-top: 20px;
+  border-style: solid;
+}
+
+.workspace_element{
+  height: 40px;
+  width: 110px;
+}

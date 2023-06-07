@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Attributes } from "react";
 import './Contents.css';
 import { useState, useEffect } from "react";
 import Form from "./Form";
@@ -7,8 +7,12 @@ import { Send as SendIcon } from '@mui/icons-material';
 import { Delete as DeleteIcon } from '@mui/icons-material';
 import CreateIcon from '@mui/icons-material/Create';
 import Modal from 'react-modal'
-import { ThemeProvider } from '@mui/material/styles';
 import { TextField } from '@mui/material';
+import { Icon } from '@mui/material';
+import { IconButton } from '@mui/material';
+import { Clear } from '@mui/icons-material';
+import BuildIcon from '@mui/icons-material/Build';
+
 
 
 
@@ -25,6 +29,7 @@ const Contents: React.FC = () => {
   const [currentWorkspaceData, setCurrentWorkspaceData] = useState<workspaceData>();
 
   const [selectedMessageId, setSelectedMessageId] = useState("");
+  const [selectedWorkspaceId, setselectedWorkspaceId] = useState("");
 
 // urlの取得
   const url = window.location.href;
@@ -35,6 +40,7 @@ const Contents: React.FC = () => {
   const [messageToEdit, setMessageToEdit] = useState("");
 
   const [showModal, setShowModal] = useState(false);
+  const [showModalToCreateChannel, setShowModalToCreateChannel] = useState(false);
 
 
   // modalの使用
@@ -46,15 +52,17 @@ const Contents: React.FC = () => {
     setShowModal(false);
   };
 
+  const closeModalToCreateChannel = () => {
+    setShowModalToCreateChannel(false);
+  };
 
-  // const handleEditClick = () => {
-  //   setIsEditing(true);
-  // };
-  // const handleClose = () => {
-  //   setIsEditing(false);
-  // };
+  const openModalToCreateChannel = () => {
+    setShowModalToCreateChannel(true);
+  };
 
   const [inputEditValue, setInputEditValue] = useState("");
+  const [inputChannelName, setInputChannelName] = useState("");
+  const [inputWorkspaceName, setInputWorkspaceName] = useState("");
 
 
   type messageData ={
@@ -78,38 +86,6 @@ const Contents: React.FC = () => {
     channel_id: string;
     channel_name: string; 
   }
-
-  const fetchMessageData = async () => {
-    const getResponse = await fetch(`https://hackthon1-rzmhhbabrq-uc.a.run.app/get_messages_with_channel_id/${currentChannelData?.channel_id}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    console.log("ここまでおk");
-    const data = await getResponse.json();
-    console.log("get response is...", data);
-
-    if (JSON.stringify(data) !== JSON.stringify(messageDatas)) {
-      console.log("usestate");
-      setMessageDatas(data);
-    }
-    // console.log(messageDatas[0].contents)
-  };
-
-  const initialfetchMessageData = async () => {
-    const getResponse = await fetch(`https://hackthon1-rzmhhbabrq-uc.a.run.app/get_messages_with_channel_id/${currentChannelData?.channel_id}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    console.log("ここまでおk");
-    const data = await getResponse.json();
-    console.log("get response is...", data);
-    setMessageDatas(data);
-    // console.log(messageDatas[0].contents)
-  };
 
 
     // メッセージの削除
@@ -157,6 +133,26 @@ const Contents: React.FC = () => {
       fetchMessageData();
     }
 
+    const onRegisterChannel = async (channelName:string, workspaceId: string) => {
+      try{
+        const result = await fetch("https://hackthon1-rzmhhbabrq-uc.a.run.app//register_channel/${uid}",{
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            channel_name: channelName,
+            workspace_id: workspaceId,
+          }),
+        });
+          if (!result.ok) {
+            throw Error(`Failed to create channel: ${result.status}`);
+          }
+        } catch (err) {
+          console.error(err);
+        }
+      }
+
     // 編集の送信
     const onEditMessage = async (messageId: string, content: string) => {
       try{
@@ -197,6 +193,10 @@ const Contents: React.FC = () => {
     // console.log(currentChannelData);
   };
 
+
+
+
+
   // workspaceの取得
   const initialFetchWorkspaceData = async () => {
     const getResponse = await fetch(`https://hackthon1-rzmhhbabrq-uc.a.run.app/get_workspace_with_user_id/${uid}`, {
@@ -212,46 +212,6 @@ const Contents: React.FC = () => {
     console.log(currentWorkspaceData);
   };
 
-
-  // // 編集画面が開かれる
-  // const handleMenuOpen = (messageId: string) => {
-  //   const updatedMessageDatas = messageDatas.map((data) => {
-  //     if (data.message_id === messageId) {
-  //       setMessageToEdit(data.contents)
-  //       return { ...data, isMenuOpen: true };  //  該当のmessageのisMenuOpenの値をtrueに変更する。
-  //     }
-  //     return;
-  //   });
-  // };
-
-  // const handleMenuClose = (messageId: string) => {
-  //   const updatedMessageDatas = messageDatas.map((data) => {
-  //     if (data.message_id === messageId) {
-  //       return { ...data, isMenuOpen: false }; // 該当のmessageのisMenuOpenの値をfalseに変更。
-  //     }
-  //     return;
-  //   });
-  // };
-
-  // const handleEditOpen = (messageId: string, content: String) => {
-  //   const updatedMessageDatas = messageDatas.map((data) => {
-  //     if (data.message_id === messageId) {
-  //       return { ...data, isMenuOpen: true };
-  //     }
-  //     return data;
-  //   });
-  //   setMessageDatas(updatedMessageDatas);
-  // };
-
-  // const handleEditClose = (messageId: string) => {
-  //   const updatedMessageDatas = messageDatas.map((data) => {
-  //     if (data.message_id === messageId) {
-  //       return { ...data, isMenuOpen: false };
-  //     }
-  //     return data;
-  //   });
-  //   setMessageDatas(updatedMessageDatas);
-  // };
 
 
 
@@ -269,12 +229,83 @@ const Contents: React.FC = () => {
    initialFetchWorkspaceData();
   }, []);
 
-  useEffect(() => {
-    const intervalId = setInterval(fetchMessageData, 10000);
+  // useEffect(() => {
+  //   const intervalId = setInterval(fetchMessageData, 10000);
 
-    return () => clearInterval(intervalId);
-  }, [messageDatas]);
+  //   return () => clearInterval(intervalId);
+  // }, [messageDatas]);
 
+  const fetchChannelData = async (workspaceId: string) => {
+    console.log("currentworkspaceは:", currentWorkspaceData?.workspace_id);
+    const getResponse = await fetch(`https://hackthon1-rzmhhbabrq-uc.a.run.app/get_channel_with_workspace_id/${workspaceId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await getResponse.json();
+    console.log("get channel response is...", data);
+    setChannelData(data);
+    setCurrentChannelData(data[0]);
+  };
+
+  const fetchMessageData = async () => {
+    const getResponse = await fetch(`https://hackthon1-rzmhhbabrq-uc.a.run.app/get_messages_with_channel_id/${currentChannelData?.channel_id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    console.log("ここまでおk");
+    const data = await getResponse.json();
+    console.log("get response is...", data);
+
+    if (JSON.stringify(data) !== JSON.stringify(messageDatas)) {
+      console.log("usestate");
+      setMessageDatas(data);
+    }
+    // console.log(messageDatas[0].contents)
+  };
+
+  const initialfetchMessageData = async () => {
+    const getResponse = await fetch(`https://hackthon1-rzmhhbabrq-uc.a.run.app/get_messages_with_channel_id/${currentChannelData?.channel_id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    console.log("ここまでおk");
+    const data = await getResponse.json();
+    console.log("get response is...", data);
+    setMessageDatas(data);
+  }
+
+  const changeWorksapce = async (data: workspaceData) => {
+    setCurrentWorkspaceData(data);
+    const getResponse1 = await fetch(`https://hackthon1-rzmhhbabrq-uc.a.run.app/get_channel_with_workspace_id/${data.workspace_id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const channelData: channelData[] = await getResponse1.json();
+    console.log("get channel response is...", channelData);
+    setCurrentChannelData(channelData[0]);
+    setChannelData(channelData);
+    console.log("currentchannelは", channelData[0].channel_id);
+
+
+    const getResponse2 = await fetch(`https://hackthon1-rzmhhbabrq-uc.a.run.app/get_messages_with_channel_id/${channelData[0].channel_id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    console.log("ここまでおk");
+    const messageData = await getResponse2.json();
+    console.log("get response is...", messageData);
+    setMessageDatas(messageData);
+  }
   
 
   return (
@@ -282,11 +313,14 @@ const Contents: React.FC = () => {
 
         <div className="top-bar" style={{ position: "fixed" }}>
           <div style={{ display: "flex", flexDirection: "column" }}>
-            <div className="workspace_table">
+            <div className="workspace_table" style={{ display: "flex", flexDirection: "row" }}>
               {workspaceData.map((data: workspaceData) => (
                 <div key={data.workspace_id} className="workspace-contents">
-                  <p className="workspace_element">
-                      {data.workspace_name} </p>
+                      <Button variant="contained" className="workspace_element" style={{ fontSize: '8px', marginTop:'10px' }} onClick={() => {
+                      changeWorksapce(data);
+                }}>
+                    {data.workspace_name}
+                  </Button>
                 </div>
               ))}
             </div>
@@ -296,7 +330,71 @@ const Contents: React.FC = () => {
         <div className="body-contents">
           <div className="sidebar1" style={{ position: "fixed" }}>
             {/* サイドバーのコンテンツ */}
-            <p>aaa</p>
+            <div style={{ display: "flex", flexDirection: "column" }}></div>
+            {channelData.map((data: channelData) => (
+                <div key={data.channel_id} className="channel-contents">
+                  <Button variant="contained" className="channel_element" style={{ fontSize: '8px', margin:'5px' }} onClick={() => {
+                      setCurrentChannelData(data);
+                      fetchMessageData();
+                  }}>
+                    {data.channel_name}
+                  </Button>
+                </div>
+              ))}
+              
+      
+             <button className="circle_div" onClick={()=>{
+                if(currentWorkspaceData != undefined){
+                  setselectedWorkspaceId(currentWorkspaceData.workspace_id)};
+                  openModalToCreateChannel();
+             }}>十</button>
+
+<Modal
+                                contentLabel="Example Modal"
+                                isOpen={showModalToCreateChannel}
+                                style={{
+                                  overlay: {
+                                    position: 'fixed',
+                                    top: 0,
+                                    left: 0,
+                                    right: 0,
+                                    bottom: 0,
+                                    backgroundColor: 'rgba(0, 0, 0, 0)' // モーダルの背景色や透明度を指定する場合はここで設定
+                                  },
+                                  content: {
+                                    position: 'absolute',
+                                    top: '50%',
+                                    left: '50%',
+                                    transform: 'translate(-50%, -50%)',
+                                    width: '300px', // モーダルの幅を指定
+                                    padding: '20px', // モーダルの内側の余白を指定
+                                    backgroundColor: 'darkblue', // モーダルの背景色を指定
+                                    borderRadius: '4px', // モーダルの角の丸みを指定
+                                    borderColor: 'white'
+                                  }
+                                }}>                               
+                                <button onClick={closeModalToCreateChannel}>close</button>             
+                                <form>
+                                <TextField id="outlined-basic" label="Outlined" variant="outlined" sx={{
+                                  backgroundColor: 'lightblue',
+                                }} 
+                                value = {inputChannelName} 
+                                onChange={(e) => {
+                                  setInputChannelName(e.target.value)
+                                }}
+                                />
+                                <Button type={"submit"} variant="contained" endIcon={<SendIcon />} onClick={() => {
+                                  onRegisterChannel(inputChannelName, selectedWorkspaceId);
+                                  closeModal();
+                                }}>
+                                  Register
+                                </Button>
+                                </form>
+                              </Modal>
+
+
+              
+
           </div>
           
           <div className="main-content">
@@ -316,10 +414,7 @@ const Contents: React.FC = () => {
                   {messageDatas.map((data: messageData) => (
                     <div key={data.message_id} className="chat-contents">
 
-                      <p className="chat_element"                  
-                        // onMouseEnter={() => handleMenuOpen(data.message_id)} // usestateの値の変更
-                        // onMouseLeave={() => handleMenuClose(data.message_id)} // usestateの変更
-                        >
+                      <p className="chat_element">
                         {data.user_name} <span className="date">{data.created_at}</span> {data.is_edited == 1 && (
                           <span className="edited">編集済み</span>)}<br />
                         {data.contents}
@@ -369,14 +464,9 @@ const Contents: React.FC = () => {
                                     borderRadius: '4px', // モーダルの角の丸みを指定
                                     borderColor: 'white'
                                   }
-                                }}
-                                
-                                >
-                                
-                                <button onClick={closeModal}>close</button>
-                                
+                                }}>                               
+                                <button onClick={closeModal}>close</button>             
                                 <form>
-                                  
                                 <TextField id="outlined-basic" label="Outlined" variant="outlined" sx={{
                                   backgroundColor: 'lightblue',
                                 }} 
@@ -385,7 +475,6 @@ const Contents: React.FC = () => {
                                   setInputEditValue(e.target.value)
                                 }}
                                 />
-
                                 <Button type={"submit"} variant="contained" endIcon={<SendIcon />} onClick={() => {
                                   console.log("edit用のmessage:", data.message_id)
                                   onEditMessage(selectedMessageId, inputEditValue)
@@ -393,8 +482,6 @@ const Contents: React.FC = () => {
                                 }}>
                                   Send
                                 </Button>
-
-
                                 </form>
                               </Modal>
 

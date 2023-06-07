@@ -13,7 +13,6 @@ type Props = {
 // };
 
 const Form = (props: Props) => {
-  const [currentChannelId, setCurrentChannelId] = useState(props.channelId);
   const [messageToSendData, setMessageToSendData] = useState("")
   const uid = props.userId
 
@@ -22,7 +21,7 @@ const Form = (props: Props) => {
   const submit = async(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // props.onSubmit(e);
-    props.onSubmit(currentChannelId, uid, messageToSendData);
+    props.onSubmit(props.channelId, uid, messageToSendData);
       if (!messageToSendData) {
         alert("Please enter name");
       return;
@@ -48,18 +47,12 @@ const Form = (props: Props) => {
             setMessageToSendData(e.target.value)
           }}
           ></input>
-{/* 
-        <button type={"submit"}  style ={{width: "auto", height: "30px", backgroundColor: "black", marginLeft: "10px", color: "white"}}>POST</button> */}
+
       </div>
       <Button type={"submit"} variant="contained" endIcon={<SendIcon />}>
         Send
       </Button>
 
-      {/* <div style={{ flex: "1", backgroundColor: "#148168"}}></div> */}
-
-      {/* <div>
-        <button type={"submit"}  style ={{width: "100vw", height: " 30px", paddingTop: "0px", marginBottom: "0px"}}>POST</button>
-      </div> */}
 
     </form>
   );
