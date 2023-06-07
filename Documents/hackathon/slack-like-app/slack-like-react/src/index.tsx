@@ -24,7 +24,6 @@ ReactDOM.render(
         <Route exact path="/LoginWithGoogle" component={LoginWithGoogleForm} />
         <Route exact path="/SignUpWithMail" component={SignUpWithMail} />
         <Route exact path="/LoginWithMail" component={LogInWithMail} />
-        {/* <Route exact path="/UserPage" component={UserPage} /> */}
         <Route path="/IsThereAccount" component={IsThereAccount} />
         <Route path="/RegisterAccount" component={RegisterAccount} />
         <Route path="/UserPage" component={Contents} />
