@@ -18,7 +18,7 @@ import MenuItem from '@mui/base/MenuItem';
 import Setting from "./compo/setting";
 import BasicButtons from "./compo/addChannelIcon";
 import ToggleButtonsMultiple from "./compo/inputFormOption"
-
+import { useHistory } from 'react-router-dom';
 
 
 
@@ -26,6 +26,7 @@ import ToggleButtonsMultiple from "./compo/inputFormOption"
 const Contents: React.FC = () => {
   // const location = useLocation();
   // const thisWorkspace = location.state && location.state.currentWorkspace;
+  const history = useHistory();
 
   const [messageDatas, setMessageDatas] = useState<messageData[]>([]);
 
@@ -50,6 +51,7 @@ const Contents: React.FC = () => {
 
   const [showModal, setShowModal] = useState(false);
   const [showModalToCreateChannel, setShowModalToCreateChannel] = useState(false);
+  const [showModalToCreateWorkspace, setShowModalToCreateWorkspace] = useState(false);
 
 
 
@@ -69,6 +71,15 @@ const Contents: React.FC = () => {
 
   const openModalToCreateChannel = () => {
     setShowModalToCreateChannel(true);
+  };
+
+
+  const closeModalToCreateWorksoace = () => {
+    setShowModalToCreateWorkspace(false);
+  };
+
+  const openModalToCreateWorksoace = () => {
+    setShowModalToCreateWorkspace(true);
   };
 
   const [inputEditValue, setInputEditValue] = useState("");
@@ -96,6 +107,14 @@ const Contents: React.FC = () => {
   type channelData ={
     channel_id: string;
     channel_name: string; 
+  }
+
+  const setEditUserName = async (uid: string)=>{
+    history.push({
+      pathname: `/EditUserName/${uid}`,
+      // state: { currentWorkspace: [currentWorkspace] },
+      // history.push(`//${uid}`);
+    });
   }
 
 
@@ -361,7 +380,11 @@ const Contents: React.FC = () => {
 
 
              <div className="MenuIcon">
-              <Setting />
+              <Setting 
+                setShowModalToCreateWorkspace={setShowModalToCreateWorkspace}
+                setEditUserName={setEditUserName}
+                uid= {uid}
+              />
             </div>
 
 

@@ -14,9 +14,6 @@ type Props = {
    userId: string;
 };
 
-// type Props = {
-//   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
-// };
 
 const Form = (props: Props) => {
   const [messageToSendData, setMessageToSendData] = useState("")

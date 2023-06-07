@@ -10,6 +10,21 @@ import FileCopyIcon from '@mui/icons-material/FileCopy';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
+
+
+type Props = {
+  setShowModalToCreateWorkspace: (value: boolean) => void;
+  setEditUserName: (uid: string) => void;
+  uid: string;
+};
+
+
+type workspaceData ={
+  workspace_user_name: string;
+  workspace_id: string;
+  workspace_name: string; 
+}
+
 const StyledMenu = styled((props: MenuProps) => (
   <Menu
     elevation={0}
@@ -51,7 +66,7 @@ const StyledMenu = styled((props: MenuProps) => (
   },
 }));
 
-export default function CustomizedMenus() {
+export default function CustomizedMenus({ setShowModalToCreateWorkspace, setEditUserName, uid}: Props) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -60,6 +75,14 @@ export default function CustomizedMenus() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const handleEditUserName = () =>{
+    setEditUserName(uid);
+    handleClose();
+  }
+  const handleAddWorkspace = () =>{
+    setShowModalToCreateWorkspace(true);
+    handleClose();
+  }
 
   return (
     <div>
@@ -70,7 +93,9 @@ export default function CustomizedMenus() {
         aria-expanded={open ? 'true' : undefined}
         variant="contained"
         disableElevation
-        onClick={handleClick}
+        onClick={
+          handleClick
+        }
         endIcon={<KeyboardArrowDownIcon />}
       >
         Menu
@@ -84,11 +109,11 @@ export default function CustomizedMenus() {
         open={open}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleClose} disableRipple>
+        <MenuItem onClick={handleEditUserName} disableRipple>
           <EditIcon />
           Edit User Name
         </MenuItem>
-        <MenuItem onClick={handleClose} disableRipple>
+        <MenuItem onClick={handleAddWorkspace} disableRipple>
           <FileCopyIcon />
           New Workspace
         </MenuItem>

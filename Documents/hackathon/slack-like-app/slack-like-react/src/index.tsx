@@ -10,6 +10,7 @@ import { Route, BrowserRouter } from 'react-router-dom';
 import IsThereAccount from './components/AccessToDatabase/IsThereAccount';
 import RegisterAccount from './components/AccessToDatabase/RegisterAccount';
 import Contents from './components/UserPage/Contents';
+import Rename from './components/RenamePage';
 
 
 
@@ -27,6 +28,7 @@ ReactDOM.render(
         <Route path="/IsThereAccount" component={IsThereAccount} />
         <Route path="/RegisterAccount" component={RegisterAccount} />
         <Route path="/UserPage" component={Contents} />
+        <Route path="/EditUserName" component={Rename} />
 
         
 
