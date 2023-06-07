@@ -1,23 +1,32 @@
 import React, { Attributes } from "react";
 import './Contents.css';
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Form from "./Form";
 import { Button} from "@mui/material";
-import { Send as SendIcon } from '@mui/icons-material';
+import { Height, MarginOutlined, Send as SendIcon } from '@mui/icons-material';
 import { Delete as DeleteIcon } from '@mui/icons-material';
 import CreateIcon from '@mui/icons-material/Create';
 import Modal from 'react-modal'
 import { TextField } from '@mui/material';
 import { Icon } from '@mui/material';
 import { IconButton } from '@mui/material';
-import { Clear } from '@mui/icons-material';
 import BuildIcon from '@mui/icons-material/Build';
+import ReplayIcon from '@mui/icons-material/Replay';
+import SettingsIcon from '@mui/icons-material/Settings';
+import Menu from '@mui/base/Menu';
+import MenuItem from '@mui/base/MenuItem';
+import Setting from "./compo/setting";
+import BasicButtons from "./compo/addChannelIcon";
+import ToggleButtonsMultiple from "./compo/inputFormOption"
 
 
 
 
 
 const Contents: React.FC = () => {
+  // const location = useLocation();
+  // const thisWorkspace = location.state && location.state.currentWorkspace;
+
   const [messageDatas, setMessageDatas] = useState<messageData[]>([]);
 
 // チャンネルのusestate
@@ -41,6 +50,8 @@ const Contents: React.FC = () => {
 
   const [showModal, setShowModal] = useState(false);
   const [showModalToCreateChannel, setShowModalToCreateChannel] = useState(false);
+
+
 
 
   // modalの使用
@@ -214,7 +225,6 @@ const Contents: React.FC = () => {
 
 
 
-
   useEffect(() => {
     initialFetchChannelData();
     console.log("get workspace response is...", currentWorkspaceData?.workspace_id);
@@ -226,6 +236,7 @@ const Contents: React.FC = () => {
   }, [currentChannelData])
 
   useEffect(() => {
+    
    initialFetchWorkspaceData();
   }, []);
 
@@ -265,6 +276,7 @@ const Contents: React.FC = () => {
       setMessageDatas(data);
     }
     // console.log(messageDatas[0].contents)
+    scrollerInner?.scrollIntoView(false);
   };
 
   const initialfetchMessageData = async () => {
@@ -278,6 +290,7 @@ const Contents: React.FC = () => {
     const data = await getResponse.json();
     console.log("get response is...", data);
     setMessageDatas(data);
+    scrollerInner?.scrollIntoView(false);
   }
 
   const changeWorksapce = async (data: workspaceData) => {
@@ -306,7 +319,21 @@ const Contents: React.FC = () => {
     console.log("get response is...", messageData);
     setMessageDatas(messageData);
   }
-  
+
+
+
+  // const chatAreaRef = useRef<HTMLDivElement>(null);
+
+  // useEffect(() => {
+  //   if (chatAreaRef.current) {
+  //     chatAreaRef.current.scrollTo(0, chatAreaRef.current.scrollHeight);
+  //   }
+  // }, [messageDatas]);
+
+  const scrollerInner = document.getElementById("scroller_inner");
+
+  // scrollerInner?.scrollIntoView(false);
+
 
   return (
       <div className="slack-page">
@@ -314,23 +341,40 @@ const Contents: React.FC = () => {
         <div className="top-bar" style={{ position: "fixed" }}>
           <div style={{ display: "flex", flexDirection: "column" }}>
             <div className="workspace_table" style={{ display: "flex", flexDirection: "row" }}>
+              <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center',padding:'0px', height:'100%',marginRight: '20px'}}>
+                <p style={{marginTop:'10px',  color:'white', fontSize:'24px'}}>ワークスペース</p>
+              </div>
+          
               {workspaceData.map((data: workspaceData) => (
                 <div key={data.workspace_id} className="workspace-contents">
-                      <Button variant="contained" className="workspace_element" style={{ fontSize: '8px', marginTop:'10px' }} onClick={() => {
+                      <Button 
+                      variant="contained" 
+                      className="workspace_element" 
+                      style={{ fontSize: '8px', marginTop:'10px' ,marginLeft:'10px'}} 
+                      onClick={() => {
                       changeWorksapce(data);
                 }}>
                     {data.workspace_name}
                   </Button>
                 </div>
               ))}
+
+
+             <div className="MenuIcon">
+              <Setting />
+            </div>
+
+
+
             </div>
           </div>
         </div>
 
         <div className="body-contents">
-          <div className="sidebar1" style={{ position: "fixed" }}>
+          <div className="sidebar" style={{ position: "fixed" }}>
             {/* サイドバーのコンテンツ */}
             <div style={{ display: "flex", flexDirection: "column" }}></div>
+            <div className="channelHeader">チャンネル</div>
             {channelData.map((data: channelData) => (
                 <div key={data.channel_id} className="channel-contents">
                   <Button variant="contained" className="channel_element" style={{ fontSize: '8px', margin:'5px' }} onClick={() => {
@@ -342,14 +386,21 @@ const Contents: React.FC = () => {
                 </div>
               ))}
               
-      
-             <button className="circle_div" onClick={()=>{
+    
+             <Button 
+             variant="contained" 
+             className="circle_div" 
+             style={{ fontSize: '8px', marginLeft: '5px', position: 'absolute', bottom: '30px', backgroundColor: 'gray'}} 
+             onClick={()=>{
                 if(currentWorkspaceData != undefined){
                   setselectedWorkspaceId(currentWorkspaceData.workspace_id)};
                   openModalToCreateChannel();
-             }}>十</button>
+             }}>
+                  Add Channel
+                  </Button>
+            
 
-<Modal
+            <Modal
                                 contentLabel="Example Modal"
                                 isOpen={showModalToCreateChannel}
                                 style={{
@@ -399,8 +450,13 @@ const Contents: React.FC = () => {
           
           <div className="main-content">
 
-            <header className="header" style={{ position: "fixed"}}>
-              <p>現在のチャンネル</p>
+            <header className="header" style={{ position: "fixed", display: "flex", flexDirection: "row"}}>
+              <p className="currentChannel">{currentChannelData?.channel_name}</p>
+              <div className="Reply" onClick={()=>{
+                fetchMessageData();
+              }}>
+                <ReplayIcon />
+              </div>
                 {/* ヘッダーのコンテンツ */}
             </header>
 
@@ -409,7 +465,7 @@ const Contents: React.FC = () => {
               {/* チャットエリアのコンテンツ */}
 
 
-              <div style={{ display: "flex", flexDirection: "column" }}>
+              <div style={{ display: "flex", flexDirection: "column" }} id="scroller_inner">
                 <div className="chat_table" >
                   {messageDatas.map((data: messageData) => (
                     <div key={data.message_id} className="chat-contents">
@@ -423,7 +479,7 @@ const Contents: React.FC = () => {
                         {uid === data.user_id && (
                           <div className="menu">
                             {/* メニューのコンテンツ */}
-                              <div className="editicon">
+                              <div className="edition">
                                 <CreateIcon onClick={() => {
                                   setSelectedMessageId(data.message_id);
                                   setInputEditValue(data.contents)
@@ -496,7 +552,9 @@ const Contents: React.FC = () => {
               </div>   
             </div>
 
-            <div className="user-list" style={{ position: "fixed" }}>
+            <div className="user-list" style={{ position: "fixed", padding: "0px" }}>
+                {/* <ToggleButtonsMultiple /> */}
+                <div className="inputform" style={{padding: "0px", height: "90%"}}>
                 {currentChannelData !== undefined ? (
                   <Form
                     onSubmit={onSendMessage}
@@ -504,6 +562,7 @@ const Contents: React.FC = () => {
                     userId={uid}
                   />
                 ) : null}
+                </div>
             </div>
 
 

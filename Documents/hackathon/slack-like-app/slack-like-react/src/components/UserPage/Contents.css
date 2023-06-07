@@ -26,12 +26,12 @@
   margin-right: 10px; /* 要素間の余白（任意の値を指定） */
 }
 
-.sidebar1 {
+.sidebar {
   margin-top: 60px;
   width: 120px;
   height: calc(100vh - 60px);
-  background-color: darkblue;
   z-index: 2;
+  background-color: rgb(42, 34, 93);
 }
 
 .header{
@@ -61,19 +61,22 @@
 }
 
 .chat_table{
-  margin-bottom: 100px;
+  margin-bottom: 115px;
   margin-top: 100px;
 }
 
 .user-list {
   flex: 0 0 150px;
-  background-color: #2f0364;
+  background-color: white;
   /* margin-top: 80vh; */
-  margin-top: calc(100vh - 100px);
-  height: 100px;
+  margin-top: calc(100vh - 120px);
+  height: 120px;
   margin-left: 120px;
   width: calc(100vw - 120px);  
   z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .date{
@@ -101,7 +104,7 @@
   flex-direction: row;
 }
 
-.editicon {
+.edition {
   display: flex;
   align-items: center;
   gap: 5px;
@@ -124,16 +127,16 @@
 
 .circle_div{
   z-index: 3;
-  width: 50px;
+  width: 110px;
   height: 50px;
   border-radius: 100%;
-  border-color: #000;
-  background-color: #0da42c;
+  /* border-color: #000; */
+  background-color: #d2e9d7;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-left: 30px;
-  margin-top: 20px;
+  margin-bottom: 40px;
+  margin-top: auto;
   border-style: solid;
 }
 
@@ -141,3 +144,35 @@
   height: 40px;
   width: 110px;
 }
+
+.Reply{
+  margin-top: 10px;
+  margin-left: 20px;
+}
+
+.currentChannel{
+  margin-top: 10px;
+}
+
+.setting :hover {
+  background-color: blue;
+}
+.setting{
+  background-color: azure;
+  margin: 10px;
+}
+
+.MenuIcon{
+  margin-top: 10px;
+  margin-right: 40px;
+  margin-left: auto;
+}
+
+.channelHeader{
+  margin-top: 20px;
+  margin-bottom: 10px;
+  background-color: rgb(42, 34, 93);
+  color: white;
+  text-align: center;
+}
+
