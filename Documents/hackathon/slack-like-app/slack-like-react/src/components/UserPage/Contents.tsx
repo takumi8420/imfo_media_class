@@ -3,7 +3,7 @@ import './Contents.css';
 import { useState, useEffect, useRef } from "react";
 import Form from "./Form";
 import { Button} from "@mui/material";
-import { Height, MarginOutlined, Send as SendIcon } from '@mui/icons-material';
+import { Height, Margin, MarginOutlined, Send as SendIcon } from '@mui/icons-material';
 import { Delete as DeleteIcon } from '@mui/icons-material';
 import CreateIcon from '@mui/icons-material/Create';
 import Modal from 'react-modal'
@@ -113,11 +113,6 @@ const Contents: React.FC = () => {
   }
 
   const setEditUserName = async (uid: string)=>{
-    // history.push({
-    //   pathname: `/EditUserName/${uid}`,
-    //   // state: { currentWorkspace: [currentWorkspace] },
-    //   // history.push(`//${uid}`);
-    // });
     history.push(`/EditUserName/${uid}`);
   }
 
@@ -140,7 +135,6 @@ const Contents: React.FC = () => {
       } catch (err) {
         console.error(err);
       }
-
     fetchMessageData();
     }
 
@@ -167,9 +161,10 @@ const Contents: React.FC = () => {
       fetchMessageData();
     }
 
-    const onRegisterChannel = async (channelName:string, workspaceId: string) => {
-      try{
-        const result = await fetch(`https://hackthon1-rzmhhbabrq-uc.a.run.app/register_channel/${uid}`,{
+    const onRegisterChannel = async (channelName: string, workspaceId: string) => {
+
+      try {
+        const result = await fetch(`https://hackthon1-rzmhhbabrq-uc.a.run.app/register_channel/${uid}`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -179,16 +174,18 @@ const Contents: React.FC = () => {
             workspace_id: workspaceId,
           }),
         });
-          if (!result.ok) {
-            throw Error(`Failed to create channel: ${result.status}`);
-          }
-        } catch (err) {
-          console.error(err);
+    
+        if (!result.ok) {
+          throw Error(`Failed to create channel: ${result.status}`);
         }
-        closeModal();
-        if(currentWorkspaceData?.workspace_id != undefined)
+  
+      } catch (err) {
+        console.error(err);
+      }
+      if (currentWorkspaceData) {
         fetchChannelData(currentWorkspaceData?.workspace_id);
       }
+    };
 
 
       const onRegisterWorkspace = async (workspaceName: string) => {
@@ -208,6 +205,7 @@ const Contents: React.FC = () => {
           } catch (err) {
             console.error(err);
           }
+          fetchWorkspaceData();
         }
 
     // 編集の送信
@@ -269,6 +267,19 @@ const Contents: React.FC = () => {
     console.log(currentWorkspaceData);
   };
 
+  const fetchWorkspaceData = async () => {
+    const getResponse = await fetch(`https://hackthon1-rzmhhbabrq-uc.a.run.app/get_workspace_with_user_id/${uid}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await getResponse.json();
+    console.log("get workspace response is...", data);
+    setWorkspaceData(data);
+    console.log(currentWorkspaceData);
+  };
+
 
 
   useEffect(() => {
@@ -282,7 +293,6 @@ const Contents: React.FC = () => {
   }, [currentChannelData])
 
   useEffect(() => {
-    
    initialFetchWorkspaceData();
   }, []);
 
@@ -397,7 +407,8 @@ const Contents: React.FC = () => {
                       variant="contained" 
                       className="workspace_element" 
                       style={{ fontSize: '8px', marginTop:'10px' ,marginLeft:'10px'}} 
-                      onClick={() => {
+                      onClick={(e) => {
+                      e.preventDefault();
                       changeWorksapce(data);
                 }}>
                     {data.workspace_name}
@@ -417,6 +428,8 @@ const Contents: React.FC = () => {
               <Modal
                                 contentLabel="Example Modal"
                                 isOpen={showModalToCreateWorkspace}
+                                overlayClassName="modal_overlay"
+                                className="modal_content"
                                 style={{
                                   overlay: {
                                     position: 'fixed',
@@ -433,27 +446,48 @@ const Contents: React.FC = () => {
                                     transform: 'translate(-50%, -50%)',
                                     width: '300px', // モーダルの幅を指定
                                     padding: '20px', // モーダルの内側の余白を指定
-                                    backgroundColor: 'darkblue', // モーダルの背景色を指定
+                                    backgroundColor: '#2c303b', // モーダルの背景色を指定
                                     borderRadius: '4px', // モーダルの角の丸みを指定
-                                    borderColor: 'white'
-                                  }
-                                }}>                               
-                                <button onClick={closeModalToCreateWorkspace}>close</button>             
+                                    borderColor: 'black'
+                                  } 
+                                }}
+                                >                               
+                                           
                                 <form>
-                                <TextField id="outlined-basic" label="Outlined" variant="outlined" sx={{
-                                  backgroundColor: 'lightblue',
+                                <div style={{ textAlign: 'left', marginBottom: '15px' }}>
+                                  <button onClick={closeModalToCreateWorkspace}>close</button>
+                                </div>
+                                
+                                <TextField 
+                                id="outlined-basic" 
+                                label="New Workspace Name" 
+                                variant="outlined" 
+                                sx={{
+                                  backgroundColor: '#646875',
+                                  width: '300px',
                                 }} 
                                 value = {inputWorkspaceName} 
                                 onChange={(e) => {
                                   setInputWorkspaceName(e.target.value)
                                 }}
+                                InputLabelProps={{
+                                  style: { color: 'white' },
+                                }}
                                 />
-                                <Button type={"submit"} variant="contained" endIcon={<SendIcon />} onClick={() => {
-                                  onRegisterWorkspace(inputWorkspaceName);
-                                  closeModal();
-                                }}>
-                                  Register
-                                </Button>
+                                <div style={{ textAlign: 'center', marginTop: '15px' }}>
+                                    
+                                    <Button 
+                                    type={"submit"} 
+                                    variant="contained" 
+                                    endIcon={<SendIcon />} 
+                                    onClick={(e) => {
+                                      e.preventDefault();
+                                      onRegisterWorkspace(inputWorkspaceName);
+                                      closeModalToCreateWorkspace();
+                                    }}>
+                                      Register
+                                    </Button>
+                                  </div>
                                 </form>
                               </Modal>
 
@@ -472,7 +506,8 @@ const Contents: React.FC = () => {
             <div className="channelHeader">チャンネル</div>
             {channelData.map((data: channelData) => (
                 <div key={data.channel_id} className="channel-contents">
-                  <Button variant="contained" className="channel_element" style={{ fontSize: '8px', margin:'5px' }} onClick={() => {
+                  <Button variant="contained" className="channel_element" style={{ fontSize: '8px', margin:'5px' }} onClick={(e) => {
+                    e.preventDefault();
                       setCurrentChannelData(data);
                       fetchMessageData();
                   }}>
@@ -487,17 +522,16 @@ const Contents: React.FC = () => {
              className="circle_div" 
              style={{ fontSize: '8px', marginLeft: '5px', position: 'absolute', bottom: '30px', backgroundColor: 'gray'}} 
              onClick={()=>{
-                if(currentWorkspaceData != undefined){
-                  setselectedWorkspaceId(currentWorkspaceData.workspace_id)};
                   openModalToCreateChannel();
              }}>
                   Add Channel
                   </Button>
             
-
-            <Modal
+                  <Modal
                                 contentLabel="Example Modal"
                                 isOpen={showModalToCreateChannel}
+                                overlayClassName="modal_overlay"
+                                className="modal_content"
                                 style={{
                                   overlay: {
                                     position: 'fixed',
@@ -514,28 +548,59 @@ const Contents: React.FC = () => {
                                     transform: 'translate(-50%, -50%)',
                                     width: '300px', // モーダルの幅を指定
                                     padding: '20px', // モーダルの内側の余白を指定
-                                    backgroundColor: 'darkblue', // モーダルの背景色を指定
+                                    backgroundColor: '#2c303b', // モーダルの背景色を指定
                                     borderRadius: '4px', // モーダルの角の丸みを指定
-                                    borderColor: 'white'
-                                  }
-                                }}>                               
-                                <button onClick={closeModalToCreateChannel}>close</button>             
+                                    borderColor: 'black'
+                                  } 
+                                }}
+                                >                               
+                                           
                                 <form>
-                                <TextField id="outlined-basic" label="Outlined" variant="outlined" sx={{
-                                  backgroundColor: 'lightblue',
+                                <div style={{ textAlign: 'left', marginBottom: '15px' }}>
+                                  <button onClick={(e)=>{
+                                    e.preventDefault();                     
+                                    closeModalToCreateChannel();
+                                  }}>close</button>
+                                </div>
+                                
+                                <TextField 
+                                id="outlined-basic" 
+                                label="New Channel Name" 
+                                variant="outlined" 
+                                sx={{
+                                  backgroundColor: '#646875',
+                                  width: '300px',
                                 }} 
                                 value = {inputChannelName} 
                                 onChange={(e) => {
                                   setInputChannelName(e.target.value)
                                 }}
+                                InputLabelProps={{
+                                  style: { color: 'white' },
+                                }}
                                 />
-                                <Button type={"submit"} variant="contained" endIcon={<SendIcon />} onClick={() => {
-                                  onRegisterChannel(inputChannelName, selectedWorkspaceId);
-                                }}>
-                                  Register
-                                </Button>
+                                <div style={{ textAlign: 'center', marginTop: '15px' }}>
+                                    
+                                    <Button 
+                                    type={"submit"} 
+                                    variant="contained" 
+                                    endIcon={<SendIcon />} 
+                                    onClick={(e) => {
+                                      e.preventDefault();
+                                      if(currentWorkspaceData){
+                                        onRegisterChannel(inputChannelName, currentWorkspaceData?.workspace_id);
+                                      closeModalToCreateChannel();
+                                      }
+                                    }}>
+                                      Register
+                                    </Button>
+                                  </div>
                                 </form>
                               </Modal>
+
+
+
+                              
 
 
               
@@ -546,7 +611,8 @@ const Contents: React.FC = () => {
 
             <header className="header" style={{ position: "fixed", display: "flex", flexDirection: "row"}}>
               <p className="currentChannel">{currentChannelData?.channel_name}</p>
-              <div className="Reply" onClick={()=>{
+              <div className="Reply" onClick={(e)=>{
+                e.preventDefault();
                 fetchMessageData();
               }}>
                 <ReplayIcon />
@@ -573,27 +639,31 @@ const Contents: React.FC = () => {
                         {uid === data.user_id && (
                           <div className="menu">
                             {/* メニューのコンテンツ */}
-                              <div className="edition">
-                                <CreateIcon onClick={() => {
+                              <div className="edition" onClick={() => {
                                   setSelectedMessageId(data.message_id);
                                   setInputEditValue(data.contents)
                                   console.log(data.contents)
                                   openModal();
-                                }}/>
+                                }}>
+                                <CreateIcon />
                                 <span>編集</span>
                               </div>
                               <Button 
                                 variant="outlined" 
                                 startIcon={<DeleteIcon />} 
                                 size="small"
-                                onClick={() => {
+                                onClick={(e) => {
+                                  e.preventDefault();
                                   onDeleteMessage(data.message_id)}}>
                                   Delete
                               </Button>
 
+
                               <Modal
                                 contentLabel="Example Modal"
                                 isOpen={showModal}
+                                overlayClassName="modal_overlay"
+                                className="modal_content"
                                 style={{
                                   overlay: {
                                     position: 'fixed',
@@ -610,31 +680,54 @@ const Contents: React.FC = () => {
                                     transform: 'translate(-50%, -50%)',
                                     width: '300px', // モーダルの幅を指定
                                     padding: '20px', // モーダルの内側の余白を指定
-                                    backgroundColor: 'darkblue', // モーダルの背景色を指定
+                                    backgroundColor: '#2c303b', // モーダルの背景色を指定
                                     borderRadius: '4px', // モーダルの角の丸みを指定
-                                    borderColor: 'white'
-                                  }
-                                }}>                               
-                                <button onClick={closeModal}>close</button>             
+                                    borderColor: 'black'
+                                  } 
+                                }}
+                                >                               
+                                           
                                 <form>
-                                <TextField id="outlined-basic" label="Outlined" variant="outlined" sx={{
-                                  backgroundColor: 'lightblue',
+                                <div style={{ textAlign: 'left', marginBottom:'15px'}}>
+                                  <button onClick={(e)=>{
+                                    e.preventDefault();                     
+                                    closeModal();
+                                  }}>close</button>
+                                </div>
+                                
+                                <TextField 
+                                id="outlined-basic" 
+                                label="message to edit" 
+                                variant="outlined" 
+                                sx={{
+                                  backgroundColor: '#646875',
+                                  width: '300px',
                                 }} 
                                 value = {inputEditValue} 
                                 onChange={(e) => {
                                   setInputEditValue(e.target.value)
                                 }}
+                                InputLabelProps={{
+                                  style: { color: 'white' },
+                                }}
                                 />
-                                <Button type={"submit"} variant="contained" endIcon={<SendIcon />} onClick={() => {
-                                  console.log("edit用のmessage:", data.message_id)
-                                  onEditMessage(selectedMessageId, inputEditValue)
-                                  closeModal()
-                                }}>
-                                  Send
-                                </Button>
+                                <div style={{ textAlign: 'center', marginTop: '15px' }}>
+                                    
+                                    <Button 
+                                    type={"submit"} 
+                                    variant="contained" 
+                                    endIcon={<SendIcon />} 
+                                    onClick={(e) => {
+                                      e.preventDefault();
+                                      console.log("edit用のmessage:", data.message_id)
+                                      onEditMessage(selectedMessageId, inputEditValue)
+                                      closeModal()
+                                    }}>
+                                      Register
+                                    </Button>
+                                  </div>
                                 </form>
                               </Modal>
-
 
                             </div>
                         )}
