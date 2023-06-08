@@ -45,7 +45,7 @@ const Contents: React.FC = () => {
   const url = window.location.href;
   let uid = url.substring(url.lastIndexOf("/") + 1);
   uid = uid.slice(0, 26);
-  console.log(uid)
+  // console.log(uid)
 
 
 
@@ -169,7 +169,7 @@ const Contents: React.FC = () => {
 
     const onRegisterChannel = async (channelName:string, workspaceId: string) => {
       try{
-        const result = await fetch(`https://hackthon1-rzmhhbabrq-uc.a.run.app//register_channel/${uid}`,{
+        const result = await fetch(`https://hackthon1-rzmhhbabrq-uc.a.run.app/register_channel/${uid}`,{
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -190,7 +190,7 @@ const Contents: React.FC = () => {
 
       const onRegisterWorkspace = async (workspaceName: string) => {
         try{
-          const result = await fetch(`https://hackthon1-rzmhhbabrq-uc.a.run.app//register_workspace/${uid}`,{
+          const result = await fetch(`https://hackthon1-rzmhhbabrq-uc.a.run.app/register_workspace/${uid}`,{
             method: "POST",
             headers: {
               "Content-Type": "application/json",
