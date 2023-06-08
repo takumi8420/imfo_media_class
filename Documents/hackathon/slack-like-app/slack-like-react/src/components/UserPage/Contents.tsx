@@ -46,6 +46,7 @@ const Contents: React.FC = () => {
   const uid = url.substring(url.lastIndexOf("/") + 1);
 
 
+
   // const [isEditing, setIsEditing] = useState(false);
   const [messageToEdit, setMessageToEdit] = useState("");
 
@@ -182,6 +183,26 @@ const Contents: React.FC = () => {
           console.error(err);
         }
       }
+
+
+      const onRegisterWorkspace = async (workspaceName: string) => {
+        try{
+          const result = await fetch("https://hackthon1-rzmhhbabrq-uc.a.run.app//register_workspace/${uid}",{
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              workspace_name: workspaceName,
+            }),
+          });
+            if (!result.ok) {
+              throw Error(`Failed to create channel: ${result.status}`);
+            }
+          } catch (err) {
+            console.error(err);
+          }
+        }
 
     // 編集の送信
     const onEditMessage = async (messageId: string, content: string) => {
@@ -385,6 +406,50 @@ const Contents: React.FC = () => {
                 setEditUserName={setEditUserName}
                 uid= {uid}
               />
+
+              <Modal
+                                contentLabel="Example Modal"
+                                isOpen={showModalToCreateWorkspace}
+                                style={{
+                                  overlay: {
+                                    position: 'fixed',
+                                    top: 0,
+                                    left: 0,
+                                    right: 0,
+                                    bottom: 0,
+                                    backgroundColor: 'rgba(0, 0, 0, 0)' // モーダルの背景色や透明度を指定する場合はここで設定
+                                  },
+                                  content: {
+                                    position: 'absolute',
+                                    top: '50%',
+                                    left: '50%',
+                                    transform: 'translate(-50%, -50%)',
+                                    width: '300px', // モーダルの幅を指定
+                                    padding: '20px', // モーダルの内側の余白を指定
+                                    backgroundColor: 'darkblue', // モーダルの背景色を指定
+                                    borderRadius: '4px', // モーダルの角の丸みを指定
+                                    borderColor: 'white'
+                                  }
+                                }}>                               
+                                <button onClick={closeModalToCreateWorksoace}>close</button>             
+                                <form>
+                                <TextField id="outlined-basic" label="Outlined" variant="outlined" sx={{
+                                  backgroundColor: 'lightblue',
+                                }} 
+                                value = {inputWorkspaceName} 
+                                onChange={(e) => {
+                                  setInputWorkspaceName(e.target.value)
+                                }}
+                                />
+                                <Button type={"submit"} variant="contained" endIcon={<SendIcon />} onClick={() => {
+                                  onRegisterChannel(inputChannelName, selectedWorkspaceId);
+                                  closeModal();
+                                }}>
+                                  Register
+                                </Button>
+                                </form>
+                              </Modal>
+
             </div>
 
 

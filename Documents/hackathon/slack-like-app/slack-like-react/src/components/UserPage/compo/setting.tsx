@@ -19,12 +19,6 @@ type Props = {
 };
 
 
-type workspaceData ={
-  workspace_user_name: string;
-  workspace_id: string;
-  workspace_name: string; 
-}
-
 const StyledMenu = styled((props: MenuProps) => (
   <Menu
     elevation={0}
