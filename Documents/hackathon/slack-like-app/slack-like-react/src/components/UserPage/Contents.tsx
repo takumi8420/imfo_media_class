@@ -185,6 +185,9 @@ const Contents: React.FC = () => {
         } catch (err) {
           console.error(err);
         }
+        closeModal();
+        if(currentWorkspaceData?.workspace_id != undefined)
+        fetchChannelData(currentWorkspaceData?.workspace_id);
       }
 
 
@@ -528,9 +531,6 @@ const Contents: React.FC = () => {
                                 />
                                 <Button type={"submit"} variant="contained" endIcon={<SendIcon />} onClick={() => {
                                   onRegisterChannel(inputChannelName, selectedWorkspaceId);
-                                  closeModal();
-                                  if(currentWorkspaceData?.workspace_id != undefined)
-                                  fetchChannelData(currentWorkspaceData?.workspace_id);
                                 }}>
                                   Register
                                 </Button>
