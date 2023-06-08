@@ -43,7 +43,9 @@ const Contents: React.FC = () => {
 
 // urlの取得
   const url = window.location.href;
-  const uid = url.substring(url.lastIndexOf("/") + 1);
+  let uid = url.substring(url.lastIndexOf("/") + 1);
+  uid = uid.slice(0, 26);
+  console.log(uid)
 
 
 
@@ -75,11 +77,11 @@ const Contents: React.FC = () => {
   };
 
 
-  const closeModalToCreateWorksoace = () => {
+  const closeModalToCreateWorkspace = () => {
     setShowModalToCreateWorkspace(false);
   };
 
-  const openModalToCreateWorksoace = () => {
+  const openModalToCreateWorkspace = () => {
     setShowModalToCreateWorkspace(true);
   };
 
@@ -111,18 +113,19 @@ const Contents: React.FC = () => {
   }
 
   const setEditUserName = async (uid: string)=>{
-    history.push({
-      pathname: `/EditUserName/${uid}`,
-      // state: { currentWorkspace: [currentWorkspace] },
-      // history.push(`//${uid}`);
-    });
+    // history.push({
+    //   pathname: `/EditUserName/${uid}`,
+    //   // state: { currentWorkspace: [currentWorkspace] },
+    //   // history.push(`//${uid}`);
+    // });
+    history.push(`/EditUserName/${uid}`);
   }
 
 
     // メッセージの削除
   const onDeleteMessage = async (messageId: string) => {
     try{
-      const result = await fetch("https://hackthon1-rzmhhbabrq-uc.a.run.app/delete_messages/${uid}",{
+      const result = await fetch(`https://hackthon1-rzmhhbabrq-uc.a.run.app/delete_messages/${uid}`,{
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -144,7 +147,7 @@ const Contents: React.FC = () => {
     // メッセージの送信
   const onSendMessage = async (channelId: string, userId: string, message: string) => {
     try{
-      const result = await fetch("https://hackthon1-rzmhhbabrq-uc.a.run.app/send_messages/${uid}",{
+      const result = await fetch(`https://hackthon1-rzmhhbabrq-uc.a.run.app/send_messages/${uid}`,{
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -166,7 +169,7 @@ const Contents: React.FC = () => {
 
     const onRegisterChannel = async (channelName:string, workspaceId: string) => {
       try{
-        const result = await fetch("https://hackthon1-rzmhhbabrq-uc.a.run.app//register_channel/${uid}",{
+        const result = await fetch(`https://hackthon1-rzmhhbabrq-uc.a.run.app//register_channel/${uid}`,{
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -187,7 +190,7 @@ const Contents: React.FC = () => {
 
       const onRegisterWorkspace = async (workspaceName: string) => {
         try{
-          const result = await fetch("https://hackthon1-rzmhhbabrq-uc.a.run.app//register_workspace/${uid}",{
+          const result = await fetch(`https://hackthon1-rzmhhbabrq-uc.a.run.app//register_workspace/${uid}`,{
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -207,7 +210,7 @@ const Contents: React.FC = () => {
     // 編集の送信
     const onEditMessage = async (messageId: string, content: string) => {
       try{
-        const result = await fetch("https://hackthon1-rzmhhbabrq-uc.a.run.app/edit_messages/${uid}",{
+        const result = await fetch(`https://hackthon1-rzmhhbabrq-uc.a.run.app/edit_messages/${uid}`,{
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -402,6 +405,7 @@ const Contents: React.FC = () => {
 
              <div className="MenuIcon">
               <Setting 
+                openModalToCreateWorkspace={openModalToCreateWorkspace}
                 setShowModalToCreateWorkspace={setShowModalToCreateWorkspace}
                 setEditUserName={setEditUserName}
                 uid= {uid}
@@ -431,7 +435,7 @@ const Contents: React.FC = () => {
                                     borderColor: 'white'
                                   }
                                 }}>                               
-                                <button onClick={closeModalToCreateWorksoace}>close</button>             
+                                <button onClick={closeModalToCreateWorkspace}>close</button>             
                                 <form>
                                 <TextField id="outlined-basic" label="Outlined" variant="outlined" sx={{
                                   backgroundColor: 'lightblue',
@@ -442,7 +446,7 @@ const Contents: React.FC = () => {
                                 }}
                                 />
                                 <Button type={"submit"} variant="contained" endIcon={<SendIcon />} onClick={() => {
-                                  onRegisterChannel(inputChannelName, selectedWorkspaceId);
+                                  onRegisterWorkspace(inputWorkspaceName);
                                   closeModal();
                                 }}>
                                   Register
@@ -525,6 +529,8 @@ const Contents: React.FC = () => {
                                 <Button type={"submit"} variant="contained" endIcon={<SendIcon />} onClick={() => {
                                   onRegisterChannel(inputChannelName, selectedWorkspaceId);
                                   closeModal();
+                                  if(currentWorkspaceData?.workspace_id != undefined)
+                                  fetchChannelData(currentWorkspaceData?.workspace_id);
                                 }}>
                                   Register
                                 </Button>

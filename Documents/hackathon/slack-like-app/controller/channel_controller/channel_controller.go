@@ -26,6 +26,7 @@ func RegisterChannelHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	log.Println("postはきています。")
 	contentType := r.Header.Get("Content-Type")
 	if contentType != "application/json" {
 		log.Println("fail: Content-Type is not application/json")
@@ -41,6 +42,7 @@ func RegisterChannelHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var u model.ChannelReqForPost
+
 	if err := json.Unmarshal(body, &u); err != nil {
 		log.Printf("fail: json.Unmarshal, %v\n", err)
 		w.WriteHeader(http.StatusInternalServerError)
