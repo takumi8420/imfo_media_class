@@ -28,9 +28,8 @@ func main() {
 	http.HandleFunc("/register_channel/", channel_controller.RegisterChannelHandler)
 	http.HandleFunc("/register_workspace/", workspace_controller.RegisterWorkspaceHandler)
 	http.HandleFunc("/register_workspace_and_user/", workspace_controller.RegisterWorkspaceAndUserHandler)
-
 	http.HandleFunc("/register_channel_and_user/", user_controller.RegisterUserAndChannelHandler)
-	http.HandleFunc("/register_workspace_and_user/", user_controller.RegisterUserAndWorkspaceHandler)
+	//http.HandleFunc("/register_workspace_and_user/", user_controller.RegisterUserAndWorkspaceHandler)
 	http.HandleFunc("/get_channel_with_workspace_id/", channel_controller.FindChannelWithWorkspaceIdHandler)
 	http.HandleFunc("/get_workspace_with_user_id/", workspace_controller.FindWorkspaceWithUIdHandler)
 
