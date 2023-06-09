@@ -123,9 +123,8 @@ type WorkspaceResForGetByUserId struct {
 }
 
 type AllWorkspaceResForGet struct {
-	WorkspaceUserName string `json:"workspace_user_name"`
-	WorkspaceId       string `json:"workspace_id"`
-	WorkspaceName     string `json:"workspace_name"`
+	WorkspaceId   string `json:"workspace_id"`
+	WorkspaceName string `json:"workspace_name"`
 }
 
 type ChannelReqForGetByWorkspaceId struct {

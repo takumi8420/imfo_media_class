@@ -28,7 +28,7 @@ const Contents: React.FC = () => {
 
 // workspaceのusestate
   const [workspaceData, setWorkspaceData] = useState<workspaceData[]>([]);
-  const [allWorkspaceData, setAllWorkspaceData] = useState<workspaceData[]>([]);
+  const [allWorkspaceData, setAllWorkspaceData] = useState<allWorkspaceData[]>([]);
   const [currentWorkspaceData, setCurrentWorkspaceData] = useState<workspaceData>();
 
   const [selectedMessageId, setSelectedMessageId] = useState("");
@@ -108,6 +108,11 @@ const Contents: React.FC = () => {
 
   type workspaceData ={
     workspace_user_name: string;
+    workspace_id: string;
+    workspace_name: string; 
+  }
+
+  type allWorkspaceData ={
     workspace_id: string;
     workspace_name: string; 
   }
@@ -293,6 +298,21 @@ const Contents: React.FC = () => {
     console.log(currentWorkspaceData);
   };
 
+  // const fetchWorkspaceData = async () => {
+  //   const getResponse = await fetch(`https://hackthon1-rzmhhbabrq-uc.a.run.app/get_workspace_with_user_id/${uid}`, {
+  //     method: "GET",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //   });
+  //   const data = await getResponse.json();
+  //   console.log("get workspace response is...", data);
+  
+  //   const filteredData = data.filter((item: workspaceData) => !workspaceData.includes(item));
+  //   setAllWorkspaceData(filteredData);
+  //   console.log(allWorkspaceData);
+  // };
+
   const fetchWorkspaceData = async () => {
     const getResponse = await fetch(`https://hackthon1-rzmhhbabrq-uc.a.run.app/get_workspace_with_user_id/${uid}`, {
       method: "GET",
@@ -303,7 +323,7 @@ const Contents: React.FC = () => {
     const data = await getResponse.json();
     console.log("get workspace response is...", data);
   
-    const filteredData = data.filter((item: workspaceData) => !workspaceData.includes(item));
+    const filteredData = data.filter((item: allWorkspaceData) => !workspaceData.some((w) => w.workspace_id === item.workspace_id));
     setAllWorkspaceData(filteredData);
     console.log(allWorkspaceData);
   };
@@ -335,8 +355,8 @@ const Contents: React.FC = () => {
   useEffect(() => {
     initialfetchMessageData();
     console.log("get workspace response is...", currentWorkspaceData?.workspace_id);
-    // fetchAllWorkspaceData();
-    // console.log("allworlkspace", allWorkspaceData)
+    fetchAllWorkspaceData();
+    console.log("allworlkspace", allWorkspaceData)
   }, [currentChannelData])
 
   useEffect(() => {
@@ -564,7 +584,7 @@ const Contents: React.FC = () => {
                                 </div>
                                 
 
-                                {allWorkspaceData.map((data: workspaceData) => (
+                                {allWorkspaceData.map((data: allWorkspaceData) => (
                                   <div key={data.workspace_id} className="workspace-contents">
                                         <Button 
                                         variant="contained" 

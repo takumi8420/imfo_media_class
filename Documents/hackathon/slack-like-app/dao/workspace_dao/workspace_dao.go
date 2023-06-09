@@ -132,7 +132,7 @@ func FindWorkspaceByUserId(UId string) (*[]model.WorkspaceResForGetByUserId, err
 
 func FindAllWorkspace() (*[]model.AllWorkspaceResForGet, error) {
 
-	rows, err := db.Query("SELECT workspace.workspace_id, workspace.workspace_name FROM workspace")
+	rows, err := db.Query("SELECT workspace_id, workspace_name FROM workspace")
 	if err != nil {
 		return nil, err
 	}
@@ -146,7 +146,7 @@ func FindAllWorkspace() (*[]model.AllWorkspaceResForGet, error) {
 
 	for rows.Next() {
 		var u model.AllWorkspaceResForGet
-		if err := rows.Scan(&u.WorkspaceUserName, &u.WorkspaceId, &u.WorkspaceName); err != nil {
+		if err := rows.Scan(&u.WorkspaceId, &u.WorkspaceName); err != nil {
 			log.Printf("fail: rows.Scan, %v\n", err)
 		}
 		workspaces = append(workspaces, u)
