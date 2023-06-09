@@ -310,14 +310,14 @@ const Contents: React.FC = () => {
   
 
   const fetchAllWorkspaceData = async () => {
-    const getResponse = await fetch(`https://hackthon1-rzmhhbabrq-uc.a.run.app/get_all_workspace`, {
+    const getResponse = await fetch(`https://hackthon1-rzmhhbabrq-uc.a.run.app/get_all_workspace/${uid}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
     });
     const data = await getResponse.json();
-    console.log("get workspace response is...", data);
+    console.log("get allworkspace response is...", data);
     setAllWorkspaceData(data);
     console.log(currentWorkspaceData);
   };

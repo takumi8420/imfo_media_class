@@ -65,7 +65,7 @@ func RegisterWorkspace(workspace_data model.WorkspaceReqForPost) (model.Workspac
 	return model.WorkspaceResForPost{WorkspaceId: id, WorkspaceName: workspace_data.WorkspaceName, RegisteredAt: t}, nil
 }
 
-func WorkspaceAndUserHandler(workspace_data model.WorkspaceAndUserReqForPost, uid string) (model.WorkspaceAndUserResForPost, error) {
+func WorkspaceAndUserHandler(workspaceData model.WorkspaceAndUserReqForPost, uid string) (model.WorkspaceAndUserResForPost, error) {
 
 	t := time.Now()
 	entropy := ulid.Monotonic(rand.New(rand.NewSource(t.UnixNano())), 0)
@@ -79,7 +79,7 @@ func WorkspaceAndUserHandler(workspace_data model.WorkspaceAndUserReqForPost, ui
 	}
 	defer tx.Rollback()
 
-	_, err = tx.Exec("INSERT INTO workspace_members (workspace_member_id, workspace_id, user_id, workspace_user_name) VALUES (?, ?, ?)", id, workspace_data.WorkspaceId, uid)
+	_, err = tx.Exec("INSERT INTO workspace_members (workspace_member_id, workspace_id, user_id) VALUES (?, ?, ?)", id, workspaceData.WorkspaceId, uid)
 	if err != nil {
 		return model.WorkspaceAndUserResForPost{}, err
 	}
