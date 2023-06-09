@@ -80,7 +80,7 @@ func RegisterWorkspaceAndUserHandler(w http.ResponseWriter, r *http.Request) {
 	path := r.URL.Path
 	segments := strings.Split(path, "/")
 	uid := segments[len(segments)-1]
-	log.Printf("uidは", uid)
+	log.Println("uidは", uid)
 
 	if r.Method != http.MethodPost {
 		log.Printf("fail: HTTP Method is %s\n", r.Method)
