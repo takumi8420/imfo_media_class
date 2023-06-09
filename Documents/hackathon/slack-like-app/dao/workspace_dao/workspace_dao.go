@@ -110,7 +110,41 @@ func FindWorkspaceByUserId(UId string) (*[]model.WorkspaceResForGetByUserId, err
 
 	for rows.Next() {
 		var u model.WorkspaceResForGetByUserId
-		if err := rows.Scan(&u.WorkspaceUserName, &u.WorkspaceId, &u.WorkspaceName); err != nil {
+		if err := rows.Scan(&u.WorkspaceId, &u.WorkspaceName); err != nil {
+			log.Printf("fail: rows.Scan, %v\n", err)
+		}
+		workspaces = append(workspaces, u)
+		log.Print("u:", workspaces)
+	}
+	if err := rows.Err(); err != nil {
+		log.Printf("fail: rows.Err(), %v\n", err)
+		// エラーハンドリングの処理を追加することが望ましいです
+	}
+	if err := rows.Close(); err != nil {
+		log.Printf("fail: rows.Close(), %v\n", err)
+		// エラーハンドリングの処理を追加することが望ましいです
+	}
+	log.Print("channels:", workspaces)
+	return &workspaces, nil
+}
+
+func FindAllWorkspace() (*[]model.AllWorkspaceResForGet, error) {
+
+	rows, err := db.Query("SELECT workspace.workspace_id, workspace.workspace_name FROM workspace")
+	if err != nil {
+		return nil, err
+	}
+
+	defer rows.Close()
+
+	log.Print("workspace読み取れてはいます")
+	log.Print("rows:", rows)
+
+	workspaces := make([]model.AllWorkspaceResForGet, 0)
+
+	for rows.Next() {
+		var u model.AllWorkspaceResForGet
+		if err := rows.Scan(&u.WorkspaceId, &u.WorkspaceName); err != nil {
 			log.Printf("fail: rows.Scan, %v\n", err)
 		}
 		workspaces = append(workspaces, u)

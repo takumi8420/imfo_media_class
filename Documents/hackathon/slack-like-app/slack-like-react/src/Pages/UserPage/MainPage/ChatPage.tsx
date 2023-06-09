@@ -107,7 +107,7 @@ const Contents: React.FC = () => {
   }
 
   type workspaceData ={
-    workspace_user_name: string;
+    // workspace_user_name: string;
     workspace_id: string;
     workspace_name: string; 
   }
@@ -335,11 +335,12 @@ const Contents: React.FC = () => {
   useEffect(() => {
     initialfetchMessageData();
     console.log("get workspace response is...", currentWorkspaceData?.workspace_id);
+    fetchAllWorkspaceData();
+    console.log("allworlkspace", allWorkspaceData)
   }, [currentChannelData])
 
   useEffect(() => {
    initialFetchWorkspaceData();
-   fetchAllWorkspaceData();
   }, []);
 
   // useEffect(() => {
@@ -456,7 +457,6 @@ const Contents: React.FC = () => {
              <div className="MenuIcon">
               <Setting 
                 openModalToCreateWorkspace={openModalToCreateWorkspace}
-                setShowModalToCreateWorkspace={setShowModalToCreateWorkspace}
                 setEditUserName={setEditUserName}
                 uid= {uid}
                 openModalToAddWorkspaceAndUser = {openModalToAddWorkspaceAndUser}
