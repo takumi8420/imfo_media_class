@@ -94,11 +94,11 @@ const Contents: React.FC = () => {
     user_name: string;
     message_id: string;
     channel_id: string; 
-    user_id:    string;   // user_id が同じ人に限り編集が可能になるようにしたい。（バックエンドでそのことを航路したくない。）
+    user_id:    string;   
     contents:  string;    
     created_at: string;
     is_edited: number;
-    // isMenuOpen: boolean;
+    photo_url: string;
   }
 
   type workspaceData ={
@@ -628,11 +628,15 @@ const Contents: React.FC = () => {
               <div style={{ display: "flex", flexDirection: "column" }} id="scroller_inner">
                 <div className="chat_table" >
                   {messageDatas.map((data: messageData) => (
-                    <div key={data.message_id} className="chat-contents">
-
-                      <p className="chat_element">
+                    <div key={data.message_id} className="chat-contents" style={{ display: "flex", flexDirection: "column" }}>
+                      <div className="chat_element" style={{ display: "flex", flexDirection: "row" }}>
+                        <img src={data.photo_url} alt=""></img>
+                        <p className="chat_element">
                         {data.user_name} <span className="date">{data.created_at}</span> {data.is_edited == 1 && (
-                          <span className="edited">編集済み</span>)}<br />
+                          <span className="edited">編集済み</span>)}</p>
+                      </div >
+
+                      <p>
                         {data.contents}
 
 

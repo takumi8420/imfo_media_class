@@ -37,6 +37,7 @@ const ImageUploader = () => {
       } catch (err) {
         console.error(err);
       }
+      console.log("urlの登録が完了しました。")
       
     }
 

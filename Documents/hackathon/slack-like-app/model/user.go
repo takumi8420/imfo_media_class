@@ -54,13 +54,14 @@ type UserResForHTTPPost struct {
 }
 
 type MessagesResForGet struct {
-	UserName  string `json:"user_name"`
-	MessageId string `json:"message_id"`
-	ChannelId string `json:"channel_id"`
-	UserId    string `json:"user_id"`
-	Contents  string `json:"contents"`
-	CreatedAt string `json:"created_at"`
-	IsEdited  int    `json:"is_edited"`
+	UserName     string `json:"user_name"`
+	MessageId    string `json:"message_id"`
+	ChannelId    string `json:"channel_id"`
+	UserId       string `json:"user_id"`
+	Contents     string `json:"contents"`
+	CreatedAt    string `json:"created_at"`
+	IsEdited     int    `json:"is_edited"`
+	UserPhotoURL string `json:"photo_url"`
 }
 
 type MessagesReqForPost struct {

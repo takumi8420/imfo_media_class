@@ -101,7 +101,7 @@ func RegisterUserAndChannel(req model.UserAndChannelReqForPost, uid string) (mod
 	t := time.Now()
 	entropy := ulid.Monotonic(rand.New(rand.NewSource(t.UnixNano())), 0)
 	id := ulid.MustNew(ulid.Timestamp(t), entropy).String()
-	log.Println("uid:", uid)
+	log.Println("urlは:", uid)
 	log.Println("id:", id)
 
 	tx, err := db.Begin()
@@ -155,6 +155,7 @@ func RegisterUserAndWorkspace(req model.UserAndWorkplaceReqForPost, uid string) 
 
 func RegisterPhotoURL(user model.UserPhotoReqForHTTPPost, uid string) (model.UserPhotoResForHTTPPost, error) {
 
+	log.Println(user.UserPhotoURL)
 	tx, err := db.Begin()
 	if err != nil {
 		return model.UserPhotoResForHTTPPost{}, err
