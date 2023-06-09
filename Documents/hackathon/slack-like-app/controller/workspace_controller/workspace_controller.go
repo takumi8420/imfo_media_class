@@ -148,14 +148,14 @@ func FindWorkspaceWithUIdHandler(w http.ResponseWriter, r *http.Request) {
 	path := r.URL.Path
 	segments := strings.Split(path, "/")
 	user_id := segments[len(segments)-1]
-	log.Fatalln(user_id)
+	log.Println("user_idは", user_id)
 
 	if user_id == "" {
 		log.Println("fail: uid is empty")
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
-	log.Print("user_id:", user_id)
+	log.Println("user_id:", user_id)
 
 	channels, err := workspace_dao.FindWorkspaceByUserId(user_id)
 	if err != nil {
