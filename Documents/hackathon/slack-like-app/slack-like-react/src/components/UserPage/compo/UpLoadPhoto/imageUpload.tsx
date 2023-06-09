@@ -28,7 +28,7 @@ const ImageUploader = () => {
         },
         body: JSON.stringify({
           user_id: uid,
-          photo_url: PhotoURL,
+          user_photoURL: PhotoURL,
         }),
       });
         if (!result.ok) {

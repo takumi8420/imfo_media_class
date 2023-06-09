@@ -626,117 +626,141 @@ const Contents: React.FC = () => {
 
 
               <div style={{ display: "flex", flexDirection: "column" }} id="scroller_inner">
+                
+                
                 <div className="chat_table" >
+                  
+                  
                   {messageDatas.map((data: messageData) => (
+                    
+                    
                     <div key={data.message_id} className="chat-contents" style={{ display: "flex", flexDirection: "column" }}>
-                      <div className="chat_element" style={{ display: "flex", flexDirection: "row" }}>
-                        <img src={data.photo_url} alt=""></img>
-                        <p className="chat_element">
-                        {data.user_name} <span className="date">{data.created_at}</span> {data.is_edited == 1 && (
-                          <span className="edited">編集済み</span>)}</p>
-                      </div >
-
-                      <p>
-                        {data.contents}
-
-
-                        {uid === data.user_id && (
-                          <div className="menu">
-                            {/* メニューのコンテンツ */}
-                              <div className="edition" onClick={() => {
-                                  setSelectedMessageId(data.message_id);
-                                  setInputEditValue(data.contents)
-                                  console.log(data.contents)
-                                  openModal();
-                                }}>
-                                <CreateIcon />
-                                <span>編集</span>
-                              </div>
-                              <Button 
-                                variant="outlined" 
-                                startIcon={<DeleteIcon />} 
-                                size="small"
-                                onClick={(e) => {
-                                  e.preventDefault();
-                                  onDeleteMessage(data.message_id)}}>
-                                  Delete
-                              </Button>
-
-
-                              <Modal
-                                contentLabel="Example Modal"
-                                isOpen={showModal}
-                                overlayClassName="modal_overlay"
-                                className="modal_content"
-                                style={{
-                                  overlay: {
-                                    position: 'fixed',
-                                    top: 0,
-                                    left: 0,
-                                    right: 0,
-                                    bottom: 0,
-                                    backgroundColor: 'rgba(0, 0, 0, 0)' // モーダルの背景色や透明度を指定する場合はここで設定
-                                  },
-                                  content: {
-                                    position: 'absolute',
-                                    top: '50%',
-                                    left: '50%',
-                                    transform: 'translate(-50%, -50%)',
-                                    width: '300px', // モーダルの幅を指定
-                                    padding: '20px', // モーダルの内側の余白を指定
-                                    backgroundColor: '#2c303b', // モーダルの背景色を指定
-                                    borderRadius: '4px', // モーダルの角の丸みを指定
-                                    borderColor: 'black'
-                                  } 
-                                }}
-                                >                               
-                                           
-                                <form>
-                                <div style={{ textAlign: 'left', marginBottom:'15px'}}>
-                                  <button onClick={(e)=>{
-                                    e.preventDefault();                     
-                                    closeModal();
-                                  }}>close</button>
-                                </div>
-                                
-                                <TextField 
-                                id="outlined-basic" 
-                                label="message to edit" 
-                                variant="outlined" 
-                                sx={{
-                                  backgroundColor: '#646875',
-                                  width: '300px',
-                                }} 
-                                value = {inputEditValue} 
-                                onChange={(e) => {
-                                  setInputEditValue(e.target.value)
-                                }}
-                                InputLabelProps={{
-                                  style: { color: 'white' },
-                                }}
-                                />
-                                <div style={{ textAlign: 'center', marginTop: '15px' }}>
-                                    
-                                    <Button 
-                                    type={"submit"} 
-                                    variant="contained" 
-                                    endIcon={<SendIcon />} 
-                                    onClick={(e) => {
-                                      e.preventDefault();
-                                      console.log("edit用のmessage:", data.message_id)
-                                      onEditMessage(selectedMessageId, inputEditValue)
-                                      closeModal()
-                                    }}>
-                                      Register
-                                    </Button>
-                                  </div>
-                                </form>
-                              </Modal>
-
-                            </div>
-                        )}
+                      
+                      
+                      <div className="chat_element" >
                         
-                      </p>
+                        
+                        <div style={{ display: "flex", flexDirection: "row" }}>
+                          <div 
+                    
+                          style={{height: "50px", width: "50px", marginRight: "20px" , display: "flex", justifyContent: "center", alignItems: "center" }}>
+                             <img src={data.photo_url} alt="" className="chat_element_img" ></img>
+                          </div>
+                          <div className="chat_element_username">
+                              <span style={{ fontWeight: "bold", marginRight: "30px" }}>{data.user_name}</span>
+                              <span className="date">{data.created_at}</span>
+                              {data.is_edited === 1 && <span className="edited" style={{ marginLeft: "20px" }}>編集済み</span>}
+                          </div>
+                        </div >
+
+                        <div className="chat_message">
+                          {data.contents}
+
+
+                          {uid === data.user_id && (
+                            <div className="menu">
+                              {/* メニューのコンテンツ */}
+                                <div className="edition" onClick={() => {
+                                    setSelectedMessageId(data.message_id);
+                                    setInputEditValue(data.contents)
+                                    console.log(data.contents)
+                                    openModal();
+                                  }}>
+                                  <CreateIcon />
+                                  <span>編集</span>
+                                </div>
+                                <Button 
+                                  variant="outlined" 
+                                  startIcon={<DeleteIcon />} 
+                                  size="small"
+                                  onClick={(e) => {
+                                    e.preventDefault();
+                                    onDeleteMessage(data.message_id)}}>
+                                    Delete
+                                </Button>
+
+
+                                <Modal
+                                  contentLabel="Example Modal"
+                                  isOpen={showModal}
+                                  overlayClassName="modal_overlay"
+                                  className="modal_content"
+                                  style={{
+                                    overlay: {
+                                      position: 'fixed',
+                                      top: 0,
+                                      left: 0,
+                                      right: 0,
+                                      bottom: 0,
+                                      backgroundColor: 'rgba(0, 0, 0, 0)' // モーダルの背景色や透明度を指定する場合はここで設定
+                                    },
+                                    content: {
+                                      position: 'absolute',
+                                      top: '50%',
+                                      left: '50%',
+                                      transform: 'translate(-50%, -50%)',
+                                      width: '500px', // モーダルの幅を指定
+                                      height: '220px',
+                                      padding: '20px', // モーダルの内側の余白を指定
+                                      backgroundColor: '#2c303b', // モーダルの背景色を指定
+                                      borderRadius: '4px', // モーダルの角の丸みを指定
+                                      borderColor: 'black'
+                                    } 
+                                  }}
+                                  >                               
+                                            
+                                  <form>
+                                  <div style={{ textAlign: 'left', marginBottom:'15px'}}>
+                                    <button onClick={(e)=>{
+                                      e.preventDefault();                     
+                                      closeModal();
+                                    }}>close</button>
+                                  </div>
+                                  
+                                  <TextField 
+                                  id="outlined-basic" 
+                                  label="message to edit" 
+                                  variant="outlined" 
+                                  sx={{
+                                    backgroundColor: '#646875',
+                                    width: '500px',
+                                  }} 
+                                  value = {inputEditValue} 
+                                  onChange={(e) => {
+                                    setInputEditValue(e.target.value)
+                                  }}
+                                  InputLabelProps={{
+                                    style: { color: 'white' },
+                                  }}
+                                  InputProps={{
+                                    style: { color: 'white' },
+                                  }}
+                                  multiline // 複数行を有効にする
+                                  rows={4} // 表示する行数を指定する
+                                  />
+                                  <div style={{ textAlign: 'center', marginTop: '15px' }}>
+                                      
+                                      <Button 
+                                      type={"submit"} 
+                                      variant="contained" 
+                                      endIcon={<SendIcon />} 
+                                      onClick={(e) => {
+                                        e.preventDefault();
+                                        console.log("edit用のmessage:", data.message_id)
+                                        onEditMessage(selectedMessageId, inputEditValue)
+                                        closeModal()
+                                      }}>
+                                        Register
+                                      </Button>
+                                    </div>
+                                  </form>
+                                </Modal>
+
+                              </div>
+                          )}
+                          
+                        </div>
+                      </div>
                     </div>
                   ))}
                 </div>
