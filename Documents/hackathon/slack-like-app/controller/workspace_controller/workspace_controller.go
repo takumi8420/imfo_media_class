@@ -199,7 +199,7 @@ func FindAllWorkspaceHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	log.Print("user_id:", user_id)
 
-	channels, err := workspace_dao.FindAllWorkspaceByUserId()
+	channels, err := workspace_dao.FindAllWorkspace()
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
