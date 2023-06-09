@@ -40,22 +40,20 @@ function App() {
       <div className="App">
         <header className="App-header">
       <h1>
-        SLACK-LIKE-APP
+        SLUCK
       </h1>
       <img src={logo} className="App-logo" alt="logo" />
 
-      <div>
-        <Link to="/LoginWithGoogle">
-          <button>Googleアカウントでサインイン</button>
-        </Link>
+      <div style={{ display: "flex", flexDirection: "row" }}>
+        <LoginWithGoogleForm/>
 
 
         <Link to="/LogInWithMail">
-          <button>メールアドレスでログイン</button>
+          <button style={{height: "30px", width: "200px"}}>メールアドレスでログイン</button>
         </Link>
 
         <Link to="/SignUpWithMail">
-          <button>メールアドレスで登録する</button>
+          <button style={{height: "30px", width: "200px"}}>メールアドレスで登録する</button>
         </Link>
       </div>
       

@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import LoginWithGoogleForm from './Pages/LoginPage/LoginWithGoogleForm';
 import SignUpWithMail from './Pages/LoginPage/SignUpWithMail';
 import LogInWithMail from './Pages/LoginPage/LogInWithMail';
 import reportWebVitals from './reportWebVitals';
@@ -22,8 +21,6 @@ ReactDOM.render(
     <BrowserRouter>
       <div>
         <Route exact path="/" component={App} />
-        {/* <Route exact path="/Login" component={LogInPage} /> */}
-        <Route exact path="/LoginWithGoogle" component={LoginWithGoogleForm} />
         <Route exact path="/SignUpWithMail" component={SignUpWithMail} />
         <Route exact path="/LoginWithMail" component={LogInWithMail} />
         <Route path="/IsThereAccount" component={IsThereAccount} />
