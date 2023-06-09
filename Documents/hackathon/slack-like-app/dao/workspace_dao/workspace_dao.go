@@ -8,6 +8,7 @@ import (
 	"log"
 	"math/rand"
 	"os"
+	"slack-like-app/dao/user_dao"
 	"slack-like-app/model"
 	"time"
 )
@@ -73,13 +74,19 @@ func WorkspaceAndUserHandler(workspaceData model.WorkspaceAndUserReqForPost, uid
 	// log.Println("uid:", uid)
 	log.Println("id:", id)
 
+	u, err := user_dao.FindUsersByName(uid)
+	if err != nil {
+		// エラーハンドリング
+	}
+	name := u.Name
+
 	tx, err := db.Begin()
 	if err != nil {
 		return model.WorkspaceAndUserResForPost{}, err
 	}
 	defer tx.Rollback()
 
-	_, err = tx.Exec("INSERT INTO workspace_members (workspace_member_id, workspace_id, user_id) VALUES (?, ?, ?)", id, workspaceData.WorkspaceId, uid)
+	_, err = tx.Exec("INSERT INTO workspace_members (workspace_member_id, workspace_id, user_id, workspace_user_name) VALUES (?, ?, ?, ?)", id, workspaceData.WorkspaceId, uid, name)
 	if err != nil {
 		return model.WorkspaceAndUserResForPost{}, err
 	}
