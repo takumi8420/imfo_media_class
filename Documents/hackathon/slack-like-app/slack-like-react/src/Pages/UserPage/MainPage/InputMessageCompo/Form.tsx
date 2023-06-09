@@ -14,7 +14,6 @@ type Props = {
    userId: string;
 };
 
-
 const Form = (props: Props) => {
   const [messageToSendData, setMessageToSendData] = useState("")
   const uid = props.userId
