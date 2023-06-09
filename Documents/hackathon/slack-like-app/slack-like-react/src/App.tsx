@@ -33,20 +33,16 @@ function App() {
 
   // const [currentPage, setCurrentPage] = useState("defaultPage");
 
-  let pageContent;
-
- 
-
-
+  // let pageContent;
 
   return (
     <div>
       <div className="App">
-      <header className="App-header">
+        <header className="App-header">
       <h1>
         SLACK-LIKE-APP
       </h1>
-        <img src={logo} className="App-logo" alt="logo" />
+      <img src={logo} className="App-logo" alt="logo" />
 
       <div>
         <Link to="/LoginWithGoogle">
