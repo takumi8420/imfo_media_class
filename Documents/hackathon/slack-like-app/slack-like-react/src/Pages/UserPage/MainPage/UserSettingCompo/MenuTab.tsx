@@ -17,6 +17,7 @@ type Props = {
   setEditUserName: (uid: string) => void;
   uid: string;
   openModalToCreateWorkspace: () => void;
+  openModalToAddWorkspaceAndUser: () => void;
 };
 
 
@@ -79,6 +80,11 @@ export default function CustomizedMenus({ openModalToCreateWorkspace,  setEditUs
     handleClose();
   }
 
+  const handleAddWorkspaceAndUser = () =>{
+    openModalToCreateWorkspace();
+    handleClose();
+  }
+
   return (
     <div>
       <Button
@@ -110,17 +116,12 @@ export default function CustomizedMenus({ openModalToCreateWorkspace,  setEditUs
         </MenuItem>
         <MenuItem onClick={handleAddWorkspace} disableRipple>
           <FileCopyIcon />
-          ワークスペースの追加
+          ワークスペースの作成
         </MenuItem>
-        {/* <Divider sx={{ my: 0.5 }} /> */}
-        {/* <MenuItem onClick={handleClose} disableRipple>
-          <ArchiveIcon />
-          Archive
+        <MenuItem onClick={handleAddWorkspaceAndUser} disableRipple>
+          <FileCopyIcon />
+          ワークスペースを追加
         </MenuItem>
-        <MenuItem onClick={handleClose} disableRipple>
-          <MoreHorizIcon />
-          More
-        </MenuItem> */}
       </StyledMenu>
     </div>
   );

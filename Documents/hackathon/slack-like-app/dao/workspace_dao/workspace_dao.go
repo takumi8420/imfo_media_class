@@ -65,6 +65,35 @@ func RegisterWorkspace(workspace_data model.WorkspaceReqForPost) (model.Workspac
 	return model.WorkspaceResForPost{WorkspaceId: id, WorkspaceName: workspace_data.WorkspaceName, RegisteredAt: t}, nil
 }
 
+func WorkspaceAndUserHandler(workspace_data model.WorkspaceAndUserReqForPost, uid string) (model.WorkspaceAndUserResForPost, error) {
+
+	t := time.Now()
+	entropy := ulid.Monotonic(rand.New(rand.NewSource(t.UnixNano())), 0)
+	id := ulid.MustNew(ulid.Timestamp(t), entropy).String()
+	// log.Println("uid:", uid)
+	log.Println("id:", id)
+
+	tx, err := db.Begin()
+	if err != nil {
+		return model.WorkspaceAndUserResForPost{}, err
+	}
+	defer tx.Rollback()
+
+	_, err = tx.Exec("INSERT INTO workspace_members (workspace_member_id, workspace_id, user_id, workspace_user_name) VALUES (?, ?, ?)", id, workspace_data.WorkspaceId, uid)
+	if err != nil {
+		return model.WorkspaceAndUserResForPost{}, err
+	}
+	log.Println("ok user table")
+
+	//log.Println(id, workspace_data.WorkspaceName)
+
+	if err := tx.Commit(); err != nil {
+		return model.WorkspaceAndUserResForPost{}, err
+	}
+
+	return model.WorkspaceAndUserResForPost{WorkspaceId: id}, nil
+}
+
 func FindWorkspaceByUserId(UId string) (*[]model.WorkspaceResForGetByUserId, error) {
 
 	rows, err := db.Query("SELECT workspace_members.workspace_user_name ,workspace.workspace_id, workspace.workspace_name FROM workspace LEFT JOIN workspace_members ON workspace_members.workspace_id = workspace.workspace_id WHERE workspace_members.user_id = ?", UId)
