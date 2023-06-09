@@ -162,7 +162,7 @@ func FindWorkspaceWithUIdHandler(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
-	log.Print("ok getworkspacebyuid", channels)
+	log.Println("ok getworkspacebyuid", channels)
 
 	bytes, err := json.Marshal(channels)
 	if err != nil {
@@ -170,8 +170,8 @@ func FindWorkspaceWithUIdHandler(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
-	log.Print("ok bytesofworkspace", bytes)
-	log.Print("変換終了 bytes", bytes)
+	log.Println("ok bytesofworkspace", bytes)
+	log.Println("変換終了 bytes", bytes)
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(bytes)
 }
@@ -200,14 +200,14 @@ func FindAllWorkspaceHandler(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
-	log.Print("user_id:", user_id)
+	log.Println("user_id:", user_id)
 
 	channels, err := workspace_dao.FindAllWorkspace()
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
-	log.Print("ok getworkspacebyuid", channels)
+	log.Println("ok getworkspacebyuid", channels)
 
 	bytes, err := json.Marshal(channels)
 	if err != nil {
@@ -215,8 +215,8 @@ func FindAllWorkspaceHandler(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
-	log.Print("ok bytesofworkspace", bytes)
-	log.Print("変換終了 bytes", bytes)
+	log.Println("ok bytesofworkspace", bytes)
+	log.Println("変換終了 bytes", bytes)
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(bytes)
 }
