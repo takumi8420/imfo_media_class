@@ -148,6 +148,7 @@ func FindWorkspaceWithUIdHandler(w http.ResponseWriter, r *http.Request) {
 	path := r.URL.Path
 	segments := strings.Split(path, "/")
 	user_id := segments[len(segments)-1]
+	log.Fatalln(user_id)
 
 	if user_id == "" {
 		log.Println("fail: uid is empty")

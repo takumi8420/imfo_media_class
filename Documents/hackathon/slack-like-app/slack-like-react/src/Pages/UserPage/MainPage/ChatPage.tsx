@@ -1,6 +1,6 @@
 import React from "react";
 import './ChatPage.css';
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import Form from "./InputMessageCompo/Form";
 import { Button} from "@mui/material";
 import { Send as SendIcon } from '@mui/icons-material';
@@ -335,8 +335,8 @@ const Contents: React.FC = () => {
   useEffect(() => {
     initialfetchMessageData();
     console.log("get workspace response is...", currentWorkspaceData?.workspace_id);
-    fetchAllWorkspaceData();
-    console.log("allworlkspace", allWorkspaceData)
+    // fetchAllWorkspaceData();
+    // console.log("allworlkspace", allWorkspaceData)
   }, [currentChannelData])
 
   useEffect(() => {
