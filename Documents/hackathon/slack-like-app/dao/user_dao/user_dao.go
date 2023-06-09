@@ -152,3 +152,25 @@ func RegisterUserAndWorkspace(req model.UserAndWorkplaceReqForPost, uid string) 
 
 	return model.UserAndWorkspaceResForPost{WorkspaceMemberId: id, WorkspaceId: req.WorkspaceId, UserId: uid, WorkspaceUserName: req.Name}, nil
 }
+
+func RegisterPhotoURL(user model.UserPhotoReqForHTTPPost, uid string) (model.UserPhotoResForHTTPPost, error) {
+
+	tx, err := db.Begin()
+	if err != nil {
+		return model.UserPhotoResForHTTPPost{}, err
+	}
+	defer tx.Rollback()
+
+	_, err = tx.Exec("UPDATE user SET photo_url = ? WHERE user_id = ?", user.UserPhotoURL, user.Id)
+
+	if err != nil {
+		return model.UserPhotoResForHTTPPost{}, err
+	}
+	log.Println("ok user table")
+
+	if err := tx.Commit(); err != nil {
+		return model.UserPhotoResForHTTPPost{}, err
+	}
+
+	return model.UserPhotoResForHTTPPost{Id: uid, UserPhotoURL: user.UserPhotoURL}, nil
+}

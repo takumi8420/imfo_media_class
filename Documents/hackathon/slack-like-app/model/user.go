@@ -15,6 +15,16 @@ type UserReqForHTTPPost struct {
 	Age  int64  `json:"age"`
 }
 
+type UserPhotoReqForHTTPPost struct {
+	Id           string `json:"user_id"`
+	UserPhotoURL int64  `json:"user_photoURL"`
+}
+
+type UserPhotoResForHTTPPost struct {
+	Id           string `json:"user_id"`
+	UserPhotoURL int64  `json:"user_photoURL"`
+}
+
 type UserAndChannelReqForPost struct {
 	ChannelId   string `json:"channel_id"`
 	WorkspaceId string `json:"workspace_id"`
