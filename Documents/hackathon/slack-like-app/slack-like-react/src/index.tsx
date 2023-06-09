@@ -2,16 +2,16 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import LoginWithGoogleForm from './components/LogInWithFirsbase.tsx/LoginWithGoogleForm';
-import SignUpWithMail from './components/LogInWithFirsbase.tsx/SignUpWithMail';
-import LogInWithMail from './components/LogInWithFirsbase.tsx/LogInWithMail';
+import LoginWithGoogleForm from './Pages/LoginPage/LoginWithGoogleForm';
+import SignUpWithMail from './Pages/LoginPage/SignUpWithMail';
+import LogInWithMail from './Pages/LoginPage/LogInWithMail';
 import reportWebVitals from './reportWebVitals';
 import { Route, BrowserRouter } from 'react-router-dom';
-import IsThereAccount from './components/AccessToDatabase/IsThereAccount';
-import RegisterAccount from './components/AccessToDatabase/RegisterAccount';
-import Contents from './components/UserPage/Contents';
-import Rename from './components/RenamePage';
-import UploadPage from './components/UserPage/compo/UpLoadPhoto/UploadPage'
+import IsThereAccount from './Pages/LoginPage/IsThereAccount';
+import RegisterAccount from './Pages/LoginPage/RegisterAccount';
+import Contents from './Pages/UserPage/MainPage/ChatPage';
+import EditUserSetting from './Pages/UserPage/MainPage/UserSettingCompo/UserSettingPage';
+import UploadPage from './Pages/UserPage/MainPage/UserSettingCompo/UpLoadPhoto/UploadPage'
 
 
 
@@ -29,7 +29,7 @@ ReactDOM.render(
         <Route path="/IsThereAccount" component={IsThereAccount} />
         <Route path="/RegisterAccount" component={RegisterAccount} />
         <Route path="/UserPage" component={Contents} />
-        <Route path="/EditUserName" component={Rename} />
+        <Route path="/EditUserName" component={EditUserSetting} />
         <Route path="/UploadPage" component={UploadPage} />
         
     

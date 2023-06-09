@@ -106,11 +106,11 @@ export default function CustomizedMenus({ openModalToCreateWorkspace,  setEditUs
       >
         <MenuItem onClick={handleEditUserName} disableRipple>
           <EditIcon />
-          Edit User Name
+          ユーザー設定
         </MenuItem>
         <MenuItem onClick={handleAddWorkspace} disableRipple>
           <FileCopyIcon />
-          New Workspace
+          ワークスペースの追加
         </MenuItem>
         {/* <Divider sx={{ my: 0.5 }} /> */}
         {/* <MenuItem onClick={handleClose} disableRipple>

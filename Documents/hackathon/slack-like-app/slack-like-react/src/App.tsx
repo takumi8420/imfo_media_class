@@ -1,13 +1,12 @@
 
 import React, { useState, useEffect } from 'react';
 import './App.css';
-import LoginWithGoogleForm from "./components/LogInWithFirsbase.tsx/LoginWithGoogleForm";
-import Contents  from "./components/UserPage/Contents";
+import LoginWithGoogleForm from "./Pages/LoginPage/LoginWithGoogleForm";
+import Contents  from "./Pages/UserPage/MainPage/ChatPage";
 import { onAuthStateChanged } from "firebase/auth";
 import { fireAuth } from "./firebase";
-import SignUp from "./components/LogInWithFirsbase.tsx/SignUpWithMail"
-import DefaultPage from "./DefaultPage"
-import SignIn from './components/LogInWithFirsbase.tsx/LogInWithMail';
+import SignUp from "./Pages/LoginPage/SignUpWithMail"
+import SignIn from './Pages/LoginPage/LogInWithMail';
 import logo from './logo.svg';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Link } from 'react-router-dom';

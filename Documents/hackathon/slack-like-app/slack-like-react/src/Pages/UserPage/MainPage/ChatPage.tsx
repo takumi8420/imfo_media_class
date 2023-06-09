@@ -1,7 +1,7 @@
 import React, { Attributes } from "react";
-import './Contents.css';
+import './ChatPage.css';
 import { useState, useEffect, useRef } from "react";
-import Form from "./Form";
+import Form from "./InputMessageCompo/Form";
 import { Button} from "@mui/material";
 import { Height, Margin, MarginOutlined, Send as SendIcon } from '@mui/icons-material';
 import { Delete as DeleteIcon } from '@mui/icons-material';
@@ -15,9 +15,9 @@ import ReplayIcon from '@mui/icons-material/Replay';
 import SettingsIcon from '@mui/icons-material/Settings';
 import Menu from '@mui/base/Menu';
 import MenuItem from '@mui/base/MenuItem';
-import Setting from "./compo/setting";
-import BasicButtons from "./compo/addChannelIcon";
-import ToggleButtonsMultiple from "./compo/inputFormOption"
+import Setting from "./UserSettingCompo/MenuTab";
+import BasicButtons from "./ChannelCompo/addChannelIcon";
+import ToggleButtonsMultiple from "./InputMessageCompo/inputFormOption"
 import { useHistory } from 'react-router-dom';
 
 
@@ -524,7 +524,7 @@ const Contents: React.FC = () => {
              onClick={()=>{
                   openModalToCreateChannel();
              }}>
-                  Add Channel
+                  チャンネル<br/>追加
                   </Button>
             
                   <Modal
