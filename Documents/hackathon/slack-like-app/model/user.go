@@ -117,15 +117,15 @@ type WorkspaceReqForGetByUserId struct {
 }
 
 type WorkspaceResForGetByUserId struct {
-	//WorkspaceUserName string `json:"workspace_user_name"`
-	WorkspaceId   string `json:"workspace_id"`
-	WorkspaceName string `json:"workspace_name"`
+	WorkspaceUserName string `json:"workspace_user_name"`
+	WorkspaceId       string `json:"workspace_id"`
+	WorkspaceName     string `json:"workspace_name"`
 }
 
 type AllWorkspaceResForGet struct {
-	//WorkspaceUserName string `json:"workspace_user_name"`
-	WorkspaceId   string `json:"workspace_id"`
-	WorkspaceName string `json:"workspace_name"`
+	WorkspaceUserName string `json:"workspace_user_name"`
+	WorkspaceId       string `json:"workspace_id"`
+	WorkspaceName     string `json:"workspace_name"`
 }
 
 type ChannelReqForGetByWorkspaceId struct {

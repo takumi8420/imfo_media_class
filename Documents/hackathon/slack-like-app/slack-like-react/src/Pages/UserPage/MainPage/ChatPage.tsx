@@ -107,7 +107,7 @@ const Contents: React.FC = () => {
   }
 
   type workspaceData ={
-    // workspace_user_name: string;
+    workspace_user_name: string;
     workspace_id: string;
     workspace_name: string; 
   }
