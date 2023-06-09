@@ -17,12 +17,12 @@ type UserReqForHTTPPost struct {
 
 type UserPhotoReqForHTTPPost struct {
 	Id           string `json:"user_id"`
-	UserPhotoURL int64  `json:"user_photoURL"`
+	UserPhotoURL string `json:"user_photoURL"`
 }
 
 type UserPhotoResForHTTPPost struct {
 	Id           string `json:"user_id"`
-	UserPhotoURL int64  `json:"user_photoURL"`
+	UserPhotoURL string `json:"user_photoURL"`
 }
 
 type UserAndChannelReqForPost struct {
