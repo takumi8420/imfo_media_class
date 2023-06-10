@@ -481,7 +481,7 @@ const Contents: React.FC = () => {
                   e.preventDefault();
                   fetchWorkspaceData();
               }}>
-                <ReplayIcon style={{ fontSize: '30px' }} />
+                <ReplayIcon style={{ fontSize: '30px', color: 'white' }} />
               </div>
 
 
@@ -737,7 +737,7 @@ const Contents: React.FC = () => {
                 e.preventDefault();
                 fetchMessageData();
               }}>
-              <ReplayIcon />
+              <ReplayIcon style={{ fontSize: '25px'}} />
               </div>
                 {/* ヘッダーのコンテンツ */}
             </header>
