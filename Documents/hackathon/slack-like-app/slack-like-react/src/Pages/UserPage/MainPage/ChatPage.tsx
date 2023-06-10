@@ -323,9 +323,8 @@ const Contents: React.FC = () => {
     const data = await getResponse.json();
     console.log("get workspace response is...", data);
   
-    const filteredData = data.filter((item: allWorkspaceData) => !workspaceData.some((w) => w.workspace_id === item.workspace_id));
-    setAllWorkspaceData(filteredData);
-    console.log(allWorkspaceData);
+    setWorkspaceData(data);
+    console.log(data);
   };
   
 
@@ -338,8 +337,14 @@ const Contents: React.FC = () => {
     });
     const data = await getResponse.json();
     console.log("get allworkspace response is...", data);
-    setAllWorkspaceData(data);
-    console.log(currentWorkspaceData);
+
+
+
+    const filteredData = data.filter((item: allWorkspaceData) => !workspaceData.some((w) => w.workspace_id === item.workspace_id));
+    setAllWorkspaceData(filteredData);
+    console.log(allWorkspaceData);
+    // setAllWorkspaceData(data);
+    // console.log(currentWorkspaceData);
   };
 
 
@@ -460,18 +465,24 @@ const Contents: React.FC = () => {
           
               {workspaceData.map((data: workspaceData) => (
                 <div key={data.workspace_id} className="workspace-contents">
-                      <Button 
+                  <Button 
                       variant="contained" 
                       className="workspace_element" 
                       style={{ fontSize: '8px', marginTop:'10px' ,marginLeft:'10px'}} 
                       onClick={(e) => {
                       e.preventDefault();
                       changeWorksapce(data);
-                }}>
+                  }}>
                     {data.workspace_name}
                   </Button>
                 </div>
               ))}
+              <div className="ReplyWorkspace" onClick={(e)=>{
+                  e.preventDefault();
+                  fetchWorkspaceData();
+              }}>
+                <ReplayIcon style={{ fontSize: '30px' }} />
+              </div>
 
 
              <div className="MenuIcon">
@@ -598,22 +609,6 @@ const Contents: React.FC = () => {
                                     </Button>
                                   </div>
                                 ))}
-
-                                
-                                <div style={{ textAlign: 'center', marginTop: '15px' }}>
-                                    
-                                    <Button 
-                                    type={"submit"} 
-                                    variant="contained" 
-                                    endIcon={<SendIcon />} 
-                                    onClick={(e) => {
-                                      e.preventDefault();
-                                      onRegisterWorkspace(inputWorkspaceName);
-                                      closeModalToCreateWorkspace();
-                                    }}>
-                                      Register
-                                    </Button>
-                                  </div>
                                 </form>
                               </Modal>
 
@@ -742,7 +737,7 @@ const Contents: React.FC = () => {
                 e.preventDefault();
                 fetchMessageData();
               }}>
-                <ReplayIcon />
+              <ReplayIcon />
               </div>
                 {/* ヘッダーのコンテンツ */}
             </header>

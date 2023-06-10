@@ -131,6 +131,13 @@
 .Reply{
   margin-top: 10px;
   margin-left: 20px;
+  z-index: 3;
+}
+
+.ReplyWorkspace{
+  margin-top: 15px;
+  margin-left: 20px;
+  z-index: 3;
 }
 
 .currentChannel{
