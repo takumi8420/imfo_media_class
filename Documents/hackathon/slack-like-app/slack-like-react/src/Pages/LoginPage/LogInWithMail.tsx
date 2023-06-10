@@ -101,10 +101,6 @@ const SignIn: React.FC = () => {
               value={password}
               onChange={handleChangePassword}
             />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="ログイン状態を保持する"
-            />
             <Button
               type="submit"
               fullWidth
@@ -113,18 +109,8 @@ const SignIn: React.FC = () => {
               >
               サインイン
               </Button>
-              <Grid container>
-              <Grid item xs>
-              <Link href="#" variant="body2">
-              パスワードをお忘れですか？
-              </Link>
-              </Grid>
-              <Grid item>
-              <Link href="#" variant="body2">
-              アカウントをお持ちでない方はこちら
-              </Link>
-              </Grid>
-              </Grid>
+              {/* <Grid container>
+              </Grid> */}
               </Box>
               </Box>
               </Container>

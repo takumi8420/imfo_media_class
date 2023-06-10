@@ -18,16 +18,16 @@ const Form = (props: Props) => {
   const [messageToSendData, setMessageToSendData] = useState("")
   const uid = props.userId
 
-  
-
-
-
   const submit = async(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // props.onSubmit(e);
     props.onSubmit(props.channelId, uid, messageToSendData);
       if (!messageToSendData) {
-        alert("Please enter name");
+        alert("文字を入力してください。");
+      return;
+    }
+    if (messageToSendData.length > 200) {
+      alert("200字以下で入力してください。");
       return;
     }
     setMessageToSendData("");
