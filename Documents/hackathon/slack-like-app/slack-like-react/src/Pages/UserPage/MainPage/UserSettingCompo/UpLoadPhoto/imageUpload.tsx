@@ -21,7 +21,8 @@ const ImageUploader = () => {
 
   const onRegisterUserPhotoURL = async (uid: string, PhotoURL: string) => {
     try{
-      const result = await fetch(`https://hackthon1-rzmhhbabrq-uc.a.run.app/register_userPhotoURL/${uid}`,{
+      // const result = await fetch(`https://hackthon1-rzmhhbabrq-uc.a.run.app/register_userPhotoURL/${uid}`,{
+      const result = await fetch(`http://localhost:8000/register_userPhotoURL/${uid}`,{
         method: "POST",
         headers: {
           "Content-Type": "application/json",

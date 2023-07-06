@@ -42,9 +42,9 @@ const Form = (props: Props) => {
 
     <div style={{ display: "flex", flexDirection: "row", width: "100%" }}>
 
-      <div className="ToggleButtonsMultiple" style={{ marginLeft: "0px", marginRight: "auto" }}>
-        <ToggleButtonsMultiple />
-      </div>
+      {/* <div className="ToggleButtonsMultiple" style={{ marginLeft: "0px", marginRight: "auto" }}> */}
+        {/* <ToggleButtonsMultiple /> */}
+      {/* </div> */}
 
       <Button
         type="submit"

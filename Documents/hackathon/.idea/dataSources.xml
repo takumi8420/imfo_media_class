@@ -8,5 +8,12 @@
       <jdbc-url>jdbc:mysql://35.238.119.100:3306/hackathon</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="slack_like_app@localhost" uuid="19490e66-f3dc-400e-a810-3f528f1c1948">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://localhost:3306/slack_like_app</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>

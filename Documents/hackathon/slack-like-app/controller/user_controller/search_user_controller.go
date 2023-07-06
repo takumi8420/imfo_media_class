@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
-	"slack-like-app/usecase"
+	"slack-like-app/dao/user_dao"
 	"strings"
 )
 
@@ -34,7 +34,7 @@ func SearchUserHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	user, err := usecase.GetUserByName(uid)
+	user, err := user_dao.FindUsersByUid(uid)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		return

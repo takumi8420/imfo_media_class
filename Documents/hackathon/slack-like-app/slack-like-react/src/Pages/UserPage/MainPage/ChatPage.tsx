@@ -130,7 +130,7 @@ const Contents: React.FC = () => {
     // メッセージの削除
   const onDeleteMessage = async (messageId: string) => {
     try{
-      const result = await fetch(`https://hackthon1-rzmhhbabrq-uc.a.run.app/delete_messages/${uid}`,{
+      const result = await fetch(`http://localhost:8000/delete_messages/${uid}`,{
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -151,7 +151,7 @@ const Contents: React.FC = () => {
     // メッセージの送信
   const onSendMessage = async (channelId: string, userId: string, message: string) => {
     try{
-      const result = await fetch(`https://hackthon1-rzmhhbabrq-uc.a.run.app/send_messages/${uid}`,{
+      const result = await fetch(`http://localhost:8000/send_messages/${uid}`,{
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -174,7 +174,7 @@ const Contents: React.FC = () => {
     const onRegisterChannel = async (channelName: string, workspaceId: string) => {
 
       try {
-        const result = await fetch(`https://hackthon1-rzmhhbabrq-uc.a.run.app/register_channel/${uid}`, {
+        const result = await fetch(`http://localhost:8000/register_channel/${uid}`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -200,7 +200,7 @@ const Contents: React.FC = () => {
 
       const onRegisterWorkspace = async (workspaceName: string) => {
         try{
-          const result = await fetch(`https://hackthon1-rzmhhbabrq-uc.a.run.app/register_workspace/${uid}`,{
+          const result = await fetch(`http://localhost:8000/register_workspace/${uid}`,{
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -215,12 +215,14 @@ const Contents: React.FC = () => {
           } catch (err) {
             console.error(err);
           }
+          console.log("workspaceのポストは送られている。");
           fetchWorkspaceData();
+          fetchAllWorkspaceData();
         }
 
         const onAddWorksapceAndUser = async (workspaceId: string) => {
           try{
-            const result = await fetch(`https://hackthon1-rzmhhbabrq-uc.a.run.app/register_workspace_and_user/${uid}`,{
+            const result = await fetch(`http://localhost:8000/register_workspace_and_user/${uid}`,{
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
@@ -242,7 +244,7 @@ const Contents: React.FC = () => {
     // 編集の送信
     const onEditMessage = async (messageId: string, content: string) => {
       try{
-        const result = await fetch(`https://hackthon1-rzmhhbabrq-uc.a.run.app/edit_messages/${uid}`,{
+        const result = await fetch(`http://localhost:8000/edit_messages/${uid}`,{
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -266,7 +268,7 @@ const Contents: React.FC = () => {
 // チャンネルの取得
   const initialFetchChannelData = async () => {
     console.log("currentworkspaceは:", currentWorkspaceData?.workspace_id);
-    const getResponse = await fetch(`https://hackthon1-rzmhhbabrq-uc.a.run.app/get_channel_with_workspace_id/${currentWorkspaceData?.workspace_id}`, {
+    const getResponse = await fetch(`http://localhost:8000/get_channel_with_workspace_id/${currentWorkspaceData?.workspace_id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -285,7 +287,7 @@ const Contents: React.FC = () => {
 
   // workspaceの取得
   const initialFetchWorkspaceData = async () => {
-    const getResponse = await fetch(`https://hackthon1-rzmhhbabrq-uc.a.run.app/get_workspace_with_user_id/${uid}`, {
+    const getResponse = await fetch(`http://localhost:8000/get_workspace_with_user_id/${uid}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -314,7 +316,7 @@ const Contents: React.FC = () => {
   // };
 
   const fetchWorkspaceData = async () => {
-    const getResponse = await fetch(`https://hackthon1-rzmhhbabrq-uc.a.run.app/get_workspace_with_user_id/${uid}`, {
+    const getResponse = await fetch(`http://localhost:8000/get_workspace_with_user_id/${uid}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -329,7 +331,7 @@ const Contents: React.FC = () => {
   
 
   const fetchAllWorkspaceData = async () => {
-    const getResponse = await fetch(`https://hackthon1-rzmhhbabrq-uc.a.run.app/get_all_workspace/${uid}`, {
+    const getResponse = await fetch(`http://localhost:8000/get_all_workspace/${uid}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -337,7 +339,6 @@ const Contents: React.FC = () => {
     });
     const data = await getResponse.json();
     console.log("get allworkspace response is...", data);
-
 
 
     const filteredData = data.filter((item: allWorkspaceData) => !workspaceData.some((w) => w.workspace_id === item.workspace_id));
@@ -376,7 +377,7 @@ const Contents: React.FC = () => {
 
   const fetchChannelData = async (workspaceId: string) => {
     console.log("currentworkspaceは:", currentWorkspaceData?.workspace_id);
-    const getResponse = await fetch(`https://hackthon1-rzmhhbabrq-uc.a.run.app/get_channel_with_workspace_id/${workspaceId}`, {
+    const getResponse = await fetch(`http://localhost:8000/get_channel_with_workspace_id/${workspaceId}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -389,7 +390,7 @@ const Contents: React.FC = () => {
   };
 
   const fetchMessageData = async () => {
-    const getResponse = await fetch(`https://hackthon1-rzmhhbabrq-uc.a.run.app/get_messages_with_channel_id/${currentChannelData?.channel_id}`, {
+    const getResponse = await fetch(`http://localhost:8000/get_messages_with_channel_id/${currentChannelData?.channel_id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -408,7 +409,7 @@ const Contents: React.FC = () => {
   };
 
   const initialfetchMessageData = async () => {
-    const getResponse = await fetch(`https://hackthon1-rzmhhbabrq-uc.a.run.app/get_messages_with_channel_id/${currentChannelData?.channel_id}`, {
+    const getResponse = await fetch(`http://localhost:8000/get_messages_with_channel_id/${currentChannelData?.channel_id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -423,7 +424,7 @@ const Contents: React.FC = () => {
 
   const changeWorksapce = async (data: workspaceData) => {
     setCurrentWorkspaceData(data);
-    const getResponse1 = await fetch(`https://hackthon1-rzmhhbabrq-uc.a.run.app/get_channel_with_workspace_id/${data.workspace_id}`, {
+    const getResponse1 = await fetch(`http://localhost:8000/get_channel_with_workspace_id/${data.workspace_id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -436,7 +437,7 @@ const Contents: React.FC = () => {
     console.log("currentchannelは", channelData[0].channel_id);
 
 
-    const getResponse2 = await fetch(`https://hackthon1-rzmhhbabrq-uc.a.run.app/get_messages_with_channel_id/${channelData[0].channel_id}`, {
+    const getResponse2 = await fetch(`http://localhost:8000/get_messages_with_channel_id/${channelData[0].channel_id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -522,8 +523,8 @@ const Contents: React.FC = () => {
                                 >                               
                                            
                                 <form>
-                                <div style={{ textAlign: 'left', marginBottom: '15px' }}>
-                                  <button onClick={closeModalToCreateWorkspace}>close</button>
+                                  <div style={{ textAlign: 'left', marginBottom: '15px' }}>
+                                    <button onClick={closeModalToCreateWorkspace}>close</button>
                                 </div>
                                 
                                 <TextField 
@@ -557,11 +558,11 @@ const Contents: React.FC = () => {
                                     </Button>
                                   </div>
                                 </form>
-                              </Modal>
+                </Modal>
 
 
 
-                              <Modal
+                <Modal
                                 contentLabel="Example Modal"
                                 isOpen={showModalToAddWorkspaceAndUser}
                                 overlayClassName="modal_overlay"
@@ -590,8 +591,8 @@ const Contents: React.FC = () => {
                                 >                               
                                            
                                 <form>
-                                <div style={{ textAlign: 'left', marginBottom: '15px' }}>
-                                  <button onClick={closeModalToAddWorkspaceAndUser}>close</button>
+                                  <div style={{ textAlign: 'left', marginBottom: '15px' }}>
+                                    <button onClick={closeModalToAddWorkspaceAndUser}>close</button>
                                 </div>
                                 
 
@@ -719,14 +720,6 @@ const Contents: React.FC = () => {
                                   </div>
                                 </form>
                               </Modal>
-
-
-
-                              
-
-
-              
-
           </div>
           
           <div className="main-content">
@@ -742,19 +735,14 @@ const Contents: React.FC = () => {
                 {/* ヘッダーのコンテンツ */}
             </header>
 
-
             <div className="chat-area" style={{ overflowY: "scroll" }}>
               {/* チャットエリアのコンテンツ */}
 
-
               <div style={{ display: "flex", flexDirection: "column" }} id="scroller_inner">
-                
                 
                 <div className="chat_table" >
                   
-                  
                   {messageDatas.map((data: messageData) => (
-                    
                     
                     <div key={data.message_id} className="chat-contents" style={{ display: "flex", flexDirection: "column" }}>
                       
@@ -877,10 +865,8 @@ const Contents: React.FC = () => {
                                     </div>
                                   </form>
                                 </Modal>
-
                               </div>
                           )}
-                          
                         </div>
                       </div>
                     </div>
@@ -901,9 +887,6 @@ const Contents: React.FC = () => {
                 ) : null}
                 </div>
             </div>
-
-
-
           </div>
 
         </div>

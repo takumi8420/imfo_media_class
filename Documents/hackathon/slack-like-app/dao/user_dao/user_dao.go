@@ -7,7 +7,6 @@ import (
 	"github.com/oklog/ulid/v2"
 	"log"
 	"math/rand"
-	"os"
 	"slack-like-app/model"
 	"time"
 )
@@ -17,16 +16,29 @@ var db *sql.DB
 func init() {
 	// ①-1 環境変数を用いる
 
-	mysqlUser := os.Getenv("MYSQL_USER")
-	mysqlPwd := os.Getenv("MYSQL_PWD")
-	mysqlHost := os.Getenv("MYSQL_HOST")
-	mysqlDatabase := os.Getenv("MYSQL_DATABASE")
+	//mysqlUser := os.Getenv("MYSQL_USER")
+	//mysqlPwd := os.Getenv("MYSQL_PWD")
+	//mysqlHost := os.Getenv("MYSQL_HOST")
+	//mysqlDatabase := os.Getenv("MYSQL_DATABASE")
+	//
+	//connStr := fmt.Sprintf("%s:%s@%s/%s", mysqlUser, mysqlPwd, mysqlHost, mysqlDatabase)
+	//_db, err := sql.Open("mysql", connStr)
 
-	connStr := fmt.Sprintf("%s:%s@%s/%s", mysqlUser, mysqlPwd, mysqlHost, mysqlDatabase)
-	_db, err := sql.Open("mysql", connStr)
+	//if err != nil {
+	//	log.Fatalf("fail: sql.Open, %v\n", err)
+	//}
+	//
+	//if err := _db.Ping(); err != nil {
+	//	log.Fatalf("fail: _db.Ping, %v\n", err)
+	//}
+	//db = _db
+
+	mysqlUser := "test_user"
+	mysqlUserPwd := "password"
+	mysqlDatabase := "slack_like_app"
 
 	// ①-2
-	//_db, err := sql.Open("mysql", fmt.Sprintf("%s:%s@(localhost:3306)/%s", mysqlUser, mysqlPwd, mysqlDatabase))
+	_db, err := sql.Open("mysql", fmt.Sprintf("%s:%s@(localhost:3306)/%s", mysqlUser, mysqlUserPwd, mysqlDatabase))
 	if err != nil {
 		log.Fatalf("fail: sql.Open, %v\n", err)
 	}
@@ -37,7 +49,7 @@ func init() {
 	db = _db
 }
 
-func FindUsersByName(uid string) (*model.UserResForHTTPGet, error) {
+func FindUsersByUid(uid string) (*model.UserResForHTTPGet, error) {
 
 	rows, err := db.Query("SELECT user_account.user_id, user.user_name, user.age FROM user_account LEFT JOIN user ON user_account.user_id = user.user_id WHERE user_account.firebase_id = ?", uid)
 	if err != nil {

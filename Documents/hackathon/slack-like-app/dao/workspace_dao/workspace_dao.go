@@ -7,7 +7,6 @@ import (
 	"github.com/oklog/ulid/v2"
 	"log"
 	"math/rand"
-	"os"
 	"slack-like-app/dao/user_dao"
 	"slack-like-app/model"
 	"time"
@@ -18,16 +17,31 @@ var db *sql.DB
 func init() {
 	// ①-1 環境変数を用いる
 
-	mysqlUser := os.Getenv("MYSQL_USER")
-	mysqlPwd := os.Getenv("MYSQL_PWD")
-	mysqlHost := os.Getenv("MYSQL_HOST")
-	mysqlDatabase := os.Getenv("MYSQL_DATABASE")
+	//mysqlUser := os.Getenv("MYSQL_USER")
+	//mysqlPwd := os.Getenv("MYSQL_PWD")
+	//mysqlHost := os.Getenv("MYSQL_HOST")
+	//mysqlDatabase := os.Getenv("MYSQL_DATABASE")
+	//
+	//connStr := fmt.Sprintf("%s:%s@%s/%s", mysqlUser, mysqlPwd, mysqlHost, mysqlDatabase)
+	//_db, err := sql.Open("mysql", connStr)
+	//
+	//// ①-2
+	////_db, err := sql.Open("mysql", fmt.Sprintf("%s:%s@(localhost:3306)/%s", mysqlUser, mysqlPwd, mysqlDatabase))
+	//if err != nil {
+	//	log.Fatalf("fail: sql.Open, %v\n", err)
+	//}
+	//// ①-3
+	//if err := _db.Ping(); err != nil {
+	//	log.Fatalf("fail: _db.Ping, %v\n", err)
+	//}
+	//db = _db
 
-	connStr := fmt.Sprintf("%s:%s@%s/%s", mysqlUser, mysqlPwd, mysqlHost, mysqlDatabase)
-	_db, err := sql.Open("mysql", connStr)
+	mysqlUser := "test_user"
+	mysqlUserPwd := "password"
+	mysqlDatabase := "slack_like_app"
 
 	// ①-2
-	//_db, err := sql.Open("mysql", fmt.Sprintf("%s:%s@(localhost:3306)/%s", mysqlUser, mysqlPwd, mysqlDatabase))
+	_db, err := sql.Open("mysql", fmt.Sprintf("%s:%s@(localhost:3306)/%s", mysqlUser, mysqlUserPwd, mysqlDatabase))
 	if err != nil {
 		log.Fatalf("fail: sql.Open, %v\n", err)
 	}
@@ -74,7 +88,7 @@ func WorkspaceAndUserHandler(workspaceData model.WorkspaceAndUserReqForPost, uid
 	// log.Println("uid:", uid)
 	log.Println("id:", id)
 
-	u, err := user_dao.FindUsersByName(uid)
+	u, err := user_dao.FindUsersByUid(uid)
 	if err != nil {
 		// エラーハンドリング
 	}

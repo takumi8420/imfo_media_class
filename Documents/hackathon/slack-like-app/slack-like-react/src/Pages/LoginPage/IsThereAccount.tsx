@@ -22,9 +22,10 @@ const IsThereAccount: React.FC = () => {
       const uid = url.substring(url.lastIndexOf("/") + 1);
       console.log(uid);
     
-      // uidが存在する場合のみGETリクエストを送る
+      // urlにuidが存在する場合のみGETリクエストを送る
       if (uid) {
-        const getResponse = await fetch(`https://hackthon1-rzmhhbabrq-uc.a.run.app/search_user/${uid}`, {
+        // const getResponse = await fetch(`https://hackthon1-rzmhhbabrq-uc.a.run.app/search_user/${uid}`, {
+        const getResponse = await fetch(`http://localhost:8000/search_user/${uid}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",

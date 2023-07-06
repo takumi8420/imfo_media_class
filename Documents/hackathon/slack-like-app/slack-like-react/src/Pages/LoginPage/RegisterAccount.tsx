@@ -27,7 +27,9 @@ function RegisterAccount(){
     
       // uidが存在する場合のみGETリクエストを送る
       if (uid) {
-        const getResponse = await fetch(`https://hackthon1-rzmhhbabrq-uc.a.run.app/search_user/${uid}`, {
+        // const getResponse = await fetch(`https://hackthon1-rzmhhbabrq-uc.a.run.app/search_user/${uid}`, {
+        const getResponse = await fetch(`http://localhost:8000/search_user/${uid}`, {
+
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -69,7 +71,8 @@ function RegisterAccount(){
 
   const onSubmit = async (name: string, age: number) => {
     try {
-      const result = await fetch(`https://hackthon1-rzmhhbabrq-uc.a.run.app/register_user/${uid}`, {
+      // const result = await fetch(`https://hackthon1-rzmhhbabrq-uc.a.run.app/register_user/${uid}`, {
+      const result = await fetch(`http://localhost:8000/register_user/${uid}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
